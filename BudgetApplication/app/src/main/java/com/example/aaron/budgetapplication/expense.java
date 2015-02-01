@@ -4,9 +4,9 @@ package com.example.aaron.budgetapplication;
  * Created by Jacob on 2/1/2015.
  */
 public class expense {
-    private String name;
-    private float currentExpense = 0;
-    private float maxExpense = 100;
+    private String name; //name of expense
+    private float currentExpense = 0; //how much is currently being spent on the item
+    private float maxExpense = 100; //max amount of money that can be spent on item
 
     expense (float newCurrent, float newMax){
         currentExpense = newCurrent;

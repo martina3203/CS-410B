@@ -19,7 +19,6 @@ public class mainActivity extends FragmentActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budget);
         budgetSaveButton = (Button) findViewById(R.id.budgetSaveButton);
-        entryEditText1 = (EditText) findViewById(R.id.entryTextEdit1);
     }
 
 

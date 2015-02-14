@@ -9,5 +9,6 @@
     <string name="save_button_label">Save</string>
     <string name="total_budget_label">Total Budget:</string>
     <string name="total_expenses_label">Total Expenses:</string>
+    <string name="AddNewBudget">Add New Budget..</string>
 
 </resources>

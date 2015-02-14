@@ -1,0 +1,2 @@
+C:\Users\Aaron\Desktop\Programming Projects\CS-410B\TipCalculator\app\build\intermediates\classes\debug
+C:\Users\Aaron\Desktop\Programming Projects\CS-410B\TipCalculator\app\build\intermediates\pre-dexed\debug\support-v4-19.1.0-e310064c40d0293045ddad78e687855c80186640.jar

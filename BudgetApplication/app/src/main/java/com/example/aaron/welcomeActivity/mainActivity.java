@@ -1,24 +1,23 @@
 package com.example.aaron.welcomeActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 
 public class mainActivity extends ActionBarActivity {
 
-    private Button budgetSaveButton; //Button that saves input when pressed
-    private EditText entryEditText1; //entry name input field
+    private Button budgetAddButton; //Button that saves input when pressed
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_budget);
-        budgetSaveButton = (Button) findViewById(R.id.budgetSaveButton);
+        setContentView(R.layout.select_budget);
+        budgetAddButton = (Button) findViewById(R.id.budgetAddButton);
     }
 
 
@@ -44,7 +43,9 @@ public class mainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Executes when the budgetAddButton is pressed
     public void onAddBudgetClick(View view) {
-
+        Intent newIntent = new Intent(this, newBudgetActivity.class);
+        startActivity(newIntent);
     }
 }

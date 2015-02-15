@@ -1,7 +1,7 @@
-package com.example.aaron.budgetapplication;
+package com.example.aaron.welcomeActivity;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-public class mainActivity extends FragmentActivity{
+public class mainActivity extends ActionBarActivity {
 
     private Button budgetSaveButton; //Button that saves input when pressed
     private EditText entryEditText1; //entry name input field
@@ -45,18 +45,6 @@ public class mainActivity extends FragmentActivity{
     }
 
     public void onAddBudgetClick(View view) {
-        if (findViewById(R.id.mainLayout) != null) {
 
-            // Create a new Fragment to be placed in the activity layout
-            newBudgetFragment firstFragment = new newBudgetFragment();
-
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-            firstFragment.setArguments(getIntent().getExtras());
-
-            // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.mainLayout, firstFragment).commit();
-        }
     }
 }

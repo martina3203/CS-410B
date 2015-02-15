@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.example.aaron.budgetapplication"
+        applicationId "com.example.aaron.welcomeActivity"
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1

@@ -1,4 +1,4 @@
-package com.example.aaron.budgetapplication;
+package com.example.aaron.welcomeActivity;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

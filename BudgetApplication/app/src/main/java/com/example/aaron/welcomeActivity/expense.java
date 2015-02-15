@@ -1,4 +1,4 @@
-package com.example.aaron.budgetapplication;
+package com.example.aaron.welcomeActivity;
 
 /**
  * Created by Jacob on 2/1/2015.

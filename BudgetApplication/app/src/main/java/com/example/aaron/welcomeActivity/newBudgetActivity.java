@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 
 public class newBudgetActivity extends ActionBarActivity {
     private String newBudgetName;
     private double budgetLimit;
+    private Button cancelButton;
+    private Button addButton;
 
     //Typical Constructor
     public newBudgetActivity(){
@@ -21,6 +24,9 @@ public class newBudgetActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_budget_layout);
+        //Creates buttons
+        cancelButton = (Button) findViewById(R.id.cancelButton);
+        addButton = (Button) findViewById(R.id.addButton);
     }
 
     @Override
@@ -35,19 +41,19 @@ public class newBudgetActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //Executes when onAddBudgetClick is clicked
+    //Executes when addButton is clicked
     public void onAddBudgetClick(View view)
     {
         //Save results
 
         //Finish Activity
-        finish();
+        this.finish();
     }
 
-    //Executes when cancel is clicked
+    //Executes when cancelButton is clicked
     public void onCancelClick(View view)
     {
         //Finish activity
-        finish();
+        this.finish();
     }
 }

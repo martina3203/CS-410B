@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="243dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Budget Name"
+        android:id="@+id/titleTextView"
+        android:layout_weight="0.02" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Expense List"
+        android:textSize="22sp"
+        android:id="@+id/expenseListLabel"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="253dp"
+        android:id="@+id/expenseListView"
+        android:layout_weight="0.48"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:text="Add Custom Category"
+        android:id="@+id/addCustomExpenseButton"
+        android:textSize="@dimen/abc_text_size_caption_material"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@android:color/darker_gray"
+        android:layout_gravity="top" />
+
+    <ProgressBar
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/allocationProgressBar"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.02"
+        android:max="1000"
+        android:progress="500"
+        android:maxHeight="20dp"
+        android:minHeight="20dp"
+        android:indeterminate="false"
+        android:layout_margin="7dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current Money Allocated:"
+            android:textSize="22sp"
+            android:id="@+id/currentAllocationTextView"
+            android:layout_weight="0.02"
+            android:gravity="left"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$$$$$$"
+            android:textSize="22sp"
+            android:id="@+id/currentAllocationAmountTextView"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:layout_margin="5dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Money Available:"
+            android:textSize="22sp"
+            android:id="@+id/moneyAvailableTextView"
+            android:layout_weight="0.02"
+            android:gravity="left"
+            android:layout_marginLeft="5dp"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$$$$$$"
+            android:textSize="22sp"
+            android:id="@+id/moneyAvailableAmountTextView"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:layout_margin="5dp"
+
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@android:color/darker_gray"/>
+
+
+
+
+</LinearLayout>

@@ -6,18 +6,39 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+
+import java.io.Serializable;
+import java.lang.String;
+import java.util.ArrayList;
 
 
 public class mainActivity extends ActionBarActivity {
 
     private Button budgetAddButton; //Button that saves input when pressed
+    private ListView budgetListView;
+    private ArrayList budgetList;
+
+    //List components
+    private ArrayList<String> listItems=new ArrayList<String>();
+    private ArrayAdapter<String> theAdaptor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_budget);
         budgetAddButton = (Button) findViewById(R.id.budgetAddButton);
+        budgetListView = (ListView) findViewById(R.id.budgetListView);
+        //Creates Array and will Load any saved information
+        budgetList = new ArrayList();
+
+        //Updates list with budgets
+        //theAdaptor = new ArrayAdapter<String>(this,R.id.budgetListView,listItems);
+        //budgetListView.setAdapter(theAdaptor);
+
     }
 
 
@@ -45,6 +66,27 @@ public class mainActivity extends ActionBarActivity {
     //Executes when the budgetAddButton is pressed
     public void onAddBudgetClick(View view) {
         Intent newIntent = new Intent(this, newBudgetActivity.class);
-        startActivity(newIntent);
+        //Send to other app
+        startActivityForResult(newIntent,1);
     }
+
+    //Reviews what is returned when an intent is updated
+    protected void onActivityResult(int requestCode,int resultCode, Intent returnedIntent)
+    {
+        //If the request code corresponds
+        if (requestCode == 1)
+        {   //And the results are what we would like
+            if ((resultCode == RESULT_OK) && (returnedIntent != null))
+            {
+                //Acquires the new item that we have received
+                budget newBudget = (budget) returnedIntent.getSerializableExtra("New Budget");
+                //Adds to list for testing purpose
+                //THIS LINE CAN BE REMOVED
+                //If this crashed, it basically meant it wasn't sending the appropriate data
+                newBudget.getName();
+            }
+            return;
+        }
+    }
+
 }

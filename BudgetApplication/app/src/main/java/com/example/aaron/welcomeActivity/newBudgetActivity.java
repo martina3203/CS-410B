@@ -1,11 +1,13 @@
 package com.example.aaron.welcomeActivity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 
 public class newBudgetActivity extends ActionBarActivity {
@@ -13,6 +15,8 @@ public class newBudgetActivity extends ActionBarActivity {
     private double budgetLimit;
     private Button cancelButton;
     private Button addButton;
+    private EditText newBudgetNameTextEdit;
+    private EditText newBudgetTotalTextEdit;
 
     //Typical Constructor
     public newBudgetActivity(){
@@ -27,6 +31,8 @@ public class newBudgetActivity extends ActionBarActivity {
         //Creates buttons
         cancelButton = (Button) findViewById(R.id.cancelButton);
         addButton = (Button) findViewById(R.id.addButton);
+        newBudgetNameTextEdit = (EditText) findViewById(R.id.newBudgetNameTextEdit);
+        newBudgetTotalTextEdit = (EditText) findViewById(R.id.totalBudgetTextEdit);
     }
 
     @Override
@@ -44,16 +50,26 @@ public class newBudgetActivity extends ActionBarActivity {
     //Executes when addButton is clicked
     public void onAddBudgetClick(View view)
     {
-        //Save results
+        //Gather Field Information
+        String newBudgetName = newBudgetNameTextEdit.toString();
+        String temp = newBudgetTotalTextEdit.toString();
+        //Float newBudgetTotal = Float.parseFloat(temp);
 
-        //Finish Activity
+        //Create new Budget object
+        budget newBudget = new budget(newBudgetName,0);
+
+        //Finish Activity and return results
+        Intent returnedIntent = this.getIntent();
+        returnedIntent.putExtra("New Budget",newBudget);
+        //Says it's ok and returns the information upon finish
+        setResult(RESULT_OK,returnedIntent);
         this.finish();
     }
 
     //Executes when cancelButton is clicked
     public void onCancelClick(View view)
     {
-        //Finish activity
+        //Finish activity and do nothing
         this.finish();
     }
 }

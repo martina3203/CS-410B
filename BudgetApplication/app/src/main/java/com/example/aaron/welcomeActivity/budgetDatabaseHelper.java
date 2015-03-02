@@ -49,7 +49,7 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-        //This will handle if we want to delete the database and upgrade
+        //This will handle if we want to delete the database and upgrade accordingly
     }
 
     //Adds a subtable of expenses that corresponds to a budget
@@ -109,5 +109,15 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
     public void removeExpense(String expenseName)
     {
 
+    }
+
+    //Call this when done with working with the database
+    public void closeDatabase()
+    {
+        SQLiteDatabase database = this.getWritableDatabase();
+        if ((database != null) && (database.isOpen()))
+        {
+            database.close();
+        }
     }
 }

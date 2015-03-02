@@ -9,11 +9,13 @@ public class budget implements Serializable {
     private String name; //name of budget
     private float currentValue = 0; //how much of the budget is currently used
     private float maxValue = 100; //maximum amount of money that can be used
+    private int IDNumber = 0;
 
-    budget(String newName, float newMax)
+    budget(String newName, float newMax, int newIDNumber)
     {
         name = newName;
         maxValue = newMax;
+        IDNumber = newIDNumber;
     }
 
     budget (float newCurrent, float newMax){

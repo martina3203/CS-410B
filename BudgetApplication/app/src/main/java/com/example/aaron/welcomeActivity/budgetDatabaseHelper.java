@@ -30,9 +30,10 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
     //The formatting is basically like this: create table TABLE_NAME ( COLUMN_NAME DATA_TYPE, ...);
     //Accepted Data types are Text, Integers, Reals.
     private static final String DATABASE_CREATE = "create table "
-            + BUDGET_TABLE_NAME + "(" + COLUMN_ID
-            + " integer primary key autoincrement, " + COLUMN_BUDGET_NAME
-            + " text not null);";
+            + BUDGET_TABLE_NAME + "(" +
+            COLUMN_ID + " integer primary key autoincrement, " +
+            COLUMN_BUDGET_NAME + " text, " +
+            COLUMN_BUDGET_LIMIT + "real);";
 
     public budgetDatabaseHelper(Context context)
     {

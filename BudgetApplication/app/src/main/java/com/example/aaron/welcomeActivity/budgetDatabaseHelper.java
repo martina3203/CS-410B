@@ -35,39 +35,60 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_BUDGET_NAME + " text, " +
             COLUMN_BUDGET_LIMIT + "real);";
 
-    public budgetDatabaseHelper(Context context)
-    {
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
+    public budgetDatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     //Called on creation
-    public void onCreate(SQLiteDatabase database)
-    {
+    @Override
+    public void onCreate(SQLiteDatabase database) {
         //Carries out the creation of such a table
         database.execSQL(DATABASE_CREATE);
     }
 
+    @Override
+    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+        //This will handle if we want to delete the database and upgrade
+    }
+
     //Adds a subtable of expenses that corresponds to a budget
-    public void addExpenseTable(String newTableName,SQLiteDatabase database)
-    {
+    public void addExpenseTable(String newTableName, SQLiteDatabase database) {
         //This is the string for execution via SQL.execSQL
         String command = "create table " + newTableName +
                 "(" + COLUMN_ID + " integer primary key autoincrement, " +
-                COLUMN_EXPENSE_NAME  + "text, " + COLUMN_EXPENSE_PRIORITY + "integer," +
+                COLUMN_EXPENSE_NAME + "text, " + COLUMN_EXPENSE_PRIORITY + "integer," +
                 COLUMN_EXPENSE_COST + "real, " + COLUMN_EXPENSE_MAX_COST + "real)";
         database.execSQL(command);
 
     }
 
     //Removes an existing subtable of the expenses that corresponds to a budget
-    public void removeSubTable(String tableName, SQLiteDatabase database)
-    {
+    public void removeSubTable(String tableName, SQLiteDatabase database) {
         String command = "DROP TABLE " + DATABASE_NAME + "." + tableName;
         database.execSQL(command);
     }
 
-    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion)
+    //Adds a budget to the table
+    public void insertBudget(budget theBudget)
     {
-        //This will handle if we want to delete the database and upgrade
+
+    }
+
+    //Adds an expense to the corresponding expense
+    public void insertExpense(expense theExpense, String tableName)
+    {
+
+    }
+
+    //Removes a listed budget, if it exists
+    public void removeBudget(String budgetName)
+    {
+
+    }
+
+    //Removes a listed expense, if it exists
+    public void removeExpense(String expenseName)
+    {
+
     }
 }

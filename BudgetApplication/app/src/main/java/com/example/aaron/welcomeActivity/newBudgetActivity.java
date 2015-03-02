@@ -56,11 +56,10 @@ public class newBudgetActivity extends ActionBarActivity {
         //Float newBudgetTotal = Float.parseFloat(temp);
 
         //Create new Budget object
-        budget newBudget = new budget(newBudgetName,0);
+
 
         //Finish Activity and return results
         Intent returnedIntent = this.getIntent();
-        returnedIntent.putExtra("New Budget",newBudget);
         //Says it's ok and returns the information upon finish
         setResult(RESULT_OK,returnedIntent);
         this.finish();

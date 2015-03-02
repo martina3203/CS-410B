@@ -1,5 +1,6 @@
 package com.example.aaron.welcomeActivity;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -52,32 +53,50 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Adds a subtable of expenses that corresponds to a budget
-    public void addExpenseTable(String newTableName, SQLiteDatabase database) {
+    public void addExpenseTable(String newTableName) {
         //This is the string for execution via SQL.execSQL
+        SQLiteDatabase database = this.getWritableDatabase();
         String command = "create table " + newTableName +
                 "(" + COLUMN_ID + " integer primary key autoincrement, " +
                 COLUMN_EXPENSE_NAME + "text, " + COLUMN_EXPENSE_PRIORITY + "integer," +
                 COLUMN_EXPENSE_COST + "real, " + COLUMN_EXPENSE_MAX_COST + "real)";
         database.execSQL(command);
-
     }
 
     //Removes an existing subtable of the expenses that corresponds to a budget
-    public void removeSubTable(String tableName, SQLiteDatabase database) {
+    public void removeSubTable(String tableName) {
+        SQLiteDatabase database = this.getWritableDatabase();
         String command = "DROP TABLE " + DATABASE_NAME + "." + tableName;
         database.execSQL(command);
     }
 
-    //Adds a budget to the table
-    public void insertBudget(budget theBudget)
+    //Adds a budget to the table, returns ID number
+    public long insertBudget(budget theBudget)
     {
+        SQLiteDatabase database = this.getWritableDatabase();
+        //Build a Content Values class that contains the values of this budget
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_BUDGET_NAME, theBudget.getName());
+        values.put(COLUMN_BUDGET_LIMIT, theBudget.getMaxValue());
 
+        //Insert it into the database, this will also return the ID number, in case we decide to use it
+        long ID = database.insert(BUDGET_TABLE_NAME,null,values);
+        return ID;
     }
 
     //Adds an expense to the corresponding expense
-    public void insertExpense(expense theExpense, String tableName)
+    public long insertExpense(expense theExpense, String tableName)
     {
+        SQLiteDatabase database = this.getWritableDatabase();
+        //Build a Content Values class that contains the values of this budget
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_EXPENSE_NAME, theExpense.getName());
+        values.put(COLUMN_EXPENSE_COST, theExpense.getCurrentExpense());
+        values.put(COLUMN_EXPENSE_MAX_COST, theExpense.getMaxExpense());
+        values.put(COLUMN_EXPENSE_PRIORITY, theExpense.getPriority());
 
+        long ID = database.insert(tableName,null,values);
+        return ID;
     }
 
     //Removes a listed budget, if it exists

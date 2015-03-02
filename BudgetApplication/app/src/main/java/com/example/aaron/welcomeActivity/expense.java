@@ -8,6 +8,7 @@ public class expense {
     private float currentExpense = 0; //how much is currently being spent on the item
     private float maxExpense = 100; //max amount of money that can be spent on item
     private int IDNumber = 0; //ID number that corresponds to the SQL database location
+    private int priority = 0; //Priority that corresponds to the importance of the expense
 
     expense (String newName, float newCurrent, float newMax, int newIDNumber){
         name = newName;
@@ -28,6 +29,8 @@ public class expense {
         name = newName;
     }
 
+    void setPriority(int newPriority) {priority = newPriority; }
+
     float getCurrentExpense(){
         return currentExpense;
     }
@@ -39,5 +42,7 @@ public class expense {
     String getName(){
         return name;
     }
+
+    int getPriority() { return priority; }
 }
 

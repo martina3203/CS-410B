@@ -1,8 +1,10 @@
 package com.example.aaron.welcomeActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +23,7 @@ public class mainActivity extends ActionBarActivity {
     private Button budgetAddButton; //Button that saves input when pressed
     private ListView budgetListView;
     private ArrayList budgetList;
+    private budgetDatabaseHelper theDatabase;
 
     //List components
     private ArrayList<String> listItems=new ArrayList<String>();
@@ -31,17 +34,33 @@ public class mainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_budget);
+        //Sets up database material
+        theDatabase = new budgetDatabaseHelper(getApplicationContext());
+        //Load Budgets
+        test();
         budgetAddButton = (Button) findViewById(R.id.budgetAddButton);
         budgetListView = (ListView) findViewById(R.id.budgetListView);
         //Creates Array and will Load any saved information
         budgetList = new ArrayList();
 
         //Updates list with budgets
-        //theAdaptor = new ArrayAdapter<String>(this,R.id.budgetListView,listItems);
+        //theAdaptor = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listItems);
         //budgetListView.setAdapter(theAdaptor);
-
     }
 
+    public void test()
+    {
+        //This is used to my database testing, otherwise ignore and
+        //from method OnCreate as you see fit
+        budget newBudget = new budget("Poop",100);
+        budget newTurd = new budget("NotPoop",100);
+        newBudget.setIDNumber(theDatabase.insertBudget(newBudget));
+        newTurd.setIDNumber(theDatabase.insertBudget(newTurd));
+        long yes = newBudget.getIDNumber();
+        long no = newTurd.getIDNumber();
+        Log.d("Yes, the ID is:", Long.toString(yes));
+        Log.d("Yes, the ID is not: ", Long.toString(no));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

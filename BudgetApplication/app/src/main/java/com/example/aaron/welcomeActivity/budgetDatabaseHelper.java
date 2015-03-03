@@ -2,6 +2,7 @@ package com.example.aaron.welcomeActivity;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -134,6 +135,35 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
         //This builds a delete command to be executed
         String command = "DELETE FROM " + tableName + " WHERE " + COLUMN_ID + " = " + ID;
         database.execSQL(command);
+    }
+
+    public budget findBudget(long ID)
+    {
+        SQLiteDatabase database = this.getReadableDatabase();
+        //Builds a cursor from the query where we find it by the ID number
+        Cursor theCursor = database.query(BUDGET_TABLE_NAME,null,COLUMN_ID + " = " + ID,null,null,null,null);
+        String budgetName = theCursor.getString(1);
+        Double budgetLimit = theCursor.getDouble(2);
+
+        budget newBudget = new budget(budgetName,budgetLimit);
+        newBudget.setIDNumber(ID);
+        return newBudget;
+    }
+
+    public expense findExpense(long ID, String budgetName)
+    {
+        SQLiteDatabase database = this.getReadableDatabase();
+        //Builds a cursor from the query where we find it by the ID number and the appropriate table
+        Cursor theCursor = database.query(budgetName,null,COLUMN_ID + " = " + ID,null,null,null,null);
+        String expenseName = theCursor.getString(1);
+        int expensePriority = theCursor.getInt(2);
+        float expenseTotal = theCursor.getFloat(3);
+        float expenseMax = theCursor.getFloat(4);
+
+        expense newExpense = new expense(expenseName,expenseTotal,expenseMax);
+        newExpense.setPriority(expensePriority);
+        newExpense.setIDNumber(ID);
+        return newExpense;
     }
 
     //Call this when done with working with the database

@@ -8,14 +8,13 @@ import java.io.Serializable;
 public class budget implements Serializable {
     private String name; //name of budget
     private float currentValue = 0; //how much of the budget is currently used
-    private float maxValue = 100; //maximum amount of money that can be used
+    private double maxValue = 100; //maximum amount of money that can be used
     private long IDNumber = 0;
 
-    budget(String newName, float newMax, int newIDNumber)
+    budget(String newName, double newMax)
     {
         name = newName;
         maxValue = newMax;
-        IDNumber = newIDNumber;
     }
 
     budget (float newCurrent, float newMax){
@@ -41,7 +40,7 @@ public class budget implements Serializable {
         return currentValue;
     }
 
-    float getMaxValue(){
+    double getMaxValue(){
         return maxValue;
     }
 

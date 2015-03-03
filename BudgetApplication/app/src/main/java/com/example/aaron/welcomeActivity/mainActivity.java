@@ -78,12 +78,7 @@ public class mainActivity extends ActionBarActivity {
         {   //And the results are what we would like
             if ((resultCode == RESULT_OK) && (returnedIntent != null))
             {
-                //Acquires the new item that we have received
-                budget newBudget = (budget) returnedIntent.getSerializableExtra("New Budget");
-                //Adds to list for testing purpose
-                //THIS LINE CAN BE REMOVED
-                //If this crashed, it basically meant it wasn't sending the appropriate data
-                newBudget.getName();
+                //Was replaced
             }
             return;
         }

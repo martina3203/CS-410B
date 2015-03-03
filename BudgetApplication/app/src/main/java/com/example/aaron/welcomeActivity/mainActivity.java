@@ -23,7 +23,7 @@ public class mainActivity extends ActionBarActivity {
     private Button budgetAddButton; //Button that saves input when pressed
     private ListView budgetListView;
     private ArrayList budgetList;
-    private budgetDatabaseHelper theDatabase;
+    private DatabaseAccess theDatabase;
 
     //List components
     private ArrayList<String> listItems=new ArrayList<String>();
@@ -35,7 +35,7 @@ public class mainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_budget);
         //Sets up database material
-        theDatabase = new budgetDatabaseHelper(getApplicationContext());
+        theDatabase = new DatabaseAccess(getApplicationContext());
         //Load Budgets
         test();
         budgetAddButton = (Button) findViewById(R.id.budgetAddButton);

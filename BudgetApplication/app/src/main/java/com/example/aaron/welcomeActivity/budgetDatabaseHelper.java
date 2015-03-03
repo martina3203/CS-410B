@@ -35,7 +35,7 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
             + BUDGET_TABLE_NAME + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
             COLUMN_BUDGET_NAME + " text, " +
-            COLUMN_BUDGET_LIMIT + "real);";
+            COLUMN_BUDGET_LIMIT + " real);";
 
     public budgetDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

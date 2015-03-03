@@ -94,19 +94,24 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_EXPENSE_COST, theExpense.getCurrentExpense());
         values.put(COLUMN_EXPENSE_MAX_COST, theExpense.getMaxExpense());
         values.put(COLUMN_EXPENSE_PRIORITY, theExpense.getPriority());
-
+        /*
+        Equivalent SQL statement
+        String command = "INSERT INTO " + tableName +
+                COLUMN_EXPENSE_NAME +"," + COLUMN_EXPENSE_COST + "," + COLUMN_EXPENSE_MAX_COST + "," + COLUMN_EXPENSE_PRIORITY + ")" +
+                "VALUES (" + theExpense.getName() + "," + theExpense.getCurrentExpense() + "," + theExpense.getMaxExpense() + "," + theExpense.getPriority() + ")";
+        */
         long ID = database.insert(tableName,null,values);
         return ID;
     }
 
     //Removes a listed budget, if it exists
-    public void removeBudget(String budgetName)
+    public void removeBudget(long ID)
     {
 
     }
 
     //Removes a listed expense, if it exists
-    public void removeExpense(String expenseName)
+    public void removeExpense(long ID)
     {
 
     }

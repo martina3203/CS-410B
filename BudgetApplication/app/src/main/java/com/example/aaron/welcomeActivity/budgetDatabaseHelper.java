@@ -66,7 +66,7 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
     //Removes an existing subtable of the expenses that corresponds to a budget
     public void removeSubTable(String tableName) {
         SQLiteDatabase database = this.getWritableDatabase();
-        String command = "DROP TABLE " + DATABASE_NAME + "." + tableName;
+        String command = "DROP TABLE " + tableName;
         database.execSQL(command);
     }
 
@@ -82,6 +82,20 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
         //Insert it into the database, this will also return the ID number, in case we decide to use it
         long ID = database.insert(BUDGET_TABLE_NAME,null,values);
         return ID;
+    }
+
+    public void updateExpense(long ID, expense theExpense, String budgetName)
+    {
+        SQLiteDatabase database = this.getWritableDatabase();
+        //Builds a string to update an entry in an expense table to a corresponding budget
+        //It is also important to note that this methods updates ALL of the fields corresonding to Expense except of course the ID
+        String command = "UPDATE " +  budgetName +
+                " SET " + COLUMN_EXPENSE_NAME + " = '" + theExpense.getName() + "'," +
+                COLUMN_EXPENSE_COST + " = " + theExpense.getCurrentExpense() + ","
+                + COLUMN_EXPENSE_MAX_COST + " = " + theExpense.getCurrentExpense() + ","
+                + COLUMN_EXPENSE_PRIORITY + " = " + theExpense.getPriority() +
+                " WHERE " + COLUMN_ID + " = " + ID;
+        database.execSQL(command);
     }
 
     //Adds an expense to the corresponding expense
@@ -107,13 +121,19 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
     //Removes a listed budget, if it exists
     public void removeBudget(long ID)
     {
-
+        SQLiteDatabase database = this.getWritableDatabase();
+        //Thi builds a delete command to be executed
+        String command = "DELETE FROM " + BUDGET_TABLE_NAME + " WHERE " + COLUMN_ID + " = " + ID;
+        database.execSQL(command);
     }
 
     //Removes a listed expense, if it exists
-    public void removeExpense(long ID)
+    public void removeExpense(long ID, String tableName)
     {
-
+        SQLiteDatabase database = this.getWritableDatabase();
+        //This builds a delete command to be executed
+        String command = "DELETE FROM " + tableName + " WHERE " + COLUMN_ID + " = " + ID;
+        database.execSQL(command);
     }
 
     //Call this when done with working with the database

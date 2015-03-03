@@ -9,11 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+//This activity is used with new_budget_layout
 
 public class newBudgetActivity extends ActionBarActivity {
     private String newBudgetName;
     private double budgetLimit;
-    private Button cancelButton;
     private Button addButton;
     private EditText newBudgetNameTextEdit;
     private EditText newBudgetTotalTextEdit;
@@ -29,7 +29,6 @@ public class newBudgetActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_budget_layout);
         //Creates buttons
-        cancelButton = (Button) findViewById(R.id.cancelButton);
         addButton = (Button) findViewById(R.id.addButton);
         newBudgetNameTextEdit = (EditText) findViewById(R.id.newBudgetNameTextEdit);
         newBudgetTotalTextEdit = (EditText) findViewById(R.id.totalBudgetTextEdit);

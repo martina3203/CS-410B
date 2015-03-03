@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.lang.String;
 import java.util.ArrayList;
 
+//This activity is used with select_budget
 
 public class mainActivity extends ActionBarActivity {
 

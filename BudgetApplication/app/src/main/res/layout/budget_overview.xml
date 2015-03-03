@@ -10,7 +10,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Budget Name"
         android:id="@+id/titleTextView"
-        android:layout_weight="0.02" />
+        android:layout_weight="0.02"
+        android:textSize="30sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -31,8 +32,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="34dp"
-        android:text="Add Custom Category"
-        android:id="@+id/addCustomExpenseButton"
+        android:text="Add New Expense"
+        android:id="@+id/addNewExpenseButton"
         android:textSize="@dimen/abc_text_size_caption_material"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp" />
@@ -41,7 +42,8 @@
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="@android:color/darker_gray"
-        android:layout_gravity="top" />
+        android:layout_gravity="top"
+        android:id="@+id/TextView" />
 
     <ProgressBar
         style="@android:style/Widget.ProgressBar.Horizontal"

@@ -36,6 +36,7 @@ public class mainActivity extends ActionBarActivity {
         setContentView(R.layout.select_budget);
         //Sets up database material
         theDatabase = new DatabaseAccess(getApplicationContext());
+        theDatabase.open();
         //Load Budgets
         test();
         budgetAddButton = (Button) findViewById(R.id.budgetAddButton);
@@ -48,6 +49,12 @@ public class mainActivity extends ActionBarActivity {
         //budgetListView.setAdapter(theAdaptor);
     }
 
+    @Override
+    protected void onPause()
+    {
+        theDatabase.closeDatabase();
+    }
+    
     public void test()
     {
         //This is used to my database testing, otherwise ignore and

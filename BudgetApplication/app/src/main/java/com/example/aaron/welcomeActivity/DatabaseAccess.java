@@ -16,7 +16,6 @@ public class DatabaseAccess {
     DatabaseAccess(Context context)
     {
         theHelper = new budgetDatabaseHelper(context);
-        open();
     }
 
     public void open()

@@ -29,9 +29,9 @@ public class DatabaseAccess {
         //This is the string for execution via SQL.execSQL
         String command = "create table " + newTableName +
                 "(" + theHelper.COLUMN_ID + " integer primary key autoincrement, " +
-                theHelper.COLUMN_EXPENSE_NAME + "text, " + theHelper.COLUMN_EXPENSE_PRIORITY + "integer," +
-                theHelper.COLUMN_EXPENSE_COST + "real, " + theHelper.COLUMN_EXPENSE_MAX_COST + "real)";
-        Log.d("No", "table created");
+                theHelper.COLUMN_EXPENSE_NAME + " text, " + theHelper.COLUMN_EXPENSE_PRIORITY + " integer," +
+                theHelper.COLUMN_EXPENSE_COST + " real, " + theHelper.COLUMN_EXPENSE_MAX_COST + " real)";
+        Log.d("Expense Table Created: ", newTableName);
         theDatabase.execSQL(command);
     }
 
@@ -111,6 +111,7 @@ public class DatabaseAccess {
 
         budget newBudget = new budget(budgetName,budgetLimit);
         newBudget.setIDNumber(ID);
+        theCursor.close();
         return newBudget;
     }
 

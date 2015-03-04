@@ -60,6 +60,8 @@ public class mainActivity extends ActionBarActivity {
         long no = newTurd.getIDNumber();
         Log.d("Yes, the ID is:", Long.toString(yes));
         Log.d("Yes, the ID is not: ", Long.toString(no));
+        //newBudget = theDatabase.findBudget(yes);
+        //Log.d(newBudget.getName(),null);
     }
 
     @Override

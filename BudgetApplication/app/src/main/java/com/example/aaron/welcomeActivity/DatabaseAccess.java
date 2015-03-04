@@ -105,13 +105,22 @@ public class DatabaseAccess {
     public budget findBudget(long ID)
     {
         //Builds a cursor from the query where we find it by the ID number
-        Cursor theCursor = theDatabase.query(theHelper.BUDGET_TABLE_NAME,null,theHelper.COLUMN_ID + " = " + ID,null,null,null,null);
-        String budgetName = theCursor.getString(1);
-        Double budgetLimit = theCursor.getDouble(2);
+        Cursor theCursor = theDatabase.query(theHelper.BUDGET_TABLE_NAME,null,theHelper.COLUMN_ID + " = " + ID ,null,null,null,null);
+        theCursor.moveToFirst();
+        budget newBudget = new budget("FAILURE10101",0);
+        if (theCursor != null) {
+            String budgetName = theCursor.getString(1);
+            Double budgetLimit = theCursor.getDouble(2);
 
-        budget newBudget = new budget(budgetName,budgetLimit);
-        newBudget.setIDNumber(ID);
-        theCursor.close();
+            newBudget = new budget(budgetName, budgetLimit);
+            newBudget.setIDNumber(ID);
+            theCursor.close();
+            return newBudget;
+        }
+        else
+        {
+            Log.d("Budget not found", null);
+        }
         return newBudget;
     }
 
@@ -119,6 +128,7 @@ public class DatabaseAccess {
     {
         //Builds a cursor from the query where we find it by the ID number and the appropriate table
         Cursor theCursor = theDatabase.query(budgetName,null,theHelper.COLUMN_ID + " = " + ID,null,null,null,null);
+        theCursor.moveToFirst();
         String expenseName = theCursor.getString(1);
         int expensePriority = theCursor.getInt(2);
         float expenseTotal = theCursor.getFloat(3);

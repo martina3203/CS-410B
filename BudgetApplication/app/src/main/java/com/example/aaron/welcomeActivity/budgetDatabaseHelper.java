@@ -52,6 +52,7 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         //This will handle if we want to delete the database and upgrade accordingly
+
     }
 
 }

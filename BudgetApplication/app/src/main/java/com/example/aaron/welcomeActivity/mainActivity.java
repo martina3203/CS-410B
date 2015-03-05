@@ -59,16 +59,12 @@ public class mainActivity extends ActionBarActivity {
     {
         //This is used to my database testing, otherwise ignore and
         //from method OnCreate as you see fit
-        budget newBudget = new budget("Poop",100);
-        budget newTurd = new budget("NotPoop",100);
-        newBudget.setIDNumber(theDatabase.insertBudget(newBudget));
-        newTurd.setIDNumber(theDatabase.insertBudget(newTurd));
-        long yes = newBudget.getIDNumber();
-        long no = newTurd.getIDNumber();
-        Log.d("Yes, the ID is:", Long.toString(yes));
-        Log.d("Yes, the ID is not: ", Long.toString(no));
-        newBudget = theDatabase.findBudget(yes);
-        Log.d(newBudget.getName(),"yes");
+        ArrayList<budget> theList = theDatabase.findAllBudgets();
+        for (int i = 0; i < theList.size(); i++)
+        {
+            budget thisBudget = theList.get(i);
+            Log.d("Budget Name: ",thisBudget.getName());
+        }
         theDatabase.closeDatabase();
     }
 

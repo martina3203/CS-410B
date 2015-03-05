@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Aaron on 3/3/2015.
  */
@@ -122,6 +125,34 @@ public class DatabaseAccess {
             Log.d("Budget not found", null);
         }
         return newBudget;
+    }
+
+    public ArrayList<budget> findAllBudgets()
+    {
+        //Builds a cursor that is at the top of the budget database
+        ArrayList<budget> budgetList = new ArrayList<budget>();
+        Cursor theCursor = theDatabase.query(theHelper.BUDGET_TABLE_NAME,null,null,null,null,null,null);
+        theCursor.moveToFirst();
+        //Traverse through each row
+        while (theCursor.moveToNext())
+        {
+            //Grab material
+            long budgetID = theCursor.getInt(0);
+            String budgetName = theCursor.getString(1);
+            Double budgetLimit = theCursor.getDouble(2);
+
+            //Create budget
+            budget newBudget = new budget(budgetName,budgetLimit);
+            newBudget.setIDNumber(budgetID);
+            //Add to list
+            budgetList.add(newBudget);
+        }
+        //Close the cursor
+        if ((theCursor != null) && (theCursor.isClosed() == true))
+        {
+            theCursor.close();
+        }
+        return budgetList;
     }
 
     public expense findExpense(long ID, String budgetName)

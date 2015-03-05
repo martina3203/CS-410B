@@ -52,6 +52,7 @@ public class mainActivity extends ActionBarActivity {
     @Override
     protected void onPause()
     {
+        super.onPause();
         theDatabase.closeDatabase();
     }
     
@@ -59,13 +60,7 @@ public class mainActivity extends ActionBarActivity {
     {
         //This is used to my database testing, otherwise ignore and
         //from method OnCreate as you see fit
-        ArrayList<budget> theList = theDatabase.findAllBudgets();
-        for (int i = 0; i < theList.size(); i++)
-        {
-            budget thisBudget = theList.get(i);
-            Log.d("Budget Name: ",thisBudget.getName());
-        }
-        theDatabase.closeDatabase();
+
     }
 
     @Override

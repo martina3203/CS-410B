@@ -26,23 +26,6 @@ public class DatabaseAccess {
         theDatabase = theHelper.getWritableDatabase();
     }
 
-    //Adds a subtable of expenses that corresponds to a budget
-    public void addExpenseTable(String newTableName) {
-        //This is the string for execution via SQL.execSQL
-        String command = "create table " + newTableName +
-                "(" + theHelper.COLUMN_ID + " integer primary key autoincrement, " +
-                theHelper.COLUMN_EXPENSE_NAME + " text, " + theHelper.COLUMN_EXPENSE_PRIORITY + " integer," +
-                theHelper.COLUMN_EXPENSE_COST + " real, " + theHelper.COLUMN_EXPENSE_MAX_COST + " real)";
-        Log.d("Expense Table Created: ", newTableName);
-        theDatabase.execSQL(command);
-    }
-
-    //Removes an existing subtable of the expenses that corresponds to a budget
-    public void removeExpenseTable(String tableName) {
-        String command = "DROP TABLE " + tableName;
-        theDatabase.execSQL(command);
-    }
-
     //Adds a budget to the table, returns ID number
     public long insertBudget(budget theBudget)
     {
@@ -55,37 +38,14 @@ public class DatabaseAccess {
         return ID;
     }
 
-    //Adds an expense to the corresponding expense
-    public long insertExpense(expense theExpense, String tableName)
+    //Updates a budget entry in the database
+    public void updateBudget(budget updatedBudget)
     {
-        //Build a Content Values class that contains the values of this budget
-        ContentValues values = new ContentValues();
-        values.put(theHelper.COLUMN_EXPENSE_NAME, theExpense.getName());
-        values.put(theHelper.COLUMN_EXPENSE_COST, theExpense.getCurrentExpense());
-        values.put(theHelper.COLUMN_EXPENSE_MAX_COST, theExpense.getMaxExpense());
-        values.put(theHelper.COLUMN_EXPENSE_PRIORITY, theExpense.getPriority());
-        /*
-        Equivalent SQL statement
-        String command = "INSERT INTO " + tableName +
-                COLUMN_EXPENSE_NAME +"," + COLUMN_EXPENSE_COST + "," + COLUMN_EXPENSE_MAX_COST + "," + COLUMN_EXPENSE_PRIORITY + ")" +
-                "VALUES (" + theExpense.getName() + "," + theExpense.getCurrentExpense() + "," + theExpense.getMaxExpense() + "," + theExpense.getPriority() + ")";
-        */
-        long ID = theDatabase.insert(tableName,null,values);
-        return ID;
-    }
-
-    public void updateExpense(long ID, expense theExpense, String budgetName)
-    {
-        SQLiteDatabase database = theHelper.getWritableDatabase();
-        //Builds a string to update an entry in an expense table to a corresponding budget
-        //It is also important to note that this methods updates ALL of the fields corresponding to Expense except of course the ID
-        String command = "UPDATE " +  budgetName +
-                " SET " + theHelper.COLUMN_EXPENSE_NAME + " = '" + theExpense.getName() + "'," +
-                theHelper.COLUMN_EXPENSE_COST + " = " + theExpense.getCurrentExpense() + ","
-                + theHelper.COLUMN_EXPENSE_MAX_COST + " = " + theExpense.getCurrentExpense() + ","
-                + theHelper.COLUMN_EXPENSE_PRIORITY + " = " + theExpense.getPriority() +
-                " WHERE " + theHelper.COLUMN_ID + " = " + ID;
-        database.execSQL(command);
+        String command = "UPDATE " +  theHelper.BUDGET_TABLE_NAME +
+                " SET " + theHelper.COLUMN_BUDGET_NAME + " = '" + updatedBudget.getName() + "'," +
+                theHelper.COLUMN_BUDGET_LIMIT + " = " + updatedBudget.getMaxValue() +
+                " WHERE " + theHelper.COLUMN_ID + " = " + updatedBudget.getIDNumber();
+        theDatabase.execSQL(command);
     }
 
     //Removes a listed budget, if it exists
@@ -96,14 +56,7 @@ public class DatabaseAccess {
         theDatabase.execSQL(command);
     }
 
-    //Removes a listed expense, if it exists
-    public void removeExpense(long ID, String tableName)
-    {
-        //This builds a delete command to be executed
-        String command = "DELETE FROM " + tableName + " WHERE " + theHelper.COLUMN_ID + " = " + ID;
-        theDatabase.execSQL(command);
-    }
-
+    //Finds a specific budget in the database
     public budget findBudget(long ID)
     {
         //Builds a cursor from the query where we find it by the ID number
@@ -127,6 +80,7 @@ public class DatabaseAccess {
         return newBudget;
     }
 
+    //Returns a list of budgets in the database
     public ArrayList<budget> findAllBudgets()
     {
         //Builds a cursor that is at the top of the budget database
@@ -153,6 +107,63 @@ public class DatabaseAccess {
             theCursor.close();
         }
         return budgetList;
+    }
+
+    //Adds an expense to the corresponding expense
+    public long insertExpense(expense theExpense, String tableName)
+    {
+        //Build a Content Values class that contains the values of this budget
+        ContentValues values = new ContentValues();
+        values.put(theHelper.COLUMN_EXPENSE_NAME, theExpense.getName());
+        values.put(theHelper.COLUMN_EXPENSE_COST, theExpense.getCurrentExpense());
+        values.put(theHelper.COLUMN_EXPENSE_MAX_COST, theExpense.getMaxExpense());
+        values.put(theHelper.COLUMN_EXPENSE_PRIORITY, theExpense.getPriority());
+        /*
+        Equivalent SQL statement
+        String command = "INSERT INTO " + tableName +
+                COLUMN_EXPENSE_NAME +"," + COLUMN_EXPENSE_COST + "," + COLUMN_EXPENSE_MAX_COST + "," + COLUMN_EXPENSE_PRIORITY + ")" +
+                "VALUES (" + theExpense.getName() + "," + theExpense.getCurrentExpense() + "," + theExpense.getMaxExpense() + "," + theExpense.getPriority() + ")";
+        */
+        long ID = theDatabase.insert(tableName,null,values);
+        return ID;
+    }
+
+    public void updateExpense(long ID, expense theExpense, String budgetName)
+    {
+        //Builds a string to update an entry in an expense table to a corresponding budget
+        //It is also important to note that this methods updates ALL of the fields corresponding to Expense except of course the ID
+        String command = "UPDATE " +  budgetName +
+                " SET " + theHelper.COLUMN_EXPENSE_NAME + " = '" + theExpense.getName() + "'," +
+                theHelper.COLUMN_EXPENSE_COST + " = " + theExpense.getCurrentExpense() + ","
+                + theHelper.COLUMN_EXPENSE_MAX_COST + " = " + theExpense.getCurrentExpense() + ","
+                + theHelper.COLUMN_EXPENSE_PRIORITY + " = " + theExpense.getPriority() +
+                " WHERE " + theHelper.COLUMN_ID + " = " + ID;
+        theDatabase.execSQL(command);
+    }
+
+    //Adds a subtable of expenses that corresponds to a budget
+    public void addExpenseTable(String newTableName) {
+        //This is the string for execution via SQL.execSQL
+        String command = "create table " + newTableName +
+                "(" + theHelper.COLUMN_ID + " integer primary key autoincrement, " +
+                theHelper.COLUMN_EXPENSE_NAME + " text, " + theHelper.COLUMN_EXPENSE_PRIORITY + " integer," +
+                theHelper.COLUMN_EXPENSE_COST + " real, " + theHelper.COLUMN_EXPENSE_MAX_COST + " real)";
+        Log.d("Expense Table Created: ", newTableName);
+        theDatabase.execSQL(command);
+    }
+
+    //Removes an existing subtable of the expenses that corresponds to a budget
+    public void removeExpenseTable(String tableName) {
+        String command = "DROP TABLE " + tableName;
+        theDatabase.execSQL(command);
+    }
+
+    //Removes a listed expense, if it exists
+    public void removeExpense(long ID, String tableName)
+    {
+        //This builds a delete command to be executed
+        String command = "DELETE FROM " + tableName + " WHERE " + theHelper.COLUMN_ID + " = " + ID;
+        theDatabase.execSQL(command);
     }
 
     public expense findExpense(long ID, String budgetName)

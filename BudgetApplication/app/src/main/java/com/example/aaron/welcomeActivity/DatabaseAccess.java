@@ -51,7 +51,7 @@ public class DatabaseAccess {
     //Removes a listed budget, if it exists
     public void removeBudget(long ID)
     {
-        //Thi builds a delete command to be executed
+        //This builds a delete command to be executed
         String command = "DELETE FROM " + theHelper.BUDGET_TABLE_NAME + " WHERE " + theHelper.COLUMN_ID + " = " + ID;
         theDatabase.execSQL(command);
     }

@@ -9,9 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-/**
- * Created by Jacob on 3/4/2015.
- */
+//this activity is used with new_item_layout
+
 public class newItemActivity extends ActionBarActivity {
 
     private EditText newItemNameTextEdit;
@@ -30,6 +29,7 @@ public class newItemActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_item_layout);
+        //Creates edit texts and buttons
         newItemNameTextEdit = (EditText) findViewById(R.id.newNameEditText);
         newItemPriorityTextEdit = (EditText) findViewById(R.id.newPriorityEditText);
         newItemCategoryTextEdit = (EditText) findViewById(R.id.newCategoryEditText);
@@ -37,4 +37,32 @@ public class newItemActivity extends ActionBarActivity {
         newItemMaxCostTextEdit = (EditText) findViewById(R.id.newMaxCostEditText);
         addItemButton = (Button) findViewById(R.id.addItemButton);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_budget, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    //called when add item button is clicked
+    public void onAddItemClick(View view){
+
+    }
 }
+

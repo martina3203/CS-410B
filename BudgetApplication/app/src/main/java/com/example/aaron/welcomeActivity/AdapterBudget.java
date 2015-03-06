@@ -57,12 +57,21 @@ public class AdapterBudget extends ArrayAdapter<budget>
         final ViewHolder holder;
         try{
             if(convertView == null){
-                vi = inflater.inflate(R.layout.yourlayout, null);
+                vi = inflater.inflate(R.layout.budget_overview, null);
                 holder = new ViewHolder();
 
-                holder.display_name = (TextView) vi.findViewById(R.id.display_name);
-                holder.display_number = (TextView) vi.findViewById(R.id.display_number);
-            }catch (Exception e){
+                holder.display_name = (TextView) vi.findViewById(R.id.budgetListView);
+                holder.display_number = (TextView) vi.findViewById(R.id.budgetListView);
+            }
+            else {
+                holder = (ViewHolder) vi.getTag();
+            }
+
+            holder.display_name.setText(lProducts.get(position).name);
+            holder.display_number.setText(lProducts.get(position).number);
+
+
+            }catch (Exception i) {
 
             }
             return vi;

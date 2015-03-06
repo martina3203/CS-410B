@@ -2,6 +2,7 @@ package com.example.aaron.welcomeActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 import java.io.Serializable;
 import java.lang.String;
@@ -24,6 +26,7 @@ public class mainActivity extends ActionBarActivity {
     private ListView budgetListView;
     private ArrayList budgetList;
     private DatabaseAccess theDatabase;
+
 
     //List components
     private ArrayList<String> listItems=new ArrayList<String>();
@@ -103,6 +106,25 @@ public class mainActivity extends ActionBarActivity {
             }
             return;
         }
+    }
+
+    private void populateListViewFromDB()
+    {
+        Cursor cursor = (Cursor) theDatabase.findAllBudgets();
+
+        //Setup mapper from cursor to view fields
+        String[] fromFieldNames = new String[]
+                {};
+
+        //Create adapter to map columns of the DB onto elements in the UI.
+        SimpleCursorAdapter myCursorAdapter =
+                new SimpleCursorAdapter(
+
+                );
+
+        //set the adapter for the list view
+        budgetListView = (ListView) findViewById(R.id.budgetListView);
+        budgetListView.setAdapter(myCursorAdapter);
     }
 
 }

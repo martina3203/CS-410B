@@ -128,7 +128,7 @@ public class DatabaseAccess {
         return ID;
     }
 
-    public void updateExpense(long ID, expense theExpense, String budgetName)
+    public void updateExpense(expense theExpense, String budgetName)
     {
         //Builds a string to update an entry in an expense table to a corresponding budget
         //It is also important to note that this methods updates ALL of the fields corresponding to Expense except of course the ID
@@ -137,11 +137,12 @@ public class DatabaseAccess {
                 theHelper.COLUMN_EXPENSE_COST + " = " + theExpense.getCurrentExpense() + ","
                 + theHelper.COLUMN_EXPENSE_MAX_COST + " = " + theExpense.getCurrentExpense() + ","
                 + theHelper.COLUMN_EXPENSE_PRIORITY + " = " + theExpense.getPriority() +
-                " WHERE " + theHelper.COLUMN_ID + " = " + ID;
+                " WHERE " + theHelper.COLUMN_ID + " = " + theExpense.getIDNumber();
         theDatabase.execSQL(command);
     }
 
     //Adds a subtable of expenses that corresponds to a budget
+    //This should be called on the creation of a new budget
     public void addExpenseTable(String newTableName) {
         //This is the string for execution via SQL.execSQL
         String command = "create table " + newTableName +
@@ -166,6 +167,7 @@ public class DatabaseAccess {
         theDatabase.execSQL(command);
     }
 
+    //Finds and returns an expense that corresponds to that budget and ID
     public expense findExpense(long ID, String budgetName)
     {
         //Builds a cursor from the query where we find it by the ID number and the appropriate table
@@ -180,6 +182,37 @@ public class DatabaseAccess {
         newExpense.setPriority(expensePriority);
         newExpense.setIDNumber(ID);
         return newExpense;
+    }
+
+    //Returns a list of expenses for a corresponding budget in the database
+    public ArrayList<expense> findAllExpenses(String tableName)
+    {
+        //Builds a cursor that is at the top of the expense table in the database
+        ArrayList<expense> expenseList = new ArrayList<expense>();
+        Cursor theCursor = theDatabase.query(tableName,null,null,null,null,null,null);
+        theCursor.moveToFirst();
+        //Traverse through each row
+        while (theCursor.moveToNext())
+        {
+            //Grab material
+            long expenseID = theCursor.getInt(0);
+            String expenseName = theCursor.getString(1);
+            int expensePriority = theCursor.getInt(2);
+            float expenseCost = theCursor.getFloat(3);
+            float expenseMaxCost = theCursor.getFloat(4);
+
+            //Create budget
+            expense newExpense = new expense(expenseName,expenseCost,expenseMaxCost);
+            newExpense.setIDNumber(expenseID);
+            //Add to list
+            expenseList.add(newExpense);
+        }
+        //Close the cursor
+        if ((theCursor != null) && (theCursor.isClosed() == true))
+        {
+            theCursor.close();
+        }
+        return expenseList;
     }
 
     //Call this when done with working with the database

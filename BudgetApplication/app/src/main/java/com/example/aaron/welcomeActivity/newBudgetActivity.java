@@ -63,11 +63,4 @@ public class newBudgetActivity extends ActionBarActivity {
         setResult(RESULT_OK,returnedIntent);
         this.finish();
     }
-
-    //Executes when cancelButton is clicked
-    public void onCancelClick(View view)
-    {
-        //Finish activity and do nothing
-        this.finish();
-    }
 }

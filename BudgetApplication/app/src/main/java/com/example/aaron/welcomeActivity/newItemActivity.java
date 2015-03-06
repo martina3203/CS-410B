@@ -13,6 +13,11 @@ import android.widget.EditText;
 
 public class newItemActivity extends ActionBarActivity {
 
+    private String newItemName;
+    private double currentCost;
+    private double itemLimit;
+    private int priority;
+    private String itemCategory;
     private EditText newItemNameTextEdit;
     private EditText newItemPriorityTextEdit;
     private EditText newItemCategoryTextEdit;
@@ -22,7 +27,11 @@ public class newItemActivity extends ActionBarActivity {
 
     //Constructor
     public newItemActivity(){
-
+        newItemName = "";
+        currentCost = 0.0;
+        itemLimit = 0.0;
+        priority = 0;
+        itemCategory = "";
     }
 
     @Override
@@ -62,6 +71,23 @@ public class newItemActivity extends ActionBarActivity {
 
     //called when add item button is clicked
     public void onAddItemClick(View view){
+        newItemName = newItemNameTextEdit.toString();
+        itemCategory = newItemCategoryTextEdit.toString();
+        String temp = newItemCurrentCostTextEdit.toString();
+        currentCost = Double.parseDouble(temp);
+        temp = newItemMaxCostTextEdit.toString();
+        itemLimit = Double.parseDouble(temp);
+        temp = newItemPriorityTextEdit.toString();
+        priority = Integer.parseInt(temp);
+
+        //Create new expense object
+
+
+        //Finish Activity and return results
+        Intent returnedIntent = this.getIntent();
+        //Says it's ok and returns the information upon finish
+        setResult(RESULT_OK,returnedIntent);
+        this.finish();
 
     }
 }

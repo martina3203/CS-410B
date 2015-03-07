@@ -8,9 +8,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.lang.String;
@@ -54,6 +57,7 @@ public class mainActivity extends ActionBarActivity {
                 android.R.layout.simple_list_item_1, listItems);
 
         budgetListView.setAdapter(theAdapter);
+        registerClick();
     }
 
     @Override
@@ -70,6 +74,7 @@ public class mainActivity extends ActionBarActivity {
                 android.R.layout.simple_list_item_1, listItems);
 
         budgetListView.setAdapter(theAdapter);
+        registerClick();
     }
 
     @Override
@@ -139,6 +144,22 @@ public class mainActivity extends ActionBarActivity {
             }
             return;
         }
+    }
+
+    //Used to register when user clicks on list item
+    private void registerClick() {
+        ListView budgetListView = (ListView) findViewById(R.id.budgetListView);
+        budgetListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+                TextView textView = (TextView) viewClicked;
+                String message = "You clicked # " + position + " which is string: " + textView.getText().toString();
+
+                Toast.makeText(mainActivity.this, message, Toast.LENGTH_SHORT).show();
+                System.out.println(message);
+            }
+        });
+
     }
 
 }

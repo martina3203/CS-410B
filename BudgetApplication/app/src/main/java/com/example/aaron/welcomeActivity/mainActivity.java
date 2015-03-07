@@ -51,9 +51,10 @@ public class mainActivity extends ActionBarActivity {
         //close database when you're done
         theDatabase.closeDatabase();
 
-
         theAdapter = new ArrayAdapter<budget>(this,
                 android.R.layout.simple_list_item_1, listItems);
+        theAdapter.notifyDataSetChanged();
+        budgetListView.invalidateViews();
 
         //Updates list with budgets
         //theAdaptor = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listItems);
@@ -76,6 +77,13 @@ public class mainActivity extends ActionBarActivity {
         newBudget.setIDNumber(theDatabase.insertBudget(newBudget));
         newTurd.setIDNumber(theDatabase.insertBudget(newTurd));
         newCrap.setIDNumber(theDatabase.insertBudget(newCrap));
+        long yes = newBudget.getIDNumber();
+        long no = newTurd.getIDNumber();
+        Log.d("Yes, the ID is:", Long.toString(yes));
+        Log.d("Yes, the ID is not: ", Long.toString(no));
+        newBudget = theDatabase.findBudget(yes);
+        Log.d(newBudget.getName(),"yes");
+
         theDatabase.closeDatabase();
 
     }

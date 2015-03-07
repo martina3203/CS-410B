@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.util.Log;
 
 //This activity is used with new_budget_layout
 
@@ -29,11 +30,12 @@ public class newBudgetActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_budget_layout);
+        theDatabase = new DatabaseAccess(getApplicationContext());
         //Creates buttons
         addButton = (Button) findViewById(R.id.addButton);
         newBudgetNameTextEdit = (EditText) findViewById(R.id.newBudgetNameTextEdit);
         newBudgetTotalTextEdit = (EditText) findViewById(R.id.totalBudgetTextEdit);
-        theDatabase = new DatabaseAccess(getApplicationContext());
+        System.out.println("Here1");
     }
 
     @Override
@@ -51,9 +53,10 @@ public class newBudgetActivity extends ActionBarActivity {
     //Executes when addButton is clicked
     public void onAddBudgetClick(View view)
     {
+        System.out.println("Here2");
         //Gather Field Information
-        newBudgetName = newBudgetNameTextEdit.toString();
-        String temp = newBudgetTotalTextEdit.toString();
+        newBudgetName = newBudgetNameTextEdit.getText().toString();
+        String temp = newBudgetTotalTextEdit.getText().toString();
         budgetLimit = Double.parseDouble(temp);
 
         //Create new Budget object and add to database
@@ -61,7 +64,9 @@ public class newBudgetActivity extends ActionBarActivity {
         budget tempBudget = new budget(newBudgetName, budgetLimit);
         tempBudget.setIDNumber(theDatabase.insertBudget(tempBudget));
         theDatabase.closeDatabase();
-        System.out.println("Here1");
+        System.out.println("Here3");
+        long stuff = tempBudget.getIDNumber();
+        Log.d(tempBudget.getName(), Long.toString(stuff));
 
         //Finish Activity and return results
         Intent returnedIntent = this.getIntent();

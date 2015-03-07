@@ -17,6 +17,7 @@ public class newBudgetActivity extends ActionBarActivity {
     private Button addButton;
     private EditText newBudgetNameTextEdit;
     private EditText newBudgetTotalTextEdit;
+    private DatabaseAccess theDatabase;
 
     //Typical Constructor
     public newBudgetActivity(){
@@ -32,6 +33,7 @@ public class newBudgetActivity extends ActionBarActivity {
         addButton = (Button) findViewById(R.id.addButton);
         newBudgetNameTextEdit = (EditText) findViewById(R.id.newBudgetNameTextEdit);
         newBudgetTotalTextEdit = (EditText) findViewById(R.id.totalBudgetTextEdit);
+        theDatabase = new DatabaseAccess(getApplicationContext());
     }
 
     @Override
@@ -50,12 +52,16 @@ public class newBudgetActivity extends ActionBarActivity {
     public void onAddBudgetClick(View view)
     {
         //Gather Field Information
-        String newBudgetName = newBudgetNameTextEdit.toString();
+        newBudgetName = newBudgetNameTextEdit.toString();
         String temp = newBudgetTotalTextEdit.toString();
-        //Float newBudgetTotal = Float.parseFloat(temp);
+        budgetLimit = Double.parseDouble(temp);
 
-        //Create new Budget object
-
+        //Create new Budget object and add to database
+        theDatabase.open();
+        budget tempBudget = new budget(newBudgetName, budgetLimit);
+        tempBudget.setIDNumber(theDatabase.insertBudget(tempBudget));
+        theDatabase.closeDatabase();
+        System.out.println("Here1");
 
         //Finish Activity and return results
         Intent returnedIntent = this.getIntent();

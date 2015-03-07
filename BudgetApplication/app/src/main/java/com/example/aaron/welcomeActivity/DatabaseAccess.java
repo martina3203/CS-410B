@@ -88,7 +88,8 @@ public class DatabaseAccess {
         Cursor theCursor = theDatabase.query(theHelper.BUDGET_TABLE_NAME,null,null,null,null,null,null);
         theCursor.moveToFirst();
         //Traverse through each row
-        while (theCursor.moveToNext())
+
+        while (!theCursor.isAfterLast())
         {
             //Grab material
             long budgetID = theCursor.getInt(0);
@@ -100,6 +101,7 @@ public class DatabaseAccess {
             newBudget.setIDNumber(budgetID);
             //Add to list
             budgetList.add(newBudget);
+            theCursor.moveToNext();
         }
         //Close the cursor
         if ((theCursor != null) && (theCursor.isClosed() == true))

@@ -49,5 +49,10 @@ public class budget implements Serializable {
     }
 
     long getIDNumber() {return IDNumber; }
+
+    //This is needed to display the budget as a String on a listView
+    public String toString() {
+        return name;
+    }
 }
 

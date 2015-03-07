@@ -15,6 +15,7 @@ import android.widget.ListView;
 import java.io.Serializable;
 import java.lang.String;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 //This activity is used with select_budget
 
@@ -26,8 +27,8 @@ public class mainActivity extends ActionBarActivity {
     private DatabaseAccess theDatabase;
 
     //List components
-    private ArrayList<String> listItems=new ArrayList<String>();
-    private ArrayAdapter<String> theAdaptor;
+    private ArrayList<budget> listItems=new ArrayList<budget>();
+    private ArrayAdapter<budget> theAdapter;
 
 
     @Override
@@ -42,11 +43,21 @@ public class mainActivity extends ActionBarActivity {
         budgetAddButton = (Button) findViewById(R.id.budgetAddButton);
         budgetListView = (ListView) findViewById(R.id.budgetListView);
         //Creates Array and will Load any saved information
-        budgetList = new ArrayList();
+
+        //opening database
+        theDatabase.open();
+        //filling listItems with budgets from database
+        listItems = theDatabase.findAllBudgets();
+        //close database when you're done
+        theDatabase.closeDatabase();
+
+
+        theAdapter = new ArrayAdapter<budget>(this,
+                android.R.layout.simple_list_item_1, listItems);
 
         //Updates list with budgets
         //theAdaptor = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listItems);
-        //budgetListView.setAdapter(theAdaptor);
+        budgetListView.setAdapter(theAdapter);
     }
 
     @Override
@@ -58,8 +69,14 @@ public class mainActivity extends ActionBarActivity {
     
     public void test()
     {
-        //This is used to my database testing, otherwise ignore and
-        //from method OnCreate as you see fit
+        //Makes new budgets to add to database
+        budget newBudget = new budget("Poop",100);
+        budget newTurd = new budget("NotPoop",100);
+        budget newCrap = new budget("TotallyPoop", 100);
+        newBudget.setIDNumber(theDatabase.insertBudget(newBudget));
+        newTurd.setIDNumber(theDatabase.insertBudget(newTurd));
+        newCrap.setIDNumber(theDatabase.insertBudget(newCrap));
+        theDatabase.closeDatabase();
 
     }
 

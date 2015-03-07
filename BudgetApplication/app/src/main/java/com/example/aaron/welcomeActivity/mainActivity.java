@@ -42,22 +42,33 @@ public class mainActivity extends ActionBarActivity {
         test();
         budgetAddButton = (Button) findViewById(R.id.budgetAddButton);
         budgetListView = (ListView) findViewById(R.id.budgetListView);
-        //Creates Array and will Load any saved information
 
         //opening database
         theDatabase.open();
         //filling listItems with budgets from database
         listItems = theDatabase.findAllBudgets();
         //close database when you're done
-        theDatabase.closeDatabase();
-
-        theAdapter = new ArrayAdapter<budget>(this,
-                android.R.layout.simple_list_item_1, listItems);
-        theAdapter.notifyDataSetChanged();
-        budgetListView.invalidateViews();
 
         //Updates list with budgets
-        //theAdaptor = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listItems);
+        theAdapter = new ArrayAdapter<budget>(this,
+                android.R.layout.simple_list_item_1, listItems);
+
+        budgetListView.setAdapter(theAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        theDatabase.open();
+        //filling listItems with budgets from database
+        listItems = theDatabase.findAllBudgets();
+        //close database when you're done
+
+        //Updates list with budgets
+        theAdapter = new ArrayAdapter<budget>(this,
+                android.R.layout.simple_list_item_1, listItems);
+
         budgetListView.setAdapter(theAdapter);
     }
 

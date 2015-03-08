@@ -114,6 +114,8 @@ public class DatabaseAccess {
     //Adds an expense to the corresponding expense
     public long insertExpense(expense theExpense, String tableName)
     {
+        //Convert to appropriate table name
+        String theTable = convertToSQLTableName(tableName);
         //Build a Content Values class that contains the values of this budget
         ContentValues values = new ContentValues();
         values.put(theHelper.COLUMN_EXPENSE_NAME, theExpense.getName());
@@ -126,7 +128,7 @@ public class DatabaseAccess {
                 COLUMN_EXPENSE_NAME +"," + COLUMN_EXPENSE_COST + "," + COLUMN_EXPENSE_MAX_COST + "," + COLUMN_EXPENSE_PRIORITY + ")" +
                 "VALUES (" + theExpense.getName() + "," + theExpense.getCurrentExpense() + "," + theExpense.getMaxExpense() + "," + theExpense.getPriority() + ")";
         */
-        long ID = theDatabase.insert(tableName,null,values);
+        long ID = theDatabase.insert(theTable,null,values);
         return ID;
     }
 
@@ -134,7 +136,9 @@ public class DatabaseAccess {
     {
         //Builds a string to update an entry in an expense table to a corresponding budget
         //It is also important to note that this methods updates ALL of the fields corresponding to Expense except of course the ID
-        String command = "UPDATE " +  budgetName +
+        //First convert to actual table name
+        String actualBudgetName = convertToSQLTableName(budgetName);
+        String command = "UPDATE " +  actualBudgetName +
                 " SET " + theHelper.COLUMN_EXPENSE_NAME + " = '" + theExpense.getName() + "'," +
                 theHelper.COLUMN_EXPENSE_COST + " = " + theExpense.getCurrentExpense() + ","
                 + theHelper.COLUMN_EXPENSE_MAX_COST + " = " + theExpense.getCurrentExpense() + ","
@@ -147,11 +151,14 @@ public class DatabaseAccess {
     //This should be called on the creation of a new budget
     public void addExpenseTable(String newTableName) {
         //This is the string for execution via SQL.execSQL
-        String command = "create table " + newTableName +
-                "(" + theHelper.COLUMN_ID + " integer primary key autoincrement, " +
+        //Will have to add '_' to the string so that the SQL command doesn't have an error
+        String newTable = convertToSQLTableName(newTableName);
+        //Build create table command
+        String command = "CREATE TABLE " + newTable +
+                " (" + theHelper.COLUMN_ID + " integer primary key autoincrement, " +
                 theHelper.COLUMN_EXPENSE_NAME + " text, " + theHelper.COLUMN_EXPENSE_PRIORITY + " integer," +
                 theHelper.COLUMN_EXPENSE_COST + " real, " + theHelper.COLUMN_EXPENSE_MAX_COST + " real)";
-        Log.d("Expense Table Created: ", newTableName);
+        Log.d("Expense Table Created: ", newTable);
         theDatabase.execSQL(command);
     }
 
@@ -187,10 +194,12 @@ public class DatabaseAccess {
     }
 
     //Returns a list of expenses for a corresponding budget in the database
-    public ArrayList<expense> findAllExpenses(String tableName)
+    public ArrayList<expense> findAllExpenses(String theExpenseTable)
     {
-        //Builds a cursor that is at the top of the expense table in the database
         ArrayList<expense> expenseList = new ArrayList<expense>();
+        //Get the actual table name
+        String tableName = convertToSQLTableName(theExpenseTable);
+        //Build a cursor
         Cursor theCursor = theDatabase.query(tableName,null,null,null,null,null,null);
         theCursor.moveToFirst();
         //Traverse through each row
@@ -215,6 +224,24 @@ public class DatabaseAccess {
             theCursor.close();
         }
         return expenseList;
+    }
+
+    //Replaces ' ' with '_' to have a valid table name
+    public String convertToSQLTableName(String input)
+    {
+        String returnString = "";
+        for (int i = 0; i < input.length(); i++)
+        {
+            if ((input.charAt(i) == ' ') || (input.charAt(i) == '\''))
+            {
+                returnString = returnString + "_";
+            }
+            else
+            {
+                returnString = returnString + input.charAt(i);
+            }
+        }
+        return returnString;
     }
 
     //Call this when done with working with the database

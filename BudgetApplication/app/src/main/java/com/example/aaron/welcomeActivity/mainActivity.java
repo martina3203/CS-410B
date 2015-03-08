@@ -40,9 +40,8 @@ public class mainActivity extends ActionBarActivity {
         setContentView(R.layout.select_budget);
         //Sets up database material
         theDatabase = new DatabaseAccess(getApplicationContext());
-        theDatabase.open();
         //Load Budgets
-        test();
+        //test();
         budgetAddButton = (Button) findViewById(R.id.budgetAddButton);
         budgetListView = (ListView) findViewById(R.id.budgetListView);
 
@@ -51,6 +50,7 @@ public class mainActivity extends ActionBarActivity {
         //filling listItems with budgets from database
         listItems = theDatabase.findAllBudgets();
         //close database when you're done
+        theDatabase.closeDatabase();
 
         //Updates list with budgets
         theAdapter = new ArrayAdapter<budget>(this,
@@ -68,6 +68,7 @@ public class mainActivity extends ActionBarActivity {
         //filling listItems with budgets from database
         listItems = theDatabase.findAllBudgets();
         //close database when you're done
+        theDatabase.closeDatabase();
 
         //Updates list with budgets
         theAdapter = new ArrayAdapter<budget>(this,
@@ -128,7 +129,7 @@ public class mainActivity extends ActionBarActivity {
     //Executes when the budgetAddButton is pressed
     public void onAddBudgetClick(View view) {
         Intent newIntent = new Intent(this, newBudgetActivity.class);
-        //Send to other app
+        //Send to other activity
         startActivityForResult(newIntent,1);
     }
 
@@ -153,10 +154,13 @@ public class mainActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
                 TextView textView = (TextView) viewClicked;
-                String message = "You clicked # " + position + " which is string: " + textView.getText().toString();
+                //needs to be sent to budgetOverviewActivity
+                String selectedBudget = textView.getText().toString();
+                String message = "You clicked # " + position + " which is string: " + selectedBudget;
+                System.out.println(selectedBudget + " is the budget clicked!");
 
+                //Displays message showing which item was clicked
                 Toast.makeText(mainActivity.this, message, Toast.LENGTH_SHORT).show();
-                System.out.println(message);
             }
         });
 

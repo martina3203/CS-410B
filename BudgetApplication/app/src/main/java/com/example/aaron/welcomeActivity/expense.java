@@ -47,5 +47,10 @@ public class expense {
     int getPriority() { return priority; }
 
     long getIDNumber() {return IDNumber; }
+
+    //This is needed to display the expense as a String on a listView
+    public String toString() {
+        return name;
+    }
 }
 

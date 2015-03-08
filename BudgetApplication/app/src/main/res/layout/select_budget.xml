@@ -60,8 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="34dp"
             android:text="Edit Selected Budget..."
-            android:id="@+id/budgetEditButton"
-            android:textSize="@dimen/abc_text_size_caption_material" />
+            android:id="@+id/budgetEditButton" />
 
     </LinearLayout>
 

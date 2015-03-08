@@ -35,7 +35,6 @@ public class newBudgetActivity extends ActionBarActivity {
         addButton = (Button) findViewById(R.id.addButton);
         newBudgetNameTextEdit = (EditText) findViewById(R.id.newBudgetNameTextEdit);
         newBudgetTotalTextEdit = (EditText) findViewById(R.id.totalBudgetTextEdit);
-        System.out.println("Here1");
     }
 
     @Override
@@ -53,7 +52,6 @@ public class newBudgetActivity extends ActionBarActivity {
     //Executes when addButton is clicked
     public void onAddBudgetClick(View view)
     {
-        System.out.println("Here2");
         //Gather Field Information
         newBudgetName = newBudgetNameTextEdit.getText().toString();
         String temp = newBudgetTotalTextEdit.getText().toString();
@@ -63,10 +61,10 @@ public class newBudgetActivity extends ActionBarActivity {
         theDatabase.open();
         budget tempBudget = new budget(newBudgetName, budgetLimit);
         tempBudget.setIDNumber(theDatabase.insertBudget(tempBudget));
+        //Create new expense table
+        theDatabase.addExpenseTable(newBudgetName);
+        //Close database when done
         theDatabase.closeDatabase();
-        System.out.println("Here3");
-        long stuff = tempBudget.getIDNumber();
-        Log.d(tempBudget.getName(), Long.toString(stuff));
 
         //Finish Activity and return results
         Intent returnedIntent = this.getIntent();

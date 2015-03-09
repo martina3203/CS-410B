@@ -48,6 +48,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
         Intent receivedIntent = this.getIntent();
         budget currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
         Log.v("Budget Loaded: ", currentBudget.getName());
+        titleTextView.setText(currentBudget.getName());
 
         theDatabase.closeDatabase();
     }

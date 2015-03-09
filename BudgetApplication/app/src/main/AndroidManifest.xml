@@ -24,6 +24,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.aaron.welcomeActivity.mainActivity" />
         </activity>
+        <activity
+            android:name=".budgetOverviewActivity"
+            android:label="Budget Overview"
+            android:parentActivityName=".mainActivity">
+
+        </activity>
     </application>
 
 </manifest>

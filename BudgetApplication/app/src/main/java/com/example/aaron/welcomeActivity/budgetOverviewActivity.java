@@ -2,6 +2,7 @@ package com.example.aaron.welcomeActivity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +43,11 @@ public class budgetOverviewActivity extends ActionBarActivity {
         moneyAvailableAmountTextView = (TextView) findViewById(R.id.moneyAvailableAmountTextView);
         expenseListView = (ListView) findViewById(R.id.expenseListView);
         progressBar = (ProgressBar) findViewById(R.id.allocationProgressBar);
+
+        //Acquire intent
+        Intent receivedIntent = this.getIntent();
+        budget currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
+        Log.v("Budget Loaded: ", currentBudget.getName());
 
         theDatabase.closeDatabase();
     }

@@ -51,6 +51,9 @@ public class DatabaseAccess {
     //Removes a listed budget, if it exists
     public void removeBudget(long ID)
     {
+        //First we delete the subtable
+        budget targetBudget = findBudget(ID);
+        removeExpenseTable(targetBudget.getName());
         //This builds a delete command to be executed
         String command = "DELETE FROM " + theHelper.BUDGET_TABLE_NAME + " WHERE " + theHelper.COLUMN_ID + " = " + ID;
         theDatabase.execSQL(command);

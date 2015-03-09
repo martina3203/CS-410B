@@ -32,6 +32,7 @@ public class mainActivity extends ActionBarActivity {
     //List components
     private ArrayList<budget> listItems=new ArrayList<budget>();
     private ArrayAdapter<budget> theAdapter;
+    private int selectedItemInListPosition = -1;
 
 
     @Override
@@ -130,21 +131,26 @@ public class mainActivity extends ActionBarActivity {
     public void onAddBudgetClick(View view) {
         Intent newIntent = new Intent(this, newBudgetActivity.class);
         //Send to other activity
-        startActivityForResult(newIntent,1);
+        startActivity(newIntent);
+    }
+
+    //Called when the edit button is pressed a long with an item on the list
+    public void onEditClick(View view)
+    {
+        Intent newIntent = new Intent(this,budgetOverviewActivity.class);
+        //Get the appropriate budget ot pass into the next activity, if available
+        if (selectedItemInListPosition != -1)
+        {
+            budget transferBudget = listItems.get(selectedItemInListPosition);
+            newIntent.putExtra("Budget",transferBudget);
+            startActivity(newIntent);
+        }
     }
 
     //Reviews what is returned when an intent is updated
     protected void onActivityResult(int requestCode,int resultCode, Intent returnedIntent)
     {
-        //If the request code corresponds
-        if (requestCode == 1)
-        {   //And the results are what we would like
-            if ((resultCode == RESULT_OK) && (returnedIntent != null))
-            {
-                //Was replaced
-            }
-            return;
-        }
+        //Omitted for now
     }
 
     //Used to register when user clicks on list item
@@ -158,7 +164,8 @@ public class mainActivity extends ActionBarActivity {
                 String selectedBudget = textView.getText().toString();
                 String message = "You clicked # " + position + " which is string: " + selectedBudget;
                 System.out.println(selectedBudget + " is the budget clicked!");
-
+                //Sets the position up for list transfer
+                selectedItemInListPosition = position;
                 //Displays message showing which item was clicked
                 Toast.makeText(mainActivity.this, message, Toast.LENGTH_SHORT).show();
             }

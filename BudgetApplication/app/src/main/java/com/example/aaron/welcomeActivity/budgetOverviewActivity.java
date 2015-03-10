@@ -6,12 +6,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.content.Intent;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 //This activity is used with budget_overview
@@ -26,8 +29,11 @@ public class budgetOverviewActivity extends ActionBarActivity {
     private ListView expenseListView;
     private ProgressBar progressBar;
 
-    private ArrayList<expense> listItems=new ArrayList<expense>();
+    //List components
+    private ArrayList<expense> expenseList = new ArrayList<expense>();
     private ArrayAdapter<expense> theAdapter;
+    private int selectedItemInListPosition = -1;
+    budget currentBudget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +52,56 @@ public class budgetOverviewActivity extends ActionBarActivity {
 
         //Acquire intent
         Intent receivedIntent = this.getIntent();
-        budget currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
+        currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
         Log.v("Budget Loaded: ", currentBudget.getName());
+        //Set title on screen to be the same as the budget name
         titleTextView.setText(currentBudget.getName());
-
+        //Open database and find all expenses for budget
+        theDatabase.open();
+        expenseList = theDatabase.findAllExpenses(currentBudget.getName());
         theDatabase.closeDatabase();
+
+        //Update list with expenses
+        theAdapter = new ArrayAdapter<expense>(this,
+                android.R.layout.simple_list_item_1, expenseList);
+        expenseListView.setAdapter(theAdapter);
+
+        /*if(expenseList.isEmpty()) {
+            currentCostAmountTextView.setText("$0.00");
+            Double moneyAvailable = currentBudget.getMaxValue();
+            String temp = "$" + String.valueOf(moneyAvailable);
+            moneyAvailableAmountTextView.setText(temp);
+
+        }
+
+        else{
+
+        }*/
+
+        registerClick();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        theDatabase.open();
+        //filling listItems with budgets from database
+        expenseList = theDatabase.findAllExpenses(currentBudget.getName());
+        //close database when you're done
+        theDatabase.closeDatabase();
+
+        //Updates list with budgets
+        theAdapter = new ArrayAdapter<expense>(this,
+                android.R.layout.simple_list_item_1, expenseList);
+
+        expenseListView.setAdapter(theAdapter);
+
+        /*currentCostAmountTextView.setText("$0.00");
+        Double moneyAvailable = currentBudget.getMaxValue();
+        String temp = "$" + String.valueOf(moneyAvailable);
+        moneyAvailableAmountTextView.setText(temp);*/
+
+        registerClick();
     }
 
     @Override
@@ -74,6 +125,35 @@ public class budgetOverviewActivity extends ActionBarActivity {
 
     //Executes when add expense button is clicked
     public void onNewExpenseClick(View view){
+        Intent newIntent = new Intent(this,newItemActivity.class);
+        budget transferBudget = currentBudget;
+        newIntent.putExtra("Budget",transferBudget);
+        startActivity(newIntent);
+    }
 
+    //Used to register when user clicks on list item
+    private void registerClick() {
+        ListView expenseListView = (ListView) findViewById(R.id.expenseListView);
+        expenseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+                TextView textView = (TextView) viewClicked;
+                //needs to be sent to budgetOverviewActivity
+                String selectedExpense = textView.getText().toString();
+                String message = "You clicked # " + position + " which is string: " + selectedExpense;
+                System.out.println(selectedExpense + " is the expense clicked!");
+                //Sets the position up for list transfer
+                selectedItemInListPosition = position;
+                //Displays message showing which item was clicked
+                Toast.makeText(budgetOverviewActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    //Reviews what is returned when an intent is updated
+    protected void onActivityResult(int requestCode,int resultCode, Intent returnedIntent)
+    {
+        //Omitted for now
     }
 }

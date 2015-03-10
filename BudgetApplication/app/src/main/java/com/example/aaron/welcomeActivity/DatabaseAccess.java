@@ -206,7 +206,7 @@ public class DatabaseAccess {
         Cursor theCursor = theDatabase.query(tableName,null,null,null,null,null,null);
         theCursor.moveToFirst();
         //Traverse through each row
-        while (theCursor.moveToNext())
+        while (!theCursor.isAfterLast())
         {
             //Grab material
             long expenseID = theCursor.getInt(0);
@@ -215,11 +215,12 @@ public class DatabaseAccess {
             float expenseCost = theCursor.getFloat(3);
             float expenseMaxCost = theCursor.getFloat(4);
 
-            //Create budget
+            //Create expense
             expense newExpense = new expense(expenseName,expenseCost,expenseMaxCost);
             newExpense.setIDNumber(expenseID);
             //Add to list
             expenseList.add(newExpense);
+            theCursor.moveToNext();
         }
         //Close the cursor
         if ((theCursor != null) && (theCursor.isClosed() == true))

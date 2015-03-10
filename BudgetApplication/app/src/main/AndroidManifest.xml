@@ -18,7 +18,7 @@
         </activity>
         <activity
             android:name=".newBudgetActivity"
-            android:label="@string/title_activity_new_budget_activity2"
+            android:label="New Budget"
             android:parentActivityName=".mainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -28,6 +28,12 @@
             android:name=".budgetOverviewActivity"
             android:label="Budget Overview"
             android:parentActivityName=".mainActivity">
+
+        </activity>
+        <activity
+            android:name=".newItemActivity"
+            android:label="New Item"
+            android:parentActivityName=".budgetOverviewActivity">
 
         </activity>
     </application>

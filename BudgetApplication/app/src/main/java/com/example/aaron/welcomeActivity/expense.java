@@ -1,9 +1,11 @@
 package com.example.aaron.welcomeActivity;
 
+import java.io.Serializable;
+
 /**
  * Created by Jacob on 2/1/2015.
  */
-public class expense {
+public class expense implements Serializable {
     private String name; //name of expense
     private float currentExpense = 0; //how much is currently being spent on the item
     private float maxExpense = 100; //max amount of money that can be spent on item

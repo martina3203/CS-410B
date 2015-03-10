@@ -166,8 +166,7 @@ public class mainActivity extends ActionBarActivity {
                 System.out.println(selectedBudget + " is the budget clicked!");
                 //Sets the position up for list transfer
                 selectedItemInListPosition = position;
-                //Displays message showing which item was clicked
-                Toast.makeText(mainActivity.this, message, Toast.LENGTH_SHORT).show();
+
             }
         });
 

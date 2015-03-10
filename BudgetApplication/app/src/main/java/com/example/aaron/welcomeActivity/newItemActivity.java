@@ -3,35 +3,38 @@ package com.example.aaron.welcomeActivity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 //this activity is used with new_item_layout
 
 public class newItemActivity extends ActionBarActivity {
 
     private String newItemName;
-    private double currentCost;
-    private double itemLimit;
+    private float currentCost;
+    private float itemLimit;
     private int priority;
-    private String itemCategory;
     private EditText newItemNameTextEdit;
     private EditText newItemPriorityTextEdit;
-    private EditText newItemCategoryTextEdit;
+    private TextView newItemCategoryName;
     private EditText newItemCurrentCostTextEdit;
     private EditText newItemMaxCostTextEdit;
     private Button addItemButton;
+    budget currentBudget;
+    private DatabaseAccess theDatabase;
 
     //Constructor
-    public newItemActivity(){
+    public newItemActivity() {
         newItemName = "";
-        currentCost = 0.0;
-        itemLimit = 0.0;
+        currentCost = 0;
+        itemLimit = 0;
         priority = 0;
-        itemCategory = "";
     }
 
     @Override
@@ -41,10 +44,16 @@ public class newItemActivity extends ActionBarActivity {
         //Creates edit texts and buttons
         newItemNameTextEdit = (EditText) findViewById(R.id.newNameEditText);
         newItemPriorityTextEdit = (EditText) findViewById(R.id.newPriorityEditText);
-        newItemCategoryTextEdit = (EditText) findViewById(R.id.newCategoryEditText);
+        newItemCategoryName = (TextView) findViewById(R.id.newCategoryName);
         newItemCurrentCostTextEdit = (EditText) findViewById(R.id.newCurrentCostEditText);
         newItemMaxCostTextEdit = (EditText) findViewById(R.id.newMaxCostEditText);
         addItemButton = (Button) findViewById(R.id.addItemButton);
+        theDatabase = new DatabaseAccess(getApplicationContext());
+
+        Intent receivedIntent = this.getIntent();
+        currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
+        Log.v("Budget Loaded: ", currentBudget.getName());
+        newItemCategoryName.setText(currentBudget.getName());
     }
 
     @Override
@@ -70,25 +79,48 @@ public class newItemActivity extends ActionBarActivity {
     }
 
     //called when add item button is clicked
-    public void onAddItemClick(View view){
+    public void onAddItemClick(View view) {
+        Log.v("Here1 ", currentBudget.getName());
         newItemName = newItemNameTextEdit.toString();
-        itemCategory = newItemCategoryTextEdit.toString();
         String temp = newItemCurrentCostTextEdit.toString();
-        currentCost = Double.parseDouble(temp);
-        temp = newItemMaxCostTextEdit.toString();
-        itemLimit = Double.parseDouble(temp);
-        temp = newItemPriorityTextEdit.toString();
-        priority = Integer.parseInt(temp);
+        currentCost = Float.parseFloat(temp);
+        String temp2 = newItemMaxCostTextEdit.toString();
+        itemLimit = Float.parseFloat(temp2);
+        String temp3 = newItemPriorityTextEdit.toString();
+        priority = Integer.parseInt(temp3);
+        Log.v("Here2 ", currentBudget.getName());
 
+        /*if (newItemName != "" || currentCost != 0 || itemLimit != 0 || priority != 0) {
+            //Create new expense object
+            expense newExpense = new expense(newItemName, currentCost, itemLimit);
+            newExpense.setPriority(priority);
+            theDatabase.open();
+            theDatabase.insertExpense(newExpense, currentBudget.getName());
+            theDatabase.closeDatabase();
+
+            //Finish Activity and return results
+            Intent returnedIntent = this.getIntent();
+            //Says it's ok and returns the information upon finish
+            setResult(RESULT_OK, returnedIntent);
+            this.finish();
+        }
+        else {
+            Toast.makeText(newItemActivity.this, "You need to fill all fields!", Toast.LENGTH_SHORT).show();
+        }*/
         //Create new expense object
+        expense newExpense = new expense(newItemName, currentCost, itemLimit);
+        newExpense.setPriority(priority);
+        theDatabase.open();
+        theDatabase.insertExpense(newExpense, currentBudget.getName());
+        theDatabase.closeDatabase();
+        Log.v("Here3 ", currentBudget.getName());
 
 
         //Finish Activity and return results
         Intent returnedIntent = this.getIntent();
         //Says it's ok and returns the information upon finish
-        setResult(RESULT_OK,returnedIntent);
+        setResult(RESULT_OK, returnedIntent);
         this.finish();
-
     }
 }
 

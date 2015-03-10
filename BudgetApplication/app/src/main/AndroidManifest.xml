@@ -30,9 +30,16 @@
             android:parentActivityName=".mainActivity">
 
         </activity>
+
         <activity
             android:name=".newItemActivity"
             android:label="New Item"
+            android:parentActivityName=".budgetOverviewActivity">
+
+        </activity>
+        <activity
+            android:name=".itemOverviewActivity"
+            android:label="Item Overview"
             android:parentActivityName=".budgetOverviewActivity">
 
         </activity>

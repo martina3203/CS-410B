@@ -66,11 +66,14 @@ public class budgetOverviewActivity extends ActionBarActivity {
                 android.R.layout.simple_list_item_1, expenseList);
         expenseListView.setAdapter(theAdapter);
 
-        /*if(expenseList.isEmpty()) {
+        /**if(expenseList.isEmpty()) {
             currentCostAmountTextView.setText("$0.00");
             Double moneyAvailable = currentBudget.getMaxValue();
             String temp = "$" + String.valueOf(moneyAvailable);
             moneyAvailableAmountTextView.setText(temp);
+
+            int maxProgressbar =
+            progressBar.setMax(currentBudget.getMaxValue());
 
         }
 
@@ -102,6 +105,13 @@ public class budgetOverviewActivity extends ActionBarActivity {
         moneyAvailableAmountTextView.setText(temp);*/
 
         registerClick();
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        theDatabase.closeDatabase();
     }
 
     @Override
@@ -146,6 +156,10 @@ public class budgetOverviewActivity extends ActionBarActivity {
                 selectedItemInListPosition = position;
                 //Displays message showing which item was clicked
                 Toast.makeText(budgetOverviewActivity.this, message, Toast.LENGTH_SHORT).show();
+                Intent newIntent = new Intent(budgetOverviewActivity.this,itemOverviewActivity.class);
+                expense transferExpense = expenseList.get(position);
+                newIntent.putExtra("Expense",transferExpense);
+                startActivity(newIntent);
             }
         });
 

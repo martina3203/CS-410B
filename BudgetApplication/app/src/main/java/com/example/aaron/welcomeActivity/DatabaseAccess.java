@@ -230,6 +230,37 @@ public class DatabaseAccess {
         return expenseList;
     }
 
+    //Returns total current cost of all expenses in a table
+    public float findTotalCost(String theExpenseTable)
+    {
+        //Get the actual table name
+        String tableName = convertToSQLTableName(theExpenseTable);
+        //Build a cursor
+        Cursor theCursor = theDatabase.query(tableName,null,null,null,null,null,null);
+        theCursor.moveToFirst();
+        float totalCost = 0;
+        //Traverse through each row
+        while (!theCursor.isAfterLast())
+        {
+            //Grab material
+            long expenseID = theCursor.getInt(0);
+            String expenseName = theCursor.getString(1);
+            int expensePriority = theCursor.getInt(2);
+            float expenseCost = theCursor.getFloat(3);
+            float expenseMaxCost = theCursor.getFloat(4);
+
+            totalCost += expenseCost;
+
+            theCursor.moveToNext();
+        }
+        //Close the cursor
+        if ((theCursor != null) && (theCursor.isClosed() == true))
+        {
+            theCursor.close();
+        }
+        return totalCost;
+    }
+
     //Replaces ' ' with '_' to have a valid table name
     public String convertToSQLTableName(String input)
     {

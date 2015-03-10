@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/newItemLinearLayout">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Viewing Item"
+        android:id="@+id/itemTitle"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp"
+        android:layout_marginLeft="2dp" />
+
+    <GridLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name:"
+            android:id="@+id/namePrompt"
+            android:textSize="25sp"
+            android:layout_marginTop="25dp"
+            android:layout_column="0"
+            android:layout_marginLeft="2dp"
+            android:layout_row="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Priority:"
+            android:id="@+id/priorityPrompt"
+            android:textSize="25sp"
+            android:layout_marginTop="25dp"
+            android:layout_column="0"
+            android:layout_marginLeft="2dp"
+            android:layout_row="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current Cost:"
+            android:id="@+id/currentCostPrompt"
+            android:textSize="25sp"
+            android:layout_marginTop="25dp"
+            android:layout_column="0"
+            android:layout_marginLeft="2dp"
+            android:layout_row="2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Max Cost:"
+            android:id="@+id/maxCostPrompt"
+            android:textSize="25sp"
+            android:layout_marginTop="25dp"
+            android:layout_column="0"
+            android:layout_marginLeft="2dp"
+            android:layout_row="3" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/nameBox"
+            android:layout_column="1"
+            android:layout_row="0"
+            android:layout_marginTop="25dp"
+            android:textSize="25sp"
+            android:layout_marginRight="160dp"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/priorityBox"
+            android:layout_column="1"
+            android:layout_row="1"
+            android:layout_marginTop="25dp"
+            android:textSize="25sp"
+            android:layout_marginRight="160dp"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/currentCostBox"
+            android:layout_column="1"
+            android:layout_row="2"
+            android:layout_marginTop="25dp"
+            android:textSize="25sp"
+            android:layout_marginRight="160dp"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/maxCostBox"
+            android:layout_column="1"
+            android:layout_row="3"
+            android:layout_marginTop="25dp"
+            android:textSize="25sp"
+            android:layout_marginRight="160dp"
+            android:layout_marginLeft="5dp" />
+
+    </GridLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:id="@+id/doneButton"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:onClick="onDoneClick" />
+
+
+</LinearLayout>

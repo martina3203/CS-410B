@@ -66,20 +66,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
                 android.R.layout.simple_list_item_1, expenseList);
         expenseListView.setAdapter(theAdapter);
 
-        /**if(expenseList.isEmpty()) {
-            currentCostAmountTextView.setText("$0.00");
-            Double moneyAvailable = currentBudget.getMaxValue();
-            String temp = "$" + String.valueOf(moneyAvailable);
-            moneyAvailableAmountTextView.setText(temp);
-
-            int maxProgressbar =
-            progressBar.setMax(currentBudget.getMaxValue());
-
-        }
-
-        else{
-
-        }*/
+        setUpProgressBar();
 
         registerClick();
     }
@@ -99,10 +86,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
 
         expenseListView.setAdapter(theAdapter);
 
-        /*currentCostAmountTextView.setText("$0.00");
-        Double moneyAvailable = currentBudget.getMaxValue();
-        String temp = "$" + String.valueOf(moneyAvailable);
-        moneyAvailableAmountTextView.setText(temp);*/
+        setUpProgressBar();
 
         registerClick();
     }
@@ -148,7 +132,6 @@ public class budgetOverviewActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
                 TextView textView = (TextView) viewClicked;
-                //needs to be sent to budgetOverviewActivity
                 String selectedExpense = textView.getText().toString();
                 String message = "You clicked # " + position + " which is string: " + selectedExpense;
                 System.out.println(selectedExpense + " is the expense clicked!");
@@ -156,10 +139,10 @@ public class budgetOverviewActivity extends ActionBarActivity {
                 selectedItemInListPosition = position;
                 //Displays message showing which item was clicked
                 Toast.makeText(budgetOverviewActivity.this, message, Toast.LENGTH_SHORT).show();
-                Intent newIntent = new Intent(budgetOverviewActivity.this,itemOverviewActivity.class);
+                /*Intent newIntent = new Intent(budgetOverviewActivity.this,itemOverviewActivity.class);
                 expense transferExpense = expenseList.get(position);
                 newIntent.putExtra("Expense",transferExpense);
-                startActivity(newIntent);
+                startActivity(newIntent);*/
             }
         });
 
@@ -169,5 +152,51 @@ public class budgetOverviewActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode,int resultCode, Intent returnedIntent)
     {
         //Omitted for now
+    }
+
+    private void setUpProgressBar(){
+
+        int maxProgress = 0;
+        int currentProgress = 0;
+
+        //If there are no expenses
+        if(expenseList.isEmpty()) {
+            //update the progress bar and textView with current money usage
+            currentCostAmountTextView.setText("$0.00");
+            progressBar.setProgress(0);
+
+            //update status bar and textView with money available
+            double moneyAvailable = currentBudget.getMaxValue();
+            String temp = "$" + String.valueOf(moneyAvailable);
+            moneyAvailableAmountTextView.setText(temp);
+
+            double maxProgressbar = currentBudget.getMaxValue();
+            maxProgress = (int) maxProgressbar; //progress bars only accept integers
+            progressBar.setMax(maxProgress);
+        }
+        //if there are some expenses
+        else{
+            theDatabase.open();
+
+            //set max value of progress bar
+            double maxProgressbar = currentBudget.getMaxValue();
+            maxProgress = (int) maxProgressbar;
+            progressBar.setMax(maxProgress);
+
+            //prepare progress bar with current money usage
+            float currentTotalCost = theDatabase.findTotalCost(currentBudget.getName());
+            currentProgress = (int) currentTotalCost;
+            progressBar.setProgress(currentProgress);
+            String temp = "$" + String.valueOf(currentTotalCost);
+            currentCostAmountTextView.setText(temp);
+
+            //update textView with money available
+            double moneyAvailable = currentBudget.getMaxValue();
+            String temp2 = "$" + String.valueOf(moneyAvailable);
+            moneyAvailableAmountTextView.setText(temp2);
+
+            theDatabase.closeDatabase();
+        }
+
     }
 }

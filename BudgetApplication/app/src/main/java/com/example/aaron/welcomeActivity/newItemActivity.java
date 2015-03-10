@@ -81,12 +81,12 @@ public class newItemActivity extends ActionBarActivity {
     //called when add item button is clicked
     public void onAddItemClick(View view) {
         Log.v("Here1 ", currentBudget.getName());
-        newItemName = newItemNameTextEdit.toString();
-        String temp = newItemCurrentCostTextEdit.toString();
+        newItemName = newItemNameTextEdit.getText().toString();
+        String temp = newItemCurrentCostTextEdit.getText().toString();
         currentCost = Float.parseFloat(temp);
-        String temp2 = newItemMaxCostTextEdit.toString();
+        String temp2 = newItemMaxCostTextEdit.getText().toString();
         itemLimit = Float.parseFloat(temp2);
-        String temp3 = newItemPriorityTextEdit.toString();
+        String temp3 = newItemPriorityTextEdit.getText().toString();
         priority = Integer.parseInt(temp3);
         Log.v("Here2 ", currentBudget.getName());
 

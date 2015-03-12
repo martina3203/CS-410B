@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 //this activity is used with new_item_layout
 
@@ -80,7 +79,6 @@ public class newItemActivity extends ActionBarActivity {
 
     //called when add item button is clicked
     public void onAddItemClick(View view) {
-        Log.v("Here1 ", currentBudget.getName());
         newItemName = newItemNameTextEdit.getText().toString();
         String temp = newItemCurrentCostTextEdit.getText().toString();
         currentCost = Float.parseFloat(temp);
@@ -88,33 +86,13 @@ public class newItemActivity extends ActionBarActivity {
         itemLimit = Float.parseFloat(temp2);
         String temp3 = newItemPriorityTextEdit.getText().toString();
         priority = Integer.parseInt(temp3);
-        Log.v("Here2 ", currentBudget.getName());
 
-        /*if (newItemName != "" || currentCost != 0 || itemLimit != 0 || priority != 0) {
-            //Create new expense object
-            expense newExpense = new expense(newItemName, currentCost, itemLimit);
-            newExpense.setPriority(priority);
-            theDatabase.open();
-            theDatabase.insertExpense(newExpense, currentBudget.getName());
-            theDatabase.closeDatabase();
-
-            //Finish Activity and return results
-            Intent returnedIntent = this.getIntent();
-            //Says it's ok and returns the information upon finish
-            setResult(RESULT_OK, returnedIntent);
-            this.finish();
-        }
-        else {
-            Toast.makeText(newItemActivity.this, "You need to fill all fields!", Toast.LENGTH_SHORT).show();
-        }*/
         //Create new expense object
         expense newExpense = new expense(newItemName, currentCost, itemLimit);
         newExpense.setPriority(priority);
         theDatabase.open();
         theDatabase.insertExpense(newExpense, currentBudget.getName());
         theDatabase.closeDatabase();
-        Log.v("Here3 ", currentBudget.getName());
-
 
         //Finish Activity and return results
         Intent returnedIntent = this.getIntent();

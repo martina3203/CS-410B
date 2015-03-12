@@ -53,6 +53,10 @@ public class itemOverviewActivity extends ActionBarActivity {
 
     public void onDoneClick(View view)
     {
+        //Finish Activity and return results
+        Intent returnedIntent = this.getIntent();
+        //Says it's ok and returns the information upon finish
+        setResult(RESULT_OK, returnedIntent);
         this.finish();
     }
 }

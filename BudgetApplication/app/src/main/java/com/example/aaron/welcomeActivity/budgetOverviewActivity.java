@@ -32,7 +32,6 @@ public class budgetOverviewActivity extends ActionBarActivity {
     //List components
     private ArrayList<expense> expenseList = new ArrayList<expense>();
     private ArrayAdapter<expense> theAdapter;
-    private int selectedItemInListPosition = -1;
     budget currentBudget;
 
     @Override
@@ -56,6 +55,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
         Log.v("Budget Loaded: ", currentBudget.getName());
         //Set title on screen to be the same as the budget name
         titleTextView.setText(currentBudget.getName());
+
         //Open database and find all expenses for budget
         theDatabase.open();
         expenseList = theDatabase.findAllExpenses(currentBudget.getName());
@@ -65,9 +65,9 @@ public class budgetOverviewActivity extends ActionBarActivity {
         theAdapter = new ArrayAdapter<expense>(this,
                 android.R.layout.simple_list_item_1, expenseList);
         expenseListView.setAdapter(theAdapter);
-
+        //set up the progress bar
         setUpProgressBar();
-
+        //registers clicks on list items
         registerClick();
     }
 
@@ -86,8 +86,9 @@ public class budgetOverviewActivity extends ActionBarActivity {
 
         expenseListView.setAdapter(theAdapter);
 
+        //set up the progress bar
         setUpProgressBar();
-
+        //registers clicks on list items
         registerClick();
     }
 
@@ -133,16 +134,12 @@ public class budgetOverviewActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
                 TextView textView = (TextView) viewClicked;
                 String selectedExpense = textView.getText().toString();
-                String message = "You clicked # " + position + " which is string: " + selectedExpense;
+                String message = "You clicked " + selectedExpense + "! Hurray for you!";
                 System.out.println(selectedExpense + " is the expense clicked!");
-                //Sets the position up for list transfer
-                selectedItemInListPosition = position;
                 //Displays message showing which item was clicked
                 Toast.makeText(budgetOverviewActivity.this, message, Toast.LENGTH_SHORT).show();
-                /*Intent newIntent = new Intent(budgetOverviewActivity.this,itemOverviewActivity.class);
-                expense transferExpense = expenseList.get(position);
-                newIntent.putExtra("Expense",transferExpense);
-                startActivity(newIntent);*/
+
+                //Will later send intent to go to itemOverview screen
             }
         });
 
@@ -154,21 +151,25 @@ public class budgetOverviewActivity extends ActionBarActivity {
         //Omitted for now
     }
 
+     //sets up the progress bar ans the textViews below it
     private void setUpProgressBar(){
 
-        int maxProgress = 0;
-        int currentProgress = 0;
+        int maxProgress = 0; //the max value of the progress bar
+        int currentProgress = 0; //the current value of the progress bar
+        String moneyNotInUse= ""; //string used to set textView text
+        String moneyInUse = ""; //string sued to set textView text
 
         //If there are no expenses
         if(expenseList.isEmpty()) {
-            //update the progress bar and textView with current money usage
+            //update the progress bar and textView with current money usage (which is none)
             currentCostAmountTextView.setText("$0.00");
-            progressBar.setProgress(0);
+            progressBar.setProgress(currentProgress);
 
             //update status bar and textView with money available
             double moneyAvailable = currentBudget.getMaxValue();
-            String temp = "$" + String.valueOf(moneyAvailable);
-            moneyAvailableAmountTextView.setText(temp);
+            moneyNotInUse = String.format("%.2f", moneyAvailable);
+            moneyNotInUse = "$" + moneyNotInUse;
+            moneyAvailableAmountTextView.setText(moneyNotInUse);
 
             double maxProgressbar = currentBudget.getMaxValue();
             maxProgress = (int) maxProgressbar; //progress bars only accept integers
@@ -187,16 +188,18 @@ public class budgetOverviewActivity extends ActionBarActivity {
             float currentTotalCost = theDatabase.findTotalCost(currentBudget.getName());
             currentProgress = (int) currentTotalCost;
             progressBar.setProgress(currentProgress);
-            String temp = "$" + String.valueOf(currentTotalCost);
-            currentCostAmountTextView.setText(temp);
+            moneyInUse = String.format("%.2f", currentTotalCost);
+            moneyInUse = "$" + moneyInUse;
+            currentCostAmountTextView.setText(moneyInUse);
 
             //update textView with money available
             double moneyAvailable = currentBudget.getMaxValue();
-            String temp2 = "$" + String.valueOf(moneyAvailable);
-            moneyAvailableAmountTextView.setText(temp2);
+            moneyAvailable =moneyAvailable - currentTotalCost;
+            moneyNotInUse = String.format("%.2f", moneyAvailable);
+            moneyNotInUse = "$" + moneyNotInUse;
+            moneyAvailableAmountTextView.setText(moneyNotInUse);
 
             theDatabase.closeDatabase();
         }
-
     }
 }

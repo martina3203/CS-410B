@@ -55,8 +55,8 @@
         android:layout_weight="0.02"
         android:max="1000"
         android:progress="500"
-        android:maxHeight="20dp"
-        android:minHeight="20dp"
+        android:maxHeight="25dp"
+        android:minHeight="25dp"
         android:indeterminate="false"
         android:layout_margin="7dp" />
 
@@ -121,13 +121,6 @@
             />
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="@android:color/darker_gray"/>
-
-
 
 
 </LinearLayout>

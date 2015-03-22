@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
+import android.widget.Toast;
 
 //This activity is used with new_budget_layout
 
@@ -52,10 +53,21 @@ public class newBudgetActivity extends ActionBarActivity {
     //Executes when addButton is clicked
     public void onAddBudgetClick(View view)
     {
-        //Gather Field Information
+        //Get new budget name
         newBudgetName = newBudgetNameTextEdit.getText().toString();
-        String temp = newBudgetTotalTextEdit.getText().toString();
-        budgetLimit = Double.parseDouble(temp);
+        if (newBudgetName.matches("")){
+            Toast.makeText(this, "You did not enter the budget name", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        //Get new budget amount
+        String budgetTotal = newBudgetTotalTextEdit.getText().toString();
+        if (budgetTotal.matches("")){
+            Toast.makeText(this, "You did not enter the max amount", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        budgetLimit = Double.parseDouble(budgetTotal);
 
         //Create new Budget object and add to database
         theDatabase.open();

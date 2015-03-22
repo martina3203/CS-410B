@@ -93,7 +93,7 @@ public class newItemActivity extends ActionBarActivity {
 
         String itemMaxCost = newItemMaxCostTextEdit.getText().toString();
         if (itemMaxCost.matches("")){
-            Toast.makeText(this, "You did not enter a max cost", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You did not enter total amount", Toast.LENGTH_SHORT).show();
             return;
         }
         else {
@@ -107,7 +107,7 @@ public class newItemActivity extends ActionBarActivity {
         else{
             priority = Integer.parseInt(itemPriority);
         }
-        
+
         //Create new expense object
         expense newExpense = new expense(newItemName, currentCost, itemLimit);
         newExpense.setPriority(priority);

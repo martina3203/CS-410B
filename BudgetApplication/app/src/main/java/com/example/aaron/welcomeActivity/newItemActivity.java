@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //this activity is used with new_item_layout
 
@@ -80,13 +81,33 @@ public class newItemActivity extends ActionBarActivity {
     //called when add item button is clicked
     public void onAddItemClick(View view) {
         newItemName = newItemNameTextEdit.getText().toString();
-        String temp = newItemCurrentCostTextEdit.getText().toString();
-        currentCost = Float.parseFloat(temp);
-        String temp2 = newItemMaxCostTextEdit.getText().toString();
-        itemLimit = Float.parseFloat(temp2);
-        String temp3 = newItemPriorityTextEdit.getText().toString();
-        priority = Integer.parseInt(temp3);
 
+        String itemCurrentCost = newItemCurrentCostTextEdit.getText().toString();
+        if (itemCurrentCost.matches("")){
+            Toast.makeText(this, "You did not enter a current cost", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else {
+            currentCost = Float.parseFloat(itemCurrentCost);
+        }
+
+        String itemMaxCost = newItemMaxCostTextEdit.getText().toString();
+        if (itemMaxCost.matches("")){
+            Toast.makeText(this, "You did not enter a max cost", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else {
+            itemLimit = Float.parseFloat(itemMaxCost);
+        }
+        String itemPriority = newItemPriorityTextEdit.getText().toString();
+        if (itemPriority.matches("")){
+            Toast.makeText(this, "You did not enter a priority", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else{
+            priority = Integer.parseInt(itemPriority);
+        }
+        
         //Create new expense object
         expense newExpense = new expense(newItemName, currentCost, itemLimit);
         newExpense.setPriority(priority);

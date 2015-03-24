@@ -20,9 +20,11 @@ public class newItemActivity extends ActionBarActivity {
     private float currentCost;
     private float itemLimit;
     private int priority;
+    private int aisle;
     private EditText newItemNameTextEdit;
     private EditText newItemPriorityTextEdit;
     private TextView newItemCategoryName;
+    private EditText newAisleTextEdit;
     private EditText newItemCurrentCostTextEdit;
     private EditText newItemMaxCostTextEdit;
     private Button addItemButton;
@@ -35,6 +37,7 @@ public class newItemActivity extends ActionBarActivity {
         currentCost = 0;
         itemLimit = 0;
         priority = 0;
+        aisle = 0;
     }
 
     @Override
@@ -45,6 +48,7 @@ public class newItemActivity extends ActionBarActivity {
         newItemNameTextEdit = (EditText) findViewById(R.id.newNameEditText);
         newItemPriorityTextEdit = (EditText) findViewById(R.id.newPriorityEditText);
         newItemCategoryName = (TextView) findViewById(R.id.newCategoryName);
+        newAisleTextEdit = (EditText) findViewById(R.id.newAisleEditText);
         newItemCurrentCostTextEdit = (EditText) findViewById(R.id.newCurrentCostEditText);
         newItemMaxCostTextEdit = (EditText) findViewById(R.id.newMaxCostEditText);
         addItemButton = (Button) findViewById(R.id.addItemButton);
@@ -80,7 +84,32 @@ public class newItemActivity extends ActionBarActivity {
 
     //called when add item button is clicked
     public void onAddItemClick(View view) {
+        //Displays message to tell user that they did not fill out a field
+        //Otherwise, it will read the field and move to the next one
+        //This repeats until all fields are filled
         newItemName = newItemNameTextEdit.getText().toString();
+        if (newItemName.matches("")){
+            Toast.makeText(this, "You did not enter a name", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String itemPriority = newItemPriorityTextEdit.getText().toString();
+        if (itemPriority.matches("")){
+            Toast.makeText(this, "You did not enter a priority", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else{
+            priority = Integer.parseInt(itemPriority);
+        }
+
+        String itemAisle = newAisleTextEdit.getText().toString();
+        if (itemAisle.matches("")){
+            Toast.makeText(this, "You did not enter an aisle", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else{
+            aisle = Integer.parseInt(itemAisle);
+        }
 
         String itemCurrentCost = newItemCurrentCostTextEdit.getText().toString();
         if (itemCurrentCost.matches("")){
@@ -98,14 +127,6 @@ public class newItemActivity extends ActionBarActivity {
         }
         else {
             itemLimit = Float.parseFloat(itemMaxCost);
-        }
-        String itemPriority = newItemPriorityTextEdit.getText().toString();
-        if (itemPriority.matches("")){
-            Toast.makeText(this, "You did not enter a priority", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        else{
-            priority = Integer.parseInt(itemPriority);
         }
 
         //Create new expense object

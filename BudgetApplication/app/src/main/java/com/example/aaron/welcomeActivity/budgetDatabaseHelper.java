@@ -28,6 +28,7 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_EXPENSE_PRIORITY = "EXPENSE_PRIORITY";
     public static final String COLUMN_EXPENSE_COST = "EXPENSE_COST";
     public static final String COLUMN_EXPENSE_MAX_COST = "EXPENSE_MAX_COST";
+    public static final String COLUMN_EXPENSE_AISLE_NUMBER = "EXPENSE_AISLE_NUMBER";
 
     //This is the command that is executed to create a database
     //The formatting is basically like this: create table TABLE_NAME ( COLUMN_NAME DATA_TYPE, ...);

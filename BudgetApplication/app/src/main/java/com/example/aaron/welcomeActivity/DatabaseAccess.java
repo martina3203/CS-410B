@@ -125,6 +125,7 @@ public class DatabaseAccess {
         values.put(theHelper.COLUMN_EXPENSE_COST, theExpense.getCurrentExpense());
         values.put(theHelper.COLUMN_EXPENSE_MAX_COST, theExpense.getMaxExpense());
         values.put(theHelper.COLUMN_EXPENSE_PRIORITY, theExpense.getPriority());
+        values.put(theHelper.COLUMN_EXPENSE_AISLE_NUMBER, theExpense.getAisle());
         /*
         Equivalent SQL statement
         String command = "INSERT INTO " + tableName +
@@ -145,7 +146,8 @@ public class DatabaseAccess {
                 " SET " + theHelper.COLUMN_EXPENSE_NAME + " = '" + theExpense.getName() + "'," +
                 theHelper.COLUMN_EXPENSE_COST + " = " + theExpense.getCurrentExpense() + ","
                 + theHelper.COLUMN_EXPENSE_MAX_COST + " = " + theExpense.getCurrentExpense() + ","
-                + theHelper.COLUMN_EXPENSE_PRIORITY + " = " + theExpense.getPriority() +
+                + theHelper.COLUMN_EXPENSE_PRIORITY + " = " + theExpense.getPriority() + ","
+                + theHelper.COLUMN_EXPENSE_AISLE_NUMBER + " = " + theExpense.getAisle() +
                 " WHERE " + theHelper.COLUMN_ID + " = " + theExpense.getIDNumber();
         theDatabase.execSQL(command);
     }
@@ -160,7 +162,8 @@ public class DatabaseAccess {
         String command = "CREATE TABLE " + newTable +
                 " (" + theHelper.COLUMN_ID + " integer primary key autoincrement, " +
                 theHelper.COLUMN_EXPENSE_NAME + " text, " + theHelper.COLUMN_EXPENSE_PRIORITY + " integer," +
-                theHelper.COLUMN_EXPENSE_COST + " real, " + theHelper.COLUMN_EXPENSE_MAX_COST + " real)";
+                theHelper.COLUMN_EXPENSE_COST + " real, " + theHelper.COLUMN_EXPENSE_MAX_COST + " real," +
+                theHelper.COLUMN_EXPENSE_AISLE_NUMBER + " integer)";
         Log.d("Expense Table Created: ", newTable);
         theDatabase.execSQL(command);
     }
@@ -189,10 +192,13 @@ public class DatabaseAccess {
         int expensePriority = theCursor.getInt(2);
         float expenseTotal = theCursor.getFloat(3);
         float expenseMax = theCursor.getFloat(4);
+        int expenseAisle = theCursor.getInt(5);
 
+        //Create an expense and return it with this information
         expense newExpense = new expense(expenseName,expenseTotal,expenseMax);
         newExpense.setPriority(expensePriority);
         newExpense.setIDNumber(ID);
+        newExpense.setAisle(expenseAisle);
         return newExpense;
     }
 
@@ -214,10 +220,13 @@ public class DatabaseAccess {
             int expensePriority = theCursor.getInt(2);
             float expenseCost = theCursor.getFloat(3);
             float expenseMaxCost = theCursor.getFloat(4);
+            int expenseAisle = theCursor.getInt(5);
 
             //Create expense
             expense newExpense = new expense(expenseName,expenseCost,expenseMaxCost);
+            newExpense.setPriority(expensePriority);
             newExpense.setIDNumber(expenseID);
+            newExpense.setAisle(expenseAisle);
             //Add to list
             expenseList.add(newExpense);
             theCursor.moveToNext();

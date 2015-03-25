@@ -134,8 +134,10 @@ public class budgetOverviewActivity extends ActionBarActivity {
         //Get the appropriate budget ot pass into the next activity, if available
         if (selectedItemInListPosition != -1)
         {
+            System.out.println("HERE DUDE");
             expense transferExpense = expenseList.get(selectedItemInListPosition);
             newIntent.putExtra("Expense",transferExpense);
+            System.out.println("HERE DUDE2");
             startActivity(newIntent);
         }
     }
@@ -150,9 +152,9 @@ public class budgetOverviewActivity extends ActionBarActivity {
                 String selectedExpense = textView.getText().toString();
                 String message = "You clicked " + selectedExpense + "! Hurray for you!";
                 System.out.println(selectedExpense + " is the expense clicked!");
-                //Displays message showing which item was clicked
-                Toast.makeText(budgetOverviewActivity.this, message, Toast.LENGTH_SHORT).show();
                 selectedItemInListPosition = position;
+                //Displays message showing which item was clicked
+                //Toast.makeText(budgetOverviewActivity.this, message, Toast.LENGTH_SHORT).show();
 
                 //Will later send intent to go to itemOverview screen
             }

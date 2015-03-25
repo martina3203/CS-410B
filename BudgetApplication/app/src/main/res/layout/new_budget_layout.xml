@@ -41,7 +41,8 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/totalBudgetTextEdit"
-        android:layout_weight="0.02" />
+        android:layout_weight="0.02"
+        android:numeric="decimal" />
 
     <Button
         android:layout_width="wrap_content"

@@ -58,6 +58,8 @@ public class newItemActivity extends ActionBarActivity {
         currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
         Log.v("Budget Loaded: ", currentBudget.getName());
         newItemCategoryName.setText(currentBudget.getName());
+
+
     }
 
     @Override

@@ -28,6 +28,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
     private DatabaseAccess theDatabase;
     private ListView expenseListView;
     private ProgressBar progressBar;
+    int selectedItemInListPosition = -1;
 
     //List components
     private ArrayList<expense> expenseList = new ArrayList<expense>();
@@ -126,6 +127,19 @@ public class budgetOverviewActivity extends ActionBarActivity {
         startActivity(newIntent);
     }
 
+    //Called when the edit button is pressed a long with an item on the list
+    public void onViewExpenseClick(View view)
+    {
+        Intent newIntent = new Intent(this,itemOverviewActivity.class);
+        //Get the appropriate budget ot pass into the next activity, if available
+        if (selectedItemInListPosition != -1)
+        {
+            expense transferExpense = expenseList.get(selectedItemInListPosition);
+            newIntent.putExtra("Expense",transferExpense);
+            startActivity(newIntent);
+        }
+    }
+
     //Used to register when user clicks on list item
     private void registerClick() {
         ListView expenseListView = (ListView) findViewById(R.id.expenseListView);
@@ -138,6 +152,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
                 System.out.println(selectedExpense + " is the expense clicked!");
                 //Displays message showing which item was clicked
                 Toast.makeText(budgetOverviewActivity.this, message, Toast.LENGTH_SHORT).show();
+                selectedItemInListPosition = position;
 
                 //Will later send intent to go to itemOverview screen
             }

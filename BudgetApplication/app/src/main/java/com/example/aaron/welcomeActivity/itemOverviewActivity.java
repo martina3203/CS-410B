@@ -12,6 +12,7 @@ public class itemOverviewActivity extends ActionBarActivity {
 
     private TextView nameBox;
     private TextView priorityBox;
+    private TextView aisleBox;
     private TextView currentCostBox;
     private TextView maxCostBox;
 
@@ -19,34 +20,27 @@ public class itemOverviewActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("HERE DUDE3");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_overview);
-        System.out.println("HERE DUDE4");
 
         nameBox = (TextView) findViewById(R.id.nameBox);
         priorityBox = (TextView) findViewById(R.id.priorityBox);
+        aisleBox = (TextView) findViewById(R.id.aisleBox);
         currentCostBox = (TextView) findViewById(R.id.currentCostBox);
         maxCostBox = (TextView) findViewById(R.id.maxCostBox);
-        System.out.println("HERE DUDE5");
 
+        //Set Text Edits to have values of expense
         Intent receivedIntent = this.getIntent();
-        System.out.println("HERE DUDE6");
         currentExpense = (expense) receivedIntent.getSerializableExtra("Expense");
-        System.out.println("HERE DUDE7");
         nameBox.setText(currentExpense.getName());
-        System.out.println("HERE DUDE8");
-        String tempS =Integer.toString(currentExpense.getPriority());
-        priorityBox.setText(tempS);
-        System.out.println("HERE DUDE9");
-        String temp = Float.toString(currentExpense.getCurrentExpense());
-        System.out.println("HERE DUDE10");
-        currentCostBox.setText(temp);
-        System.out.println("HERE DUDE11");
-        String temp2 = Float.toString(currentExpense.getMaxExpense());
-        System.out.println("HERE DUDE12");
-        maxCostBox.setText(temp2);
-        System.out.println("HERE DUDE13");
+        String temp =Integer.toString(currentExpense.getPriority());
+        priorityBox.setText(temp);
+        String temp2 =Integer.toString(currentExpense.getAisle());
+        aisleBox.setText(temp2);
+        String temp3 = Float.toString(currentExpense.getCurrentExpense());
+        currentCostBox.setText(temp3);
+        String temp4 = Float.toString(currentExpense.getMaxExpense());
+        maxCostBox.setText(temp4);
 
     }
 

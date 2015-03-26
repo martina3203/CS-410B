@@ -7,8 +7,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +26,6 @@ public class newItemActivity extends ActionBarActivity {
     private int priority;
     private int aisle;
     private EditText newItemNameTextEdit;
-    private EditText newItemPriorityTextEdit;
     private TextView newItemCategoryName;
     private EditText newAisleTextEdit;
     private EditText newItemCurrentCostTextEdit;
@@ -30,6 +33,9 @@ public class newItemActivity extends ActionBarActivity {
     private Button addItemButton;
     budget currentBudget;
     private DatabaseAccess theDatabase;
+    private Spinner dropdown;
+    private String selectedSpinner;
+    String[] values = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
     //Constructor
     public newItemActivity() {
@@ -44,14 +50,17 @@ public class newItemActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_item_layout);
-        //Creates edit texts and buttons
+        //Creates edit texts, button, and drop down menu
         newItemNameTextEdit = (EditText) findViewById(R.id.newNameEditText);
-        newItemPriorityTextEdit = (EditText) findViewById(R.id.newPriorityEditText);
         newItemCategoryName = (TextView) findViewById(R.id.newCategoryName);
         newAisleTextEdit = (EditText) findViewById(R.id.newAisleEditText);
         newItemCurrentCostTextEdit = (EditText) findViewById(R.id.newCurrentCostEditText);
         newItemMaxCostTextEdit = (EditText) findViewById(R.id.newMaxCostEditText);
         addItemButton = (Button) findViewById(R.id.addItemButton);
+        dropdown = (Spinner)findViewById(R.id.priorityDropDown);
+        ArrayAdapter<String> priorityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, values);
+        dropdown.setAdapter(priorityAdapter);
+
         theDatabase = new DatabaseAccess(getApplicationContext());
 
         Intent receivedIntent = this.getIntent();
@@ -59,7 +68,7 @@ public class newItemActivity extends ActionBarActivity {
         Log.v("Budget Loaded: ", currentBudget.getName());
         newItemCategoryName.setText(currentBudget.getName());
 
-
+        findPriorityChoice();
     }
 
     @Override
@@ -88,20 +97,11 @@ public class newItemActivity extends ActionBarActivity {
     public void onAddItemClick(View view) {
         //Displays message to tell user that they did not fill out a field
         //Otherwise, it will read the field and move to the next one
-        //This repeats until all fields are filled
+        //This repeats until all fields are filled (except priority)
         newItemName = newItemNameTextEdit.getText().toString();
         if (newItemName.matches("")){
             Toast.makeText(this, "You did not enter a name", Toast.LENGTH_SHORT).show();
             return;
-        }
-
-        String itemPriority = newItemPriorityTextEdit.getText().toString();
-        if (itemPriority.matches("")){
-            Toast.makeText(this, "You did not enter a priority", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        else{
-            priority = Integer.parseInt(itemPriority);
         }
 
         String itemAisle = newAisleTextEdit.getText().toString();
@@ -131,6 +131,9 @@ public class newItemActivity extends ActionBarActivity {
             itemLimit = Float.parseFloat(itemMaxCost);
         }
 
+        //Gets Priority from dropdown
+        priority = Integer.parseInt(selectedSpinner);
+
         //Create new expense object
         expense newExpense = new expense(newItemName, currentCost, itemLimit);
         newExpense.setPriority(priority);
@@ -144,6 +147,25 @@ public class newItemActivity extends ActionBarActivity {
         //Says it's ok and returns the information upon finish
         setResult(RESULT_OK, returnedIntent);
         this.finish();
+    }
+
+    //Gets priority choice from dropdown menu
+    private void findPriorityChoice(){
+        dropdown.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            //sets variable when selected value is changed in dropdown
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                selectedSpinner = values[position];
+                System.out.println("The dropdown is " + selectedSpinner + "!");
+            }
+
+            @Override
+            //sets variable if user doesn't select one
+            public void onNothingSelected(AdapterView<?> parentView) {
+                selectedSpinner = "1";
+                System.out.println("The dropdown is one!");
+            }
+        });
     }
 }
 

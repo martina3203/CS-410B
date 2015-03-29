@@ -88,7 +88,7 @@ public class DatabaseAccess {
     {
         //Builds a cursor that is at the top of the budget database
         ArrayList<budget> budgetList = new ArrayList<budget>();
-        Cursor theCursor = theDatabase.query(theHelper.BUDGET_TABLE_NAME,null,null,null,null,null,null);
+        Cursor theCursor = theDatabase.query(theHelper.BUDGET_TABLE_NAME,null,null,null,theHelper.COLUMN_BUDGET_NAME,null,null);
         theCursor.moveToFirst();
         //Traverse through each row
 
@@ -121,17 +121,13 @@ public class DatabaseAccess {
         String theTable = convertToSQLTableName(tableName);
         //Build a Content Values class that contains the values of this budget
         ContentValues values = new ContentValues();
+        //Add values in
         values.put(theHelper.COLUMN_EXPENSE_NAME, theExpense.getName());
         values.put(theHelper.COLUMN_EXPENSE_COST, theExpense.getCurrentExpense());
         values.put(theHelper.COLUMN_EXPENSE_MAX_COST, theExpense.getMaxExpense());
         values.put(theHelper.COLUMN_EXPENSE_PRIORITY, theExpense.getPriority());
         values.put(theHelper.COLUMN_EXPENSE_AISLE_NUMBER, theExpense.getAisle());
-        /*
-        Equivalent SQL statement
-        String command = "INSERT INTO " + tableName +
-                COLUMN_EXPENSE_NAME +"," + COLUMN_EXPENSE_COST + "," + COLUMN_EXPENSE_MAX_COST + "," + COLUMN_EXPENSE_PRIORITY + ")" +
-                "VALUES (" + theExpense.getName() + "," + theExpense.getCurrentExpense() + "," + theExpense.getMaxExpense() + "," + theExpense.getPriority() + ")";
-        */
+        //Commit insertion
         long ID = theDatabase.insert(theTable,null,values);
         return ID;
     }
@@ -141,8 +137,8 @@ public class DatabaseAccess {
         //Builds a string to update an entry in an expense table to a corresponding budget
         //It is also important to note that this methods updates ALL of the fields corresponding to Expense except of course the ID
         //First convert to actual table name
-        String actualBudgetName = convertToSQLTableName(budgetName);
-        String command = "UPDATE " +  actualBudgetName +
+        String theTable = convertToSQLTableName(budgetName);
+        String command = "UPDATE " +  theTable +
                 " SET " + theHelper.COLUMN_EXPENSE_NAME + " = '" + theExpense.getName() + "'," +
                 theHelper.COLUMN_EXPENSE_COST + " = " + theExpense.getCurrentExpense() + ","
                 + theHelper.COLUMN_EXPENSE_MAX_COST + " = " + theExpense.getCurrentExpense() + ","
@@ -209,7 +205,7 @@ public class DatabaseAccess {
         //Get the actual table name
         String tableName = convertToSQLTableName(theExpenseTable);
         //Build a cursor
-        Cursor theCursor = theDatabase.query(tableName,null,null,null,null,null,null);
+        Cursor theCursor = theDatabase.query(tableName,null,null,null,theHelper.COLUMN_EXPENSE_NAME,null,null);
         theCursor.moveToFirst();
         //Traverse through each row
         while (!theCursor.isAfterLast())

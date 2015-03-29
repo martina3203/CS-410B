@@ -1,7 +1,9 @@
 package com.example.aaron.welcomeActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +30,7 @@ public class editItemActivity extends ActionBarActivity{
     private EditText itemMaxCostTextEdit;
     private Button editItemButton;
     budget currentBudget;
+    expense currentExpense;
     private DatabaseAccess theDatabase;
     private Spinner dropdown;
     private String selectedSpinner;
@@ -58,7 +61,21 @@ public class editItemActivity extends ActionBarActivity{
 
         theDatabase = new DatabaseAccess(getApplicationContext());
 
-        //Add intent stuff here
+        //Get intent from item overview
+        Intent receivedIntent = this.getIntent();
+        currentExpense = (expense) receivedIntent.getSerializableExtra("Expense");
+        currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
+        System.out.println("Budget name is " + currentBudget.getName());
+
+        //Set the values of the edit texts
+        itemNameTextEdit.setText(currentExpense.getName(), TextView.BufferType.EDITABLE);
+        itemCategoryName.setText(currentBudget.getName());
+        String aisleNum = Integer.toString(currentExpense.getAisle());
+        aisleTextEdit.setText(aisleNum, TextView.BufferType.EDITABLE);
+        String curCost = Float.toString(currentExpense.getCurrentExpense());
+        itemCurrentCostTextEdit.setText(curCost, TextView.BufferType.EDITABLE);
+        String maxCost = Double.toString(currentExpense.getMaxExpense());
+        itemMaxCostTextEdit.setText(maxCost, TextView.BufferType.EDITABLE);
     }
 
     //Gets priority choice from dropdown menu

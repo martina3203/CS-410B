@@ -60,4 +60,13 @@ public class itemOverviewActivity extends ActionBarActivity {
         //setResult(RESULT_OK, returnedIntent);
         this.finish();
     }
+
+    public void onEditItemClick(View view){
+        Intent intent = new Intent(this, editItemActivity.class);
+        expense transferExpense = currentExpense;
+        budget transferBudget = currentBudget;
+        intent.putExtra("Expense",transferExpense);
+        intent.putExtra("Budget", transferBudget);
+        startActivity(intent);
+    }
 }

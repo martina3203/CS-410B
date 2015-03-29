@@ -130,13 +130,15 @@ public class budgetOverviewActivity extends ActionBarActivity {
     //Called when the view button is pressed a long with an item on the list
     public void onViewExpenseClick(View view)
     {
-        Intent newIntent = new Intent(this,itemOverviewActivity.class);
+        Intent intent = new Intent(this,itemOverviewActivity.class);
         //Get the appropriate budget ot pass into the next activity, if available
         if (selectedItemInListPosition != -1)
         {
             expense transferExpense = expenseList.get(selectedItemInListPosition);
-            newIntent.putExtra("Expense",transferExpense);
-            startActivity(newIntent);
+            budget transferBudget = currentBudget;
+            intent.putExtra("Expense",transferExpense);
+            intent.putExtra("Budget", transferBudget);
+            startActivity(intent);
         }
     }
 

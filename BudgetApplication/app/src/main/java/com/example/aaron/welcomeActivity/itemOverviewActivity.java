@@ -17,6 +17,7 @@ public class itemOverviewActivity extends ActionBarActivity {
     private TextView maxCostBox;
 
     expense currentExpense;
+    budget currentBudget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,8 @@ public class itemOverviewActivity extends ActionBarActivity {
         //Set Text Edits to have values of expense
         Intent receivedIntent = this.getIntent();
         currentExpense = (expense) receivedIntent.getSerializableExtra("Expense");
+        currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
+        System.out.println("Budget name is " + currentBudget.getName());
         nameBox.setText(currentExpense.getName());
         String temp =Integer.toString(currentExpense.getPriority());
         priorityBox.setText(temp);

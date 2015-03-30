@@ -152,11 +152,9 @@ public class editItemActivity extends ActionBarActivity{
 
         System.out.println("Starting intent");
 
-        //Finish Activity and return results
-        Intent returnedIntent = this.getIntent();
-        //Says it's ok and returns the information upon finish
-        setResult(RESULT_OK, returnedIntent);
-        this.finish();
+        //Finish Activity and go to select budget screen
+        Intent newIntent = new Intent(this, mainActivity.class);
+        startActivity(newIntent);
     }
 
     @Override

@@ -145,7 +145,9 @@ public class editItemActivity extends ActionBarActivity{
         newExpense.setAisle(aisle);
         theDatabase.open();
         System.out.println("Updating expense");
-        theDatabase.updateExpense(newExpense, currentBudget.getName());
+        //theDatabase.updateExpense(newExpense, currentBudget.getName());
+        theDatabase.removeExpense(currentExpense.getIDNumber(), currentBudget.getName());
+        theDatabase.insertExpense(newExpense, currentBudget.getName());
         theDatabase.closeDatabase();
 
         System.out.println("Starting intent");

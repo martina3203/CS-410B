@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //this activity is used with edit_item_layout
 
@@ -76,6 +77,8 @@ public class editItemActivity extends ActionBarActivity{
         itemCurrentCostTextEdit.setText(curCost, TextView.BufferType.EDITABLE);
         String maxCost = Double.toString(currentExpense.getMaxExpense());
         itemMaxCostTextEdit.setText(maxCost, TextView.BufferType.EDITABLE);
+
+        findPriorityChoice();
     }
 
     //Gets priority choice from dropdown menu
@@ -91,10 +94,67 @@ public class editItemActivity extends ActionBarActivity{
             @Override
             //sets variable if user doesn't select one
             public void onNothingSelected(AdapterView<?> parentView) {
-                selectedSpinner = "1";
-                System.out.println("The dropdown is one!");
+                selectedSpinner = Integer.toString(currentExpense.getAisle());
+                System.out.println("The dropdown is default!");
             }
         });
+    }
+
+    public void onFinishClick(View view){
+        itemName = itemNameTextEdit.getText().toString();
+        if (itemName.matches("")){
+            Toast.makeText(this, "You did not enter a name", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String itemAisle = aisleTextEdit.getText().toString();
+        if (itemAisle.matches("")){
+            Toast.makeText(this, "You did not enter an aisle", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else{
+            aisle = Integer.parseInt(itemAisle);
+        }
+
+        String itemCurrentCost = itemCurrentCostTextEdit.getText().toString();
+        if (itemCurrentCost.matches("")){
+            Toast.makeText(this, "You did not enter a current cost", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else {
+            currentCost = Float.parseFloat(itemCurrentCost);
+        }
+
+        String itemMaxCost = itemMaxCostTextEdit.getText().toString();
+        if (itemMaxCost.matches("")){
+            Toast.makeText(this, "You did not enter a max cost", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else {
+            itemLimit = Float.parseFloat(itemMaxCost);
+        }
+
+        //Gets Priority from dropdown
+        priority = Integer.parseInt(selectedSpinner);
+
+        System.out.println("Making new expense");
+
+        //Create new expense object
+        expense newExpense = new expense(itemName, currentCost, itemLimit);
+        newExpense.setPriority(priority);
+        newExpense.setAisle(aisle);
+        theDatabase.open();
+        System.out.println("Updating expense");
+        theDatabase.updateExpense(newExpense, currentBudget.getName());
+        theDatabase.closeDatabase();
+
+        System.out.println("Starting intent");
+
+        //Finish Activity and return results
+        Intent returnedIntent = this.getIntent();
+        //Says it's ok and returns the information upon finish
+        setResult(RESULT_OK, returnedIntent);
+        this.finish();
     }
 
     @Override

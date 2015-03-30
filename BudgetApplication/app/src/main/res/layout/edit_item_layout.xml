@@ -161,7 +161,7 @@
         android:id="@+id/editItemButton"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:onClick="onEditItemClick" />
+        android:onClick="onFinishClick" />
 
 
 </LinearLayout>

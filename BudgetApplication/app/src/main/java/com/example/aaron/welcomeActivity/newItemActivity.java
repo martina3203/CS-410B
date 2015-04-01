@@ -112,12 +112,6 @@ public class newItemActivity extends ActionBarActivity {
         //Gets Priority from dropdown
         priority = Integer.parseInt(selectedSpinner);
 
-        //make sure the current cost isn't above max cost
-        if (currentCost > itemLimit){
-            Toast.makeText(this, "Current cost is higher than the max cost!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         //Create new expense object
         expense newExpense = new expense(newItemName, currentCost, itemLimit);
         newExpense.setPriority(priority);

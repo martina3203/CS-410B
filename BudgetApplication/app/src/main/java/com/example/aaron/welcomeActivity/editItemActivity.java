@@ -137,12 +137,6 @@ public class editItemActivity extends ActionBarActivity{
         //Gets Priority from dropdown
         priority = Integer.parseInt(selectedSpinner);
 
-        //make sure the current cost isn't above max cost
-        if (currentCost > itemLimit){
-            Toast.makeText(this, "Current cost is higher than the max cost!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         System.out.println("Making new expense");
 
         //Create new expense object
@@ -151,6 +145,7 @@ public class editItemActivity extends ActionBarActivity{
         newExpense.setAisle(aisle);
         theDatabase.open();
         System.out.println("Updating expense");
+        //theDatabase.updateExpense(newExpense, currentBudget.getName());
         theDatabase.removeExpense(currentExpense.getIDNumber(), currentBudget.getName());
         theDatabase.insertExpense(newExpense, currentBudget.getName());
         theDatabase.closeDatabase();

@@ -181,17 +181,33 @@ public class budgetOverviewActivity extends ActionBarActivity {
             //prepare progress bar with current money usage
             float currentTotalCost = theDatabase.findTotalCost(currentBudget.getName());
             currentProgress = (int) currentTotalCost;
-            progressBar.setProgress(currentProgress);
+
+            //This is to make sure the progress bar doesn't mess up if the current progress
+            //becomes higher than the max progress
+            if (currentProgress > maxProgress){
+                progressBar.setProgress(maxProgress);
+            }
+            else{
+                progressBar.setProgress(currentProgress);
+            }
+
             moneyInUse = String.format("%.2f", currentTotalCost);
             moneyInUse = "$" + moneyInUse;
             currentCostAmountTextView.setText(moneyInUse);
 
-            //update textView with money available
+            //update textView with money available to use
             double moneyAvailable = currentBudget.getMaxValue();
-            moneyAvailable =moneyAvailable - currentTotalCost;
-            moneyNotInUse = String.format("%.2f", moneyAvailable);
-            moneyNotInUse = "$" + moneyNotInUse;
-            moneyAvailableAmountTextView.setText(moneyNotInUse);
+            moneyAvailable = moneyAvailable - currentTotalCost;
+            //if there is no money left in the budget, the text view will say "None"
+            if (moneyAvailable <= 0){
+                moneyAvailableAmountTextView.setText("None");
+            }
+            //if there is money leftover, set the text view's value
+            else{
+                moneyNotInUse = String.format("%.2f", moneyAvailable);
+                moneyNotInUse = "$" + moneyNotInUse;
+                moneyAvailableAmountTextView.setText(moneyNotInUse);
+            }
 
             theDatabase.closeDatabase();
         }

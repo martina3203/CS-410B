@@ -98,7 +98,6 @@ public class DatabaseAccess {
             long budgetID = theCursor.getInt(0);
             String budgetName = theCursor.getString(1);
             Double budgetLimit = theCursor.getDouble(2);
-
             //Create budget
             budget newBudget = new budget(budgetName,budgetLimit);
             newBudget.setIDNumber(budgetID);

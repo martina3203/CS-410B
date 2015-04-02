@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
 //This activity is used with new_budget_layout
 
@@ -111,21 +112,35 @@ public class newBudgetActivity extends ActionBarActivity {
         //Get new budget name
         newBudgetName = newBudgetNameTextEdit.getText().toString();
         if (newBudgetName.matches("")){
-            builder.setMessage("You have not entered a name into the Budget field.");
             builder.setTitle("Error");
+            builder.setMessage("You have not entered a name into the Budget field.");
             builder.show();
             return;
         }
-        //Now I have to check for duplicates in the database
-
 
         //Get new budget amount
         String budgetTotal = newBudgetTotalTextEdit.getText().toString();
         if (budgetTotal.matches("")){
-            builder.setMessage("You have not entered a value into the Total Budget field.");
             builder.setTitle("Error");
+            builder.setMessage("You have not entered a value into the Total Budget field.");
             builder.show();
             return;
+        }
+
+        //Now I have to check for duplicates in the database
+        theDatabase.open();
+        ArrayList<budget> budgetList = theDatabase.findAllBudgets();
+        for (int i = 0; i < budgetList.size(); i++)
+        {
+            budget currentBudget = budgetList.get(i);
+            if (newBudgetName.matches(currentBudget.getName()))
+            {
+                //We have encountered a duplicate and will not proceed
+                builder.setTitle("Error");
+                builder.setMessage("A Budget of that name already exists.");
+                builder.show();
+                return;
+            }
         }
 
         String replaceable = String.format("[%s,.\\s]", NumberFormat.getCurrencyInstance().getCurrency().getSymbol());
@@ -133,14 +148,12 @@ public class newBudgetActivity extends ActionBarActivity {
         budgetLimit = Double.parseDouble(budgetTotal);
 
         //Create new Budget object and add to database
-        theDatabase.open();
         budget tempBudget = new budget(newBudgetName, budgetLimit);
         tempBudget.setIDNumber(theDatabase.insertBudget(tempBudget));
         //Create new expense table
         theDatabase.addExpenseTable(newBudgetName);
         //Close database when done
         theDatabase.closeDatabase();
-
         //Finish Activity and return results
         Intent returnedIntent = this.getIntent();
         //Says it's ok and returns the information upon finish

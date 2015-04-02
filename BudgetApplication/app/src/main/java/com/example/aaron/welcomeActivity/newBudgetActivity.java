@@ -1,5 +1,6 @@
 package com.example.aaron.welcomeActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class newBudgetActivity extends ActionBarActivity {
     private EditText newBudgetTotalTextEdit;
     private DatabaseAccess theDatabase;
     private static final NumberFormat currencyFormat;
+    private AlertDialog.Builder builder;
 
     static {
         currencyFormat = NumberFormat.getCurrencyInstance();
@@ -86,6 +88,9 @@ public class newBudgetActivity extends ActionBarActivity {
             }
         });
 
+        //Handle Alert Dialogs by building the dialog
+        builder = new AlertDialog.Builder(this);
+        AlertDialog dialog = builder.create();
     }
 
     @Override
@@ -106,14 +111,20 @@ public class newBudgetActivity extends ActionBarActivity {
         //Get new budget name
         newBudgetName = newBudgetNameTextEdit.getText().toString();
         if (newBudgetName.matches("")){
-            Toast.makeText(this, "You did not enter the budget name", Toast.LENGTH_SHORT).show();
+            builder.setMessage("You have not entered a name into the Budget field.");
+            builder.setTitle("Error");
+            builder.show();
             return;
         }
+        //Now I have to check for duplicates in the database
+
 
         //Get new budget amount
         String budgetTotal = newBudgetTotalTextEdit.getText().toString();
         if (budgetTotal.matches("")){
-            Toast.makeText(this, "You did not enter the max amount", Toast.LENGTH_SHORT).show();
+            builder.setMessage("You have not entered a value into the Total Budget field.");
+            builder.setTitle("Error");
+            builder.show();
             return;
         }
 

@@ -35,14 +35,32 @@
         android:id="@+id/totalBudgetTextView"
         android:layout_weight="0.02" />
 
-    <EditText
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/totalBudgetTextEdit"
-        android:layout_weight="0.02"
-        android:numeric="decimal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.02">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="57dp"
+            android:text="@string/CurrencySymbol"
+            android:id="@+id/CurrencySymbol"
+            android:layout_weight="0.20"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="@dimen/abc_text_size_display_1_material" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/totalBudgetTextEdit"
+            android:layout_weight="1"
+            android:numeric="decimal" />
+    </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"

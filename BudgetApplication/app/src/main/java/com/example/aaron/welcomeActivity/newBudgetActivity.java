@@ -4,22 +4,12 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import java.text.NumberFormat;
-
-import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 //This activity is used with new_budget_layout
@@ -54,44 +44,8 @@ public class newBudgetActivity extends ActionBarActivity {
         newBudgetNameTextEdit = (EditText) findViewById(R.id.newBudgetNameTextEdit);
         newBudgetTotalTextEdit = (EditText) findViewById(R.id.totalBudgetTextEdit);
 
-        //Add Text Listeners to convert entries to currency values
-        //Credits go to http://stackoverflow.com/questions/27027070/android-edittext-addtextchangelistener-currency-format
-        newBudgetTotalTextEdit.addTextChangedListener(new TextWatcher() {
-            private String current = "";
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!s.toString().equals(current)) {
-                    newBudgetTotalTextEdit.removeTextChangedListener(this);
-                    String replaceable = String.format("[%s,.\\s]", NumberFormat.getCurrencyInstance().getCurrency().getSymbol());
-                    String cleanString = s.toString().replaceAll(replaceable, "");
-
-                    double parsed;
-                    try {
-                        parsed = Double.parseDouble(cleanString);
-                    } catch (NumberFormatException e) {
-                        parsed = 0.00;
-                    }
-                    NumberFormat formatter = NumberFormat.getCurrencyInstance();
-                    formatter.setMaximumFractionDigits(0);
-                    String formatted = formatter.format((parsed));
-
-                    current = formatted;
-                    newBudgetTotalTextEdit.setText(formatted);
-                    newBudgetTotalTextEdit.setSelection(formatted.length());
-                    newBudgetTotalTextEdit.addTextChangedListener(this);
-                }
-            }
-        });
-
         //Handle Alert Dialogs by building the dialog
         builder = new AlertDialog.Builder(this);
-        AlertDialog dialog = builder.create();
     }
 
     @Override
@@ -143,8 +97,7 @@ public class newBudgetActivity extends ActionBarActivity {
             }
         }
 
-        String replaceable = String.format("[%s,.\\s]", NumberFormat.getCurrencyInstance().getCurrency().getSymbol());
-        budgetTotal = budgetTotal.replaceAll(replaceable, "");
+        //Parse Double out of this statement
         budgetLimit = Double.parseDouble(budgetTotal);
 
         //Create new Budget object and add to database

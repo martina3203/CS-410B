@@ -11,5 +11,6 @@
     <string name="total_expenses_label">Total Expenses:</string>
     <string name="AddNewBudget">Add New Budget..</string>
     <string name="title_activity_new_budget_activity2">newBudgetActivity2</string>
+    <string name="CurrencySymbol">$</string>
 
 </resources>

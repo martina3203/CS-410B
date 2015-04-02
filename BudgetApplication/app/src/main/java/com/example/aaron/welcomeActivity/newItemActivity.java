@@ -1,5 +1,7 @@
 package com.example.aaron.welcomeActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ public class newItemActivity extends ActionBarActivity {
     private float itemLimit;
     private int priority;
     private int aisle;
+    private boolean alreadyShown;
     private EditText newItemNameTextEdit;
     private TextView newItemCategoryName;
     private EditText newAisleTextEdit;
@@ -44,6 +47,7 @@ public class newItemActivity extends ActionBarActivity {
         itemLimit = 0;
         priority = 0;
         aisle = 0;
+        alreadyShown = false;
     }
 
     @Override
@@ -76,6 +80,7 @@ public class newItemActivity extends ActionBarActivity {
         //Displays message to tell user that they did not fill out a field
         //Otherwise, it will read the field and move to the next one
         //This repeats until all fields are filled (except priority)
+
         newItemName = newItemNameTextEdit.getText().toString();
         if (newItemName.matches("")){
             Toast.makeText(this, "You did not enter a name", Toast.LENGTH_SHORT).show();
@@ -166,6 +171,25 @@ public class newItemActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //displays a dialog box telling the user that the item they're adding will cause them to go overbudget
+    public void overbudgetWarning(){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(newItemActivity.this);
+        builder1.setMessage("Adding this item will cause you to go overbudget.  " +
+                "Please consider editing or deleting other items to avoid this.");
+        builder1.setCancelable(true);
+        builder1.setPositiveButton("Back",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
+        return;
     }
 }
 

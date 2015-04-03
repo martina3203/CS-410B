@@ -1,7 +1,6 @@
 package com.example.aaron.welcomeActivity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 //this activity is used with new_item_layout
 
@@ -39,6 +37,7 @@ public class newItemActivity extends ActionBarActivity {
     private Spinner dropdown;
     private String selectedSpinner;
     String[] values = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+    private AlertDialog.Builder builder;
 
     //Constructor
     public newItemActivity() {
@@ -65,6 +64,8 @@ public class newItemActivity extends ActionBarActivity {
         ArrayAdapter<String> priorityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, values);
         dropdown.setAdapter(priorityAdapter);
 
+        builder = new AlertDialog.Builder(this);
+
         theDatabase = new DatabaseAccess(getApplicationContext());
 
         Intent receivedIntent = this.getIntent();
@@ -83,13 +84,18 @@ public class newItemActivity extends ActionBarActivity {
 
         newItemName = newItemNameTextEdit.getText().toString();
         if (newItemName.matches("")){
-            Toast.makeText(this, "You did not enter a name", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "You did not enter a name", Toast.LENGTH_SHORT).show();
+            builder.setTitle("Error");
+            builder.setMessage("You have not entered a name!");
+            builder.show();
             return;
         }
 
         String itemAisle = newAisleTextEdit.getText().toString();
         if (itemAisle.matches("")){
-            Toast.makeText(this, "You did not enter an aisle", Toast.LENGTH_SHORT).show();
+            builder.setTitle("Error");
+            builder.setMessage("You have not entered an aisle!");
+            builder.show();
             return;
         }
         else{
@@ -98,7 +104,9 @@ public class newItemActivity extends ActionBarActivity {
 
         String itemCurrentCost = newItemCurrentCostTextEdit.getText().toString();
         if (itemCurrentCost.matches("")){
-            Toast.makeText(this, "You did not enter a current cost", Toast.LENGTH_SHORT).show();
+            builder.setTitle("Error");
+            builder.setMessage("You have not entered a current cost!");
+            builder.show();
             return;
         }
         else {
@@ -107,7 +115,9 @@ public class newItemActivity extends ActionBarActivity {
 
         String itemMaxCost = newItemMaxCostTextEdit.getText().toString();
         if (itemMaxCost.matches("")){
-            Toast.makeText(this, "You did not enter a max cost", Toast.LENGTH_SHORT).show();
+            builder.setTitle("Error");
+            builder.setMessage("You have not entered a max cost!");
+            builder.show();
             return;
         }
         else {
@@ -171,25 +181,6 @@ public class newItemActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    //displays a dialog box telling the user that the item they're adding will cause them to go overbudget
-    public void overbudgetWarning(){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(newItemActivity.this);
-        builder1.setMessage("Adding this item will cause you to go overbudget.  " +
-                "Please consider editing or deleting other items to avoid this.");
-        builder1.setCancelable(true);
-        builder1.setPositiveButton("Back",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
-
-        return;
     }
 }
 

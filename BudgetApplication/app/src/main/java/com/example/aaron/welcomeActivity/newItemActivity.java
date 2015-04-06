@@ -1,6 +1,7 @@
 package com.example.aaron.welcomeActivity;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -25,7 +26,6 @@ public class newItemActivity extends ActionBarActivity {
     private float itemLimit;
     private int priority;
     private int aisle;
-    private boolean alreadyShown;
     private EditText newItemNameTextEdit;
     private TextView newItemCategoryName;
     private EditText newAisleTextEdit;
@@ -46,7 +46,6 @@ public class newItemActivity extends ActionBarActivity {
         itemLimit = 0;
         priority = 0;
         aisle = 0;
-        alreadyShown = false;
     }
 
     @Override
@@ -127,19 +126,21 @@ public class newItemActivity extends ActionBarActivity {
         //Gets Priority from dropdown
         priority = Integer.parseInt(selectedSpinner);
 
-        //Create new expense object
-        expense newExpense = new expense(newItemName, currentCost, itemLimit);
-        newExpense.setPriority(priority);
-        newExpense.setAisle(aisle);
+        //Find current total cost of budget and add the new item's price to it
         theDatabase.open();
-        theDatabase.insertExpense(newExpense, currentBudget.getName());
+        float budgetCost = theDatabase.findTotalCost(currentBudget.getName());
+        budgetCost = budgetCost + currentCost;
         theDatabase.closeDatabase();
 
-        //Finish Activity and return results
-        Intent returnedIntent = this.getIntent();
-        //Says it's ok and returns the information upon finish
-        setResult(RESULT_OK, returnedIntent);
-        this.finish();
+        /*if adding the new item may cause the user to go overbudget, display a warning box.
+          Otherwise, just add the expense
+         */
+        if(budgetCost > currentBudget.getMaxValue()){
+            overbudgetAlert();
+        }
+        else{
+            addExpense();
+        }
     }
 
     //Gets priority choice from dropdown menu
@@ -159,6 +160,43 @@ public class newItemActivity extends ActionBarActivity {
                 System.out.println("The dropdown is one!");
             }
         });
+    }
+
+    //adds new expense to database based on inputted values
+    public void addExpense(){
+        //Create new expense object
+        expense newExpense = new expense(newItemName, currentCost, itemLimit);
+        newExpense.setPriority(priority);
+        newExpense.setAisle(aisle);
+        theDatabase.open();
+        theDatabase.insertExpense(newExpense, currentBudget.getName());
+        theDatabase.closeDatabase();
+
+        //Finish Activity and return results
+        /*Intent returnedIntent = this.getIntent();
+        //Says it's ok and returns the information upon finish
+        setResult(RESULT_OK, returnedIntent);*/
+        this.finish();
+    }
+
+    //alerts user if an item they are adding will cause them to go overbudget
+    public void overbudgetAlert(){
+        builder.setTitle("Overbudget!");
+        builder.setMessage("Adding this item will cause you to go overbudget.  Add it anyway?");
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+                //Do nothing
+            }
+        });
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+                addExpense();
+            }
+        });
+        builder.create();
+        builder.show();
+
+        return;
     }
 
     @Override

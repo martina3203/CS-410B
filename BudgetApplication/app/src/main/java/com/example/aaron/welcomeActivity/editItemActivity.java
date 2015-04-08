@@ -1,5 +1,6 @@
 package com.example.aaron.welcomeActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -13,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 //this activity is used with edit_item_layout
 
@@ -35,6 +35,7 @@ public class editItemActivity extends ActionBarActivity{
     private DatabaseAccess theDatabase;
     private Spinner dropdown;
     private String selectedSpinner;
+    private AlertDialog.Builder builder;
     String[] values = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
     //Constructor
@@ -103,13 +104,17 @@ public class editItemActivity extends ActionBarActivity{
     public void onFinishClick(View view){
         itemName = itemNameTextEdit.getText().toString();
         if (itemName.matches("")){
-            Toast.makeText(this, "You did not enter a name", Toast.LENGTH_SHORT).show();
+            builder.setTitle("Error");
+            builder.setMessage("You have not entered a name!");
+            builder.show();
             return;
         }
 
         String itemAisle = aisleTextEdit.getText().toString();
         if (itemAisle.matches("")){
-            Toast.makeText(this, "You did not enter an aisle", Toast.LENGTH_SHORT).show();
+            builder.setTitle("Error");
+            builder.setMessage("You have not entered an aisle!");
+            builder.show();
             return;
         }
         else{
@@ -118,7 +123,9 @@ public class editItemActivity extends ActionBarActivity{
 
         String itemCurrentCost = itemCurrentCostTextEdit.getText().toString();
         if (itemCurrentCost.matches("")){
-            Toast.makeText(this, "You did not enter a current cost", Toast.LENGTH_SHORT).show();
+            builder.setTitle("Error");
+            builder.setMessage("You have not entered a current cost!");
+            builder.show();
             return;
         }
         else {
@@ -127,7 +134,9 @@ public class editItemActivity extends ActionBarActivity{
 
         String itemMaxCost = itemMaxCostTextEdit.getText().toString();
         if (itemMaxCost.matches("")){
-            Toast.makeText(this, "You did not enter a max cost", Toast.LENGTH_SHORT).show();
+            builder.setTitle("Error");
+            builder.setMessage("You have not entered a max cost!");
+            builder.show();
             return;
         }
         else {
@@ -145,7 +154,6 @@ public class editItemActivity extends ActionBarActivity{
         newExpense.setAisle(aisle);
         theDatabase.open();
         System.out.println("Updating expense");
-        //theDatabase.updateExpense(newExpense, currentBudget.getName());
         theDatabase.removeExpense(currentExpense.getIDNumber(), currentBudget.getName());
         theDatabase.insertExpense(newExpense, currentBudget.getName());
         theDatabase.closeDatabase();

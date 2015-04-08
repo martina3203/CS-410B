@@ -83,7 +83,6 @@ public class newItemActivity extends ActionBarActivity {
 
         newItemName = newItemNameTextEdit.getText().toString();
         if (newItemName.matches("")){
-            //Toast.makeText(this, "You did not enter a name", Toast.LENGTH_SHORT).show();
             builder.setTitle("Error");
             builder.setMessage("You have not entered a name!");
             builder.show();

@@ -41,8 +41,14 @@ public class itemOverviewActivity extends ActionBarActivity {
         String temp2 =Integer.toString(currentExpense.getAisle());
         aisleBox.setText(temp2);
         String temp3 = Float.toString(currentExpense.getCurrentExpense());
+        float f = Float.parseFloat(temp3);
+        temp3 = String.format("%.2f", f);
+        temp3 = "$" + temp3;
         currentCostBox.setText(temp3);
         String temp4 = Float.toString(currentExpense.getMaxExpense());
+        f = Float.parseFloat(temp4);
+        temp4 = String.format("%.2f", f);
+        temp4 = "$" + temp4;
         maxCostBox.setText(temp4);
 
     }

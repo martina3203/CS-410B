@@ -3,6 +3,7 @@ package com.example.aaron.welcomeActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -140,6 +141,21 @@ public class newItemActivity extends ActionBarActivity {
         else{
             addExpense();
         }
+    }
+
+    public void onPriceClick(View view) {
+        String url = "http://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=";
+        String item = newItemNameTextEdit.getText().toString();
+        if (item.matches("")){
+            builder.setTitle("Error");
+            builder.setMessage("You must enter an item name.");
+            builder.show();
+            return;
+        }
+        url = url + item;
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 
     //Gets priority choice from dropdown menu

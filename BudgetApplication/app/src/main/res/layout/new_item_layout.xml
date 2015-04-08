@@ -92,19 +92,6 @@
             android:layout_marginRight="160dp"
             android:layout_marginLeft="5dp" />
 
-        <!--<EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/newPriorityEditText"
-            android:layout_column="1"
-            android:layout_row="1"
-            android:layout_marginTop="15dp"
-            android:textSize="25sp"
-            android:layout_marginRight="160dp"
-            android:layout_marginLeft="5dp"
-            android:inputType="number" />-->
-
         <Spinner
             android:id="@+id/priorityDropDown"
             android:layout_width="225dp"
@@ -168,13 +155,32 @@
             android:inputType="numberDecimal" />
     </GridLayout>
 
-    <Button
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Item"
-        android:id="@+id/addItemButton"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:onClick="onAddItemClick" />
+        android:gravity="center_horizontal"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Find Price"
+            android:id="@+id/priceButton"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onPriceClick"
+            android:layout_marginRight="20dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Item"
+            android:id="@+id/addItemButton"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:onClick="onAddItemClick" />
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -38,7 +38,7 @@
             android:layout_height="386dp"
             android:id="@+id/budgetListView"
             android:choiceMode="singleChoice"
-            android:background="@drawable/abc_menu_hardkey_panel_mtrl_mult" />
+            android:background="#ffddffd4" />
     </LinearLayout>
 
     <LinearLayout

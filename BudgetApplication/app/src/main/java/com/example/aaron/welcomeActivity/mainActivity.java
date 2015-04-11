@@ -2,6 +2,7 @@ package com.example.aaron.welcomeActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -33,7 +34,7 @@ public class mainActivity extends ActionBarActivity {
     private ArrayList<budget> listItems=new ArrayList<budget>();
     private ArrayAdapter<budget> theAdapter;
     private int selectedItemInListPosition = -1;
-
+    private int previousListPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,18 +65,18 @@ public class mainActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         theDatabase.open();
         //filling listItems with budgets from database
         listItems = theDatabase.findAllBudgets();
         //close database when you're done
         theDatabase.closeDatabase();
-
         //Updates list with budgets
         theAdapter = new ArrayAdapter<budget>(this,
                 android.R.layout.simple_list_item_1, listItems);
-
         budgetListView.setAdapter(theAdapter);
+        //Reset some position flags
+        selectedItemInListPosition = -1;
+        previousListPosition = -1;
         registerClick();
     }
 
@@ -84,26 +85,6 @@ public class mainActivity extends ActionBarActivity {
     {
         super.onPause();
         theDatabase.closeDatabase();
-    }
-    
-    public void test()
-    {
-        //Makes new budgets to add to database
-        budget newBudget = new budget("Poop",100);
-        budget newTurd = new budget("NotPoop",100);
-        budget newCrap = new budget("TotallyPoop", 100);
-        newBudget.setIDNumber(theDatabase.insertBudget(newBudget));
-        newTurd.setIDNumber(theDatabase.insertBudget(newTurd));
-        newCrap.setIDNumber(theDatabase.insertBudget(newCrap));
-        long yes = newBudget.getIDNumber();
-        long no = newTurd.getIDNumber();
-        Log.d("Yes, the ID is:", Long.toString(yes));
-        Log.d("Yes, the ID is not: ", Long.toString(no));
-        newBudget = theDatabase.findBudget(yes);
-        Log.d(newBudget.getName(),"yes");
-
-        theDatabase.closeDatabase();
-
     }
 
     @Override
@@ -155,18 +136,23 @@ public class mainActivity extends ActionBarActivity {
 
     //Used to register when user clicks on list item
     private void registerClick() {
-        ListView budgetListView = (ListView) findViewById(R.id.budgetListView);
+        budgetListView = (ListView) findViewById(R.id.budgetListView);
         budgetListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
                 TextView textView = (TextView) viewClicked;
-                //needs to be sent to budgetOverviewActivity
-                String selectedBudget = textView.getText().toString();
-                String message = "You clicked # " + position + " which is string: " + selectedBudget;
-                System.out.println(selectedBudget + " is the budget clicked!");
                 //Sets the position up for list transfer
                 selectedItemInListPosition = position;
-
+                budgetListView.setItemChecked(position,true);
+                //This section pertains to highlighting
+                //Set the new selected to the color
+                parent.getChildAt(position).setBackgroundColor(Color.CYAN);
+                //Revert the previous color
+                if (previousListPosition != -1 && previousListPosition != position){
+                    parent.getChildAt(previousListPosition).setBackgroundColor(Color.WHITE);
+                }
+                //Update previous saved position so that we can revert it later
+                previousListPosition = position;
             }
         });
 

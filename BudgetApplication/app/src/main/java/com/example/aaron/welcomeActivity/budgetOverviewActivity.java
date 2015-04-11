@@ -1,5 +1,6 @@
 package com.example.aaron.welcomeActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -29,6 +30,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
     private ListView expenseListView;
     private ProgressBar progressBar;
     int selectedItemInListPosition = -1;
+    int previousListPosition = -1;
 
     //List components
     private ArrayList<expense> expenseList = new ArrayList<expense>();
@@ -97,6 +99,9 @@ public class budgetOverviewActivity extends ActionBarActivity {
     protected void onPause()
     {
         super.onPause();
+        //Reset some position items
+        selectedItemInListPosition = -1;
+        previousListPosition = -1;
         theDatabase.closeDatabase();
     }
 
@@ -130,9 +135,15 @@ public class budgetOverviewActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
                 TextView textView = (TextView) viewClicked;
-                String selectedExpense = textView.getText().toString();
-                String message = "You clicked " + selectedExpense + "! Hurray for you!";
-                System.out.println(selectedExpense + " is the expense clicked!");
+                //This section pertains to highlighting
+                //Set the new selected to the color
+                parent.getChildAt(position).setBackgroundColor(Color.CYAN);
+                //Revert the previous color
+                if (previousListPosition != -1 && previousListPosition != position){
+                    parent.getChildAt(previousListPosition).setBackgroundColor(Color.WHITE);
+                }
+                //Update previous saved position so that we can revert it later
+                previousListPosition = position;
                 selectedItemInListPosition = position;
             }
         });

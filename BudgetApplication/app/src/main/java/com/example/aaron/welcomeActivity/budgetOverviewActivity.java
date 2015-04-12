@@ -137,7 +137,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
                 TextView textView = (TextView) viewClicked;
                 //This section pertains to highlighting
                 //Set the new selected to the color
-                parent.getChildAt(position).setBackgroundColor(Color.CYAN);
+                parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
                 //Revert the previous color
                 if (previousListPosition != -1 && previousListPosition != position){
                     parent.getChildAt(previousListPosition).setBackgroundColor(Color.WHITE);

@@ -12,13 +12,15 @@
     android:background="#ffddffd4">
 
     <TextView
-        android:layout_width="341dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="The Budget App"
+        android:text="Budget Buddy"
         android:id="@+id/programTitleTextView"
         android:background="@drawable/abc_ab_share_pack_holo_dark"
-        android:backgroundTint="@color/background_material_light" />
+        android:backgroundTint="@color/background_material_light"
+        android:gravity="center"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"

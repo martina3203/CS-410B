@@ -6,13 +6,14 @@
     android:background="#ffddffd4">
 
     <TextView
-        android:layout_width="243dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Budget Name"
         android:id="@+id/titleTextView"
         android:layout_weight="0.02"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:gravity="center" />
 
     <TextView
         android:layout_width="match_parent"

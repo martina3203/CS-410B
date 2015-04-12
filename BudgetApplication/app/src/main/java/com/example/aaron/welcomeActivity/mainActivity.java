@@ -1,5 +1,6 @@
 package com.example.aaron.welcomeActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,7 +24,7 @@ import java.util.Arrays;
 
 //This activity is used with select_budget
 
-public class mainActivity extends ActionBarActivity {
+public class mainActivity extends Activity {
 
     private Button budgetAddButton; //Button that saves input when pressed
     private ListView budgetListView;

@@ -159,13 +159,24 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Done"
-            android:id="@+id/doneButton"
+            android:text="Delete"
+            android:id="@+id/deleteButton"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:onClick="onDoneClick" />
+            android:onClick="onDeleteClick" />
+
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:id="@+id/doneButton"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:onClick="onDoneClick" />
 
 
 </LinearLayout>

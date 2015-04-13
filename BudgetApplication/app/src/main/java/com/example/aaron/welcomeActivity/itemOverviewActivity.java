@@ -1,5 +1,7 @@
 package com.example.aaron.welcomeActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +17,8 @@ public class itemOverviewActivity extends ActionBarActivity {
     private TextView aisleBox;
     private TextView currentCostBox;
     private TextView maxCostBox;
+    private DatabaseAccess theDatabase;
+    private AlertDialog.Builder builder;
 
     expense currentExpense;
     budget currentBudget;
@@ -29,6 +33,9 @@ public class itemOverviewActivity extends ActionBarActivity {
         aisleBox = (TextView) findViewById(R.id.aisleBox);
         currentCostBox = (TextView) findViewById(R.id.currentCostBox);
         maxCostBox = (TextView) findViewById(R.id.maxCostBox);
+
+        theDatabase = new DatabaseAccess(getApplicationContext());
+        builder = new AlertDialog.Builder(this);
 
         //Set Text Edits to have values of expense
         Intent receivedIntent = this.getIntent();
@@ -75,4 +82,35 @@ public class itemOverviewActivity extends ActionBarActivity {
         intent.putExtra("Budget", transferBudget);
         startActivity(intent);
     }
+
+    //called when delete is touched
+    public void onDeleteClick(View view){
+        //make a dialog box asking if the user is sure they wish to delete the item
+        builder.setMessage("Are you sure you want to delete this item?");
+        //if they click no, do nothing
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+                //Do nothing
+            }
+        });
+        //if they click yes, call deleteExpense to delete the expense (gasp)
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+                deleteExpense();
+            }
+        });
+        builder.create();
+        builder.show();
+
+        return;
+    }
+
+    //used to delete an expense.  called in onDeleteClick
+    public void deleteExpense(){
+        theDatabase.open();
+        theDatabase.removeExpense(currentExpense.getIDNumber(), currentBudget.getName());
+        theDatabase.closeDatabase();
+        this.finish();
+    };
+
 }

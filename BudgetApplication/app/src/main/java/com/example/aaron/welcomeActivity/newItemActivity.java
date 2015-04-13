@@ -143,15 +143,19 @@ public class newItemActivity extends ActionBarActivity {
         }
     }
 
+    //opens web browser and searches Amazon for item
     public void onPriceClick(View view) {
+        //this is the URL for Amazon searches
         String url = "http://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=";
         String item = newItemNameTextEdit.getText().toString();
+        //can't search without an item name
         if (item.matches("")){
             builder.setTitle("Error");
             builder.setMessage("You must enter an item name.");
             builder.show();
             return;
         }
+        //append item name to URL and start the search
         url = url + item;
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));

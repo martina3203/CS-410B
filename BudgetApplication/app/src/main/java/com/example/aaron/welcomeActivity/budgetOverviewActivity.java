@@ -3,7 +3,6 @@ package com.example.aaron.welcomeActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.content.Intent;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -55,7 +53,6 @@ public class budgetOverviewActivity extends ActionBarActivity {
         //Acquire intent
         Intent receivedIntent = this.getIntent();
         currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
-        Log.v("Budget Loaded: ", currentBudget.getName());
         //Set title on screen to be the same as the budget name
         titleTextView.setText(currentBudget.getName());
 

@@ -67,7 +67,6 @@ public class editItemActivity extends ActionBarActivity{
         Intent receivedIntent = this.getIntent();
         currentExpense = (expense) receivedIntent.getSerializableExtra("Expense");
         currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
-        System.out.println("Budget name is " + currentBudget.getName());
 
         //Set the values of the edit texts
         itemNameTextEdit.setText(currentExpense.getName(), TextView.BufferType.EDITABLE);
@@ -89,14 +88,12 @@ public class editItemActivity extends ActionBarActivity{
             //sets variable when selected value is changed in dropdown
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selectedSpinner = values[position];
-                System.out.println("The dropdown is " + selectedSpinner + "!");
             }
 
             @Override
             //sets variable if user doesn't select one
             public void onNothingSelected(AdapterView<?> parentView) {
                 selectedSpinner = Integer.toString(currentExpense.getAisle());
-                System.out.println("The dropdown is default!");
             }
         });
     }
@@ -146,19 +143,14 @@ public class editItemActivity extends ActionBarActivity{
         //Gets Priority from dropdown
         priority = Integer.parseInt(selectedSpinner);
 
-        System.out.println("Making new expense");
-
         //Create new expense object
         expense newExpense = new expense(itemName, currentCost, itemLimit);
         newExpense.setPriority(priority);
         newExpense.setAisle(aisle);
         theDatabase.open();
-        System.out.println("Updating expense");
         theDatabase.removeExpense(currentExpense.getIDNumber(), currentBudget.getName());
         theDatabase.insertExpense(newExpense, currentBudget.getName());
         theDatabase.closeDatabase();
-
-        System.out.println("Starting intent");
 
         //Finish Activity and go to select budget screen
         Intent newIntent = new Intent(this, mainActivity.class);

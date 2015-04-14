@@ -78,9 +78,9 @@ public class newItemActivity extends ActionBarActivity {
 
     //called when add item button is clicked
     public void onAddItemClick(View view) {
-        //Displays message to tell user that they did not fill out a field
-        //Otherwise, it will read the field and move to the next one
-        //This repeats until all fields are filled (except priority)
+        /*Displays message to tell user that they did not fill out a field
+         *Otherwise, it will read the field and move to the next one
+         *This repeats until all fields are filled (except priority)*/
 
         newItemName = newItemNameTextEdit.getText().toString();
         if (newItemName.matches("")){
@@ -133,8 +133,7 @@ public class newItemActivity extends ActionBarActivity {
         theDatabase.closeDatabase();
 
         /*if adding the new item may cause the user to go overbudget, display a warning box.
-          Otherwise, just add the expense
-         */
+         *Otherwise, just add the expense*/
         if(budgetCost > currentBudget.getMaxValue()){
             overbudgetAlert();
         }
@@ -169,14 +168,12 @@ public class newItemActivity extends ActionBarActivity {
             //sets variable when selected value is changed in dropdown
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selectedSpinner = values[position];
-                System.out.println("The dropdown is " + selectedSpinner + "!");
             }
 
             @Override
             //sets variable if user doesn't select one
             public void onNothingSelected(AdapterView<?> parentView) {
                 selectedSpinner = "1";
-                System.out.println("The dropdown is one!");
             }
         });
     }

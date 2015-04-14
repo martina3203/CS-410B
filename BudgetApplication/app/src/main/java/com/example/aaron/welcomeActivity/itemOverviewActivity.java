@@ -37,11 +37,12 @@ public class itemOverviewActivity extends ActionBarActivity {
         theDatabase = new DatabaseAccess(getApplicationContext());
         builder = new AlertDialog.Builder(this);
 
-        //Set Text Edits to have values of expense
+        //Get budget and expense from intent
         Intent receivedIntent = this.getIntent();
         currentExpense = (expense) receivedIntent.getSerializableExtra("Expense");
         currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
-        System.out.println("Budget name is " + currentBudget.getName());
+
+        //Set values of text views
         nameBox.setText(currentExpense.getName());
         String temp =Integer.toString(currentExpense.getPriority());
         priorityBox.setText(temp);
@@ -65,21 +66,24 @@ public class itemOverviewActivity extends ActionBarActivity {
         super.onResume();
     }
 
+    //called when done is pressed; returns to the budgetOverviewActivity
     public void onDoneClick(View view)
     {
-        //Finish Activity and return results
-        //Intent returnedIntent = this.getIntent();
-        //Says it's ok and returns the information upon finish
-        //setResult(RESULT_OK, returnedIntent);
+        //Finishes activity and returns to last screen
         this.finish();
     }
 
+    //called when edit button is pressed; sends user to edit item screen
     public void onEditItemClick(View view){
+        //make new intent to send user to editItemActivity
         Intent intent = new Intent(this, editItemActivity.class);
+        //set up info to be transferred
         expense transferExpense = currentExpense;
         budget transferBudget = currentBudget;
+        //add budget and expense to intent
         intent.putExtra("Expense",transferExpense);
         intent.putExtra("Budget", transferBudget);
+        //send intent to start new activity
         startActivity(intent);
     }
 

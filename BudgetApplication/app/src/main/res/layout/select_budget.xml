@@ -49,26 +49,35 @@
         android:layout_height="wrap_content"
         android:weightSum="1"
         android:paddingLeft="15dp"
-        android:paddingTop="6dp"
         android:paddingRight="15dp"
         android:id="@+id/budgetButtonLayout"
-        android:paddingBottom="6dp">
+        android:paddingBottom="6dp"
+        android:gravity="center_horizontal">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="Add New Budget..."
-            android:id="@+id/budgetAddButton"
-            android:nestedScrollingEnabled="false"
-            android:onClick="onAddBudgetClick" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Edit Selected Budget..."
+            android:text="   Edit Selected   "
             android:id="@+id/budgetEditButton"
-            android:onClick="onEditClick" />
+            android:onClick="onEditClick"
+            android:layout_marginRight="10dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Delete Selected"
+            android:id="@+id/budgetDeleteButton"
+            android:onClick="onDeleteClick" />
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="Add New Budget..."
+        android:id="@+id/budgetAddButton"
+        android:nestedScrollingEnabled="false"
+        android:onClick="onAddBudgetClick"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

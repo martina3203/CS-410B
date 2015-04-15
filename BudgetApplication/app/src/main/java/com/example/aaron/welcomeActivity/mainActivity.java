@@ -110,8 +110,7 @@ public class mainActivity extends Activity {
     }
 
     //Called when the edit button is pressed a long with an item on the list
-    public void onEditClick(View view)
-    {
+    public void onEditClick(View view) {
         Intent newIntent = new Intent(this,budgetOverviewActivity.class);
         //Get the appropriate budget ot pass into the next activity, if available
         if (selectedItemInListPosition != -1)
@@ -119,6 +118,21 @@ public class mainActivity extends Activity {
             budget transferBudget = listItems.get(selectedItemInListPosition);
             newIntent.putExtra("Budget",transferBudget);
             startActivity(newIntent);
+        }
+    }
+
+    //called when delete is pressed; deletes selected budget
+    public void onDeleteClick(View view){
+        if (selectedItemInListPosition != -1){
+            //get budget to be deleted
+            budget deleteBudget = listItems.get(selectedItemInListPosition);
+            theDatabase.open();
+            //removes budget from database
+            theDatabase.removeBudget(deleteBudget.getIDNumber());
+            //removes budget from listView and updates listView
+            theAdapter.remove(deleteBudget);
+            theAdapter.notifyDataSetChanged();
+            theDatabase.closeDatabase();
         }
     }
 

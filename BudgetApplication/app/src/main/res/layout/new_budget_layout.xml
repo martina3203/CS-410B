@@ -6,7 +6,7 @@
     android:background="#ffddffd4">
 
     <TextView
-        android:layout_width="308dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Create a New Budget"

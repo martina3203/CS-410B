@@ -23,6 +23,7 @@ public class mainActivity extends Activity {
     private ListView budgetListView;
     private ArrayList budgetList;
     private DatabaseAccess theDatabase;
+    public static String BACKGROUND_COLOR = "#ffddffd4";
 
     //List components
     private ArrayList<budget> listItems=new ArrayList<budget>();
@@ -133,6 +134,8 @@ public class mainActivity extends Activity {
             theAdapter.remove(deleteBudget);
             theAdapter.notifyDataSetChanged();
             theDatabase.closeDatabase();
+            //Reset selected Flag
+            selectedItemInListPosition = -1;
         }
     }
 
@@ -157,7 +160,7 @@ public class mainActivity extends Activity {
                 parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
                 //Revert the previous color
                 if (previousListPosition != -1 && previousListPosition != position){
-                    parent.getChildAt(previousListPosition).setBackgroundColor(Color.WHITE);
+                    parent.getChildAt(previousListPosition).setBackgroundColor(Color.parseColor(BACKGROUND_COLOR));
                 }
                 //Update previous saved position so that we can revert it later
                 previousListPosition = position;

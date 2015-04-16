@@ -137,7 +137,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
                 parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
                 //Revert the previous color
                 if (previousListPosition != -1 && previousListPosition != position){
-                    parent.getChildAt(previousListPosition).setBackgroundColor(Color.WHITE);
+                    parent.getChildAt(previousListPosition).setBackgroundColor(Color.parseColor(mainActivity.BACKGROUND_COLOR));
                 }
                 //Update previous saved position so that we can revert it later
                 previousListPosition = position;

@@ -20,7 +20,8 @@
         android:background="@drawable/abc_ab_share_pack_holo_dark"
         android:backgroundTint="@color/background_material_light"
         android:gravity="center"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textSize="@dimen/abc_dropdownitem_icon_width" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -12,7 +12,8 @@
         android:text="Create a New Budget"
         android:id="@+id/titleTextView"
         android:layout_weight="0.02"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:gravity="center" />
 
     <TextView
         android:layout_width="wrap_content"

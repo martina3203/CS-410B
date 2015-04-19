@@ -144,12 +144,12 @@ public class editItemActivity extends ActionBarActivity{
         priority = Integer.parseInt(selectedSpinner);
 
         //Create new expense object
-        expense newExpense = new expense(itemName, currentCost, itemLimit);
-        newExpense.setPriority(priority);
-        newExpense.setAisle(aisle);
+        currentExpense.setCurrentExpense(currentCost);
+        currentExpense.setMaxExpense(itemLimit);
+        currentExpense.setAisle(aisle);
+        currentExpense.setPriority(priority);
         theDatabase.open();
-        theDatabase.removeExpense(currentExpense.getIDNumber(), currentBudget.getName());
-        theDatabase.insertExpense(newExpense, currentBudget.getName());
+        theDatabase.updateExpense(currentExpense, currentBudget.getName());
         theDatabase.closeDatabase();
 
         //Finish Activity and go to select budget screen

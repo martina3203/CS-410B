@@ -140,7 +140,7 @@ public class DatabaseAccess {
         String command = "UPDATE " +  theTable +
                 " SET " + theHelper.COLUMN_EXPENSE_NAME + " = '" + theExpense.getName() + "'," +
                 theHelper.COLUMN_EXPENSE_COST + " = " + theExpense.getCurrentExpense() + ","
-                + theHelper.COLUMN_EXPENSE_MAX_COST + " = " + theExpense.getCurrentExpense() + ","
+                + theHelper.COLUMN_EXPENSE_MAX_COST + " = " + theExpense.getMaxExpense() + ","
                 + theHelper.COLUMN_EXPENSE_PRIORITY + " = " + theExpense.getPriority() + ","
                 + theHelper.COLUMN_EXPENSE_AISLE_NUMBER + " = " + theExpense.getAisle() +
                 " WHERE " + theHelper.COLUMN_ID + " = " + theExpense.getIDNumber();

@@ -92,10 +92,7 @@ public class newItemActivity extends ActionBarActivity {
 
         String itemAisle = newAisleTextEdit.getText().toString();
         if (itemAisle.matches("")){
-            builder.setTitle("Error");
-            builder.setMessage("You have not entered an aisle!");
-            builder.show();
-            return;
+            aisle = 0;
         }
         else{
             aisle = Integer.parseInt(itemAisle);

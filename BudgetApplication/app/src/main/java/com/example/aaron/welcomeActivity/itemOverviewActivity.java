@@ -47,7 +47,12 @@ public class itemOverviewActivity extends ActionBarActivity {
         String temp =Integer.toString(currentExpense.getPriority());
         priorityBox.setText(temp);
         String temp2 =Integer.toString(currentExpense.getAisle());
-        aisleBox.setText(temp2);
+        if (currentExpense.getAisle() == 0){
+            aisleBox.setText("None");
+        }
+        else{
+            aisleBox.setText(temp2);
+        }
         String temp3 = Float.toString(currentExpense.getCurrentExpense());
         float f = Float.parseFloat(temp3);
         temp3 = String.format("%.2f", f);

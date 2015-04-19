@@ -165,15 +165,17 @@ public class DatabaseAccess {
 
     //Removes an existing subtable of the expenses that corresponds to a budget
     public void removeExpenseTable(String tableName) {
-        String command = "DROP TABLE " + tableName;
+        String properTableName = convertToSQLTableName(tableName);
+        String command = "DROP TABLE " + properTableName;
         theDatabase.execSQL(command);
     }
 
     //Removes a listed expense, if it exists
     public void removeExpense(long ID, String tableName)
     {
+        String properTableName = convertToSQLTableName(tableName);
         //This builds a delete command to be executed
-        String command = "DELETE FROM " + tableName + " WHERE " + theHelper.COLUMN_ID + " = " + ID;
+        String command = "DELETE FROM " + properTableName + " WHERE " + theHelper.COLUMN_ID + " = " + ID;
         theDatabase.execSQL(command);
     }
 

@@ -108,10 +108,7 @@ public class editItemActivity extends ActionBarActivity{
 
         String itemAisle = aisleTextEdit.getText().toString();
         if (itemAisle.matches("")){
-            builder.setTitle("Error");
-            builder.setMessage("You have not entered an aisle!");
-            builder.show();
-            return;
+           aisle = 0;
         }
         else{
             aisle = Integer.parseInt(itemAisle);
@@ -142,13 +139,20 @@ public class editItemActivity extends ActionBarActivity{
         //Gets Priority from dropdown
         priority = Integer.parseInt(selectedSpinner);
 
+<<<<<<< HEAD
         //Create new Expense object
         Expense newExpense = new Expense(itemName, currentCost, itemLimit);
         newExpense.setPriority(priority);
         newExpense.setAisle(aisle);
+=======
+        //Create new expense object
+        currentExpense.setCurrentExpense(currentCost);
+        currentExpense.setMaxExpense(itemLimit);
+        currentExpense.setAisle(aisle);
+        currentExpense.setPriority(priority);
+>>>>>>> origin/master
         theDatabase.open();
-        theDatabase.removeExpense(currentExpense.getIDNumber(), currentBudget.getName());
-        theDatabase.insertExpense(newExpense, currentBudget.getName());
+        theDatabase.updateExpense(currentExpense, currentBudget.getName());
         theDatabase.closeDatabase();
 
         //Finish Activity and go to select Budget screen

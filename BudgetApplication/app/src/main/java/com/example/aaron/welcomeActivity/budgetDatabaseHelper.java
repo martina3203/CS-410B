@@ -20,7 +20,7 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BUDGET_LIMIT = "BUDGET_LIMIT";
 
     //Name of the main database
-    private static final String DATABASE_NAME = "budget.db";
+    private static final String DATABASE_NAME = "Budget.db";
     private static final int DATABASE_VERSION = 1;
 
     //These are the names of the columns for our subtables that include expenses

@@ -31,9 +31,9 @@ public class budgetOverviewActivity extends ActionBarActivity {
     int previousListPosition = -1;
 
     //List components
-    private ArrayList<expense> expenseList = new ArrayList<expense>();
-    private ArrayAdapter<expense> theAdapter;
-    budget currentBudget;
+    private ArrayList<Expense> expenseList = new ArrayList<Expense>();
+    private ArrayAdapter<Expense> theAdapter;
+    Budget currentBudget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,17 +52,17 @@ public class budgetOverviewActivity extends ActionBarActivity {
 
         //Acquire intent
         Intent receivedIntent = this.getIntent();
-        currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
-        //Set title on screen to be the same as the budget name
+        currentBudget = (Budget) receivedIntent.getSerializableExtra("Budget");
+        //Set title on screen to be the same as the Budget name
         titleTextView.setText(currentBudget.getName());
 
-        //Open database and find all expenses for budget
+        //Open database and find all expenses for Budget
         theDatabase.open();
         expenseList = theDatabase.findAllExpenses(currentBudget.getName());
         theDatabase.closeDatabase();
 
         //Update list with expenses
-        theAdapter = new ArrayAdapter<expense>(this,
+        theAdapter = new ArrayAdapter<Expense>(this,
                 android.R.layout.simple_list_item_1, expenseList);
         expenseListView.setAdapter(theAdapter);
         //set up the progress bar
@@ -81,7 +81,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
         theDatabase.closeDatabase();
 
         //Updates list with budgets
-        theAdapter = new ArrayAdapter<expense>(this,
+        theAdapter = new ArrayAdapter<Expense>(this,
                 android.R.layout.simple_list_item_1, expenseList);
 
         expenseListView.setAdapter(theAdapter);
@@ -102,10 +102,10 @@ public class budgetOverviewActivity extends ActionBarActivity {
         theDatabase.closeDatabase();
     }
 
-    //Executes when add expense button is clicked
+    //Executes when add Expense button is clicked
     public void onNewExpenseClick(View view){
         Intent newIntent = new Intent(this,newItemActivity.class);
-        budget transferBudget = currentBudget;
+        Budget transferBudget = currentBudget;
         newIntent.putExtra("Budget",transferBudget);
         startActivity(newIntent);
     }
@@ -114,11 +114,11 @@ public class budgetOverviewActivity extends ActionBarActivity {
     public void onViewExpenseClick(View view)
     {
         Intent intent = new Intent(this,itemOverviewActivity.class);
-        //Get the appropriate budget ot pass into the next activity, if available
+        //Get the appropriate Budget ot pass into the next activity, if available
         if (selectedItemInListPosition != -1)
         {
-            expense transferExpense = expenseList.get(selectedItemInListPosition);
-            budget transferBudget = currentBudget;
+            Expense transferExpense = expenseList.get(selectedItemInListPosition);
+            Budget transferBudget = currentBudget;
             intent.putExtra("Expense",transferExpense);
             intent.putExtra("Budget", transferBudget);
             startActivity(intent);
@@ -206,7 +206,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
             //update textView with money available to use
             double moneyAvailable = currentBudget.getMaxValue();
             moneyAvailable = moneyAvailable - currentTotalCost;
-            //if there is no money left in the budget, the text view will say "None"
+            //if there is no money left in the Budget, the text view will say "None"
             if (moneyAvailable <= 0){
                 moneyAvailableAmountTextView.setText("None");
             }

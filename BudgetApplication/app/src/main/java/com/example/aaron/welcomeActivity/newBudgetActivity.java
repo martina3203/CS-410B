@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.util.Log;
+
 import java.util.ArrayList;
 
 //This activity is used with new_budget_layout
@@ -63,7 +63,7 @@ public class newBudgetActivity extends ActionBarActivity {
     //Executes when addButton is clicked
     public void onAddBudgetClick(View view)
     {
-        //Get new budget name
+        //Get new Budget name
         newBudgetName = newBudgetNameTextEdit.getText().toString();
         if (newBudgetName.matches("")){
             builder.setTitle("Error");
@@ -72,7 +72,7 @@ public class newBudgetActivity extends ActionBarActivity {
             return;
         }
 
-        //Get new budget amount
+        //Get new Budget amount
         String budgetTotal = newBudgetTotalTextEdit.getText().toString();
         if (budgetTotal.matches("")){
             builder.setTitle("Error");
@@ -83,10 +83,10 @@ public class newBudgetActivity extends ActionBarActivity {
 
         //Now I have to check for duplicates in the database
         theDatabase.open();
-        ArrayList<budget> budgetList = theDatabase.findAllBudgets();
+        ArrayList<Budget> budgetList = theDatabase.findAllBudgets();
         for (int i = 0; i < budgetList.size(); i++)
         {
-            budget currentBudget = budgetList.get(i);
+            Budget currentBudget = budgetList.get(i);
             if (newBudgetName.matches(currentBudget.getName()))
             {
                 //We have encountered a duplicate and will not proceed
@@ -101,9 +101,9 @@ public class newBudgetActivity extends ActionBarActivity {
         budgetLimit = Double.parseDouble(budgetTotal);
 
         //Create new Budget object and add to database
-        budget tempBudget = new budget(newBudgetName, budgetLimit);
+        Budget tempBudget = new Budget(newBudgetName, budgetLimit);
         tempBudget.setIDNumber(theDatabase.insertBudget(tempBudget));
-        //Create new expense table
+        //Create new Expense table
         theDatabase.addExpenseTable(newBudgetName);
         //Close database when done
         theDatabase.closeDatabase();

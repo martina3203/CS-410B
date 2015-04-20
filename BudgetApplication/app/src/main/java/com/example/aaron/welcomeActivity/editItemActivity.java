@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,8 +29,8 @@ public class editItemActivity extends ActionBarActivity{
     private EditText itemCurrentCostTextEdit;
     private EditText itemMaxCostTextEdit;
     private Button editItemButton;
-    budget currentBudget;
-    expense currentExpense;
+    Budget currentBudget;
+    Expense currentExpense;
     private DatabaseAccess theDatabase;
     private Spinner dropdown;
     private String selectedSpinner;
@@ -65,8 +64,8 @@ public class editItemActivity extends ActionBarActivity{
 
         //Get intent from item overview
         Intent receivedIntent = this.getIntent();
-        currentExpense = (expense) receivedIntent.getSerializableExtra("Expense");
-        currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
+        currentExpense = (Expense) receivedIntent.getSerializableExtra("Expense");
+        currentBudget = (Budget) receivedIntent.getSerializableExtra("Budget");
 
         //Set the values of the edit texts
         itemNameTextEdit.setText(currentExpense.getName(), TextView.BufferType.EDITABLE);
@@ -143,8 +142,8 @@ public class editItemActivity extends ActionBarActivity{
         //Gets Priority from dropdown
         priority = Integer.parseInt(selectedSpinner);
 
-        //Create new expense object
-        expense newExpense = new expense(itemName, currentCost, itemLimit);
+        //Create new Expense object
+        Expense newExpense = new Expense(itemName, currentCost, itemLimit);
         newExpense.setPriority(priority);
         newExpense.setAisle(aisle);
         theDatabase.open();
@@ -152,7 +151,7 @@ public class editItemActivity extends ActionBarActivity{
         theDatabase.insertExpense(newExpense, currentBudget.getName());
         theDatabase.closeDatabase();
 
-        //Finish Activity and go to select budget screen
+        //Finish Activity and go to select Budget screen
         Intent newIntent = new Intent(this, mainActivity.class);
         startActivity(newIntent);
     }

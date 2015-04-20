@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Aaron on 3/3/2015.
@@ -26,10 +25,10 @@ public class DatabaseAccess {
         theDatabase = theHelper.getWritableDatabase();
     }
 
-    //Adds a budget to the table, returns ID number
-    public long insertBudget(budget theBudget)
+    //Adds a Budget to the table, returns ID number
+    public long insertBudget(Budget theBudget)
     {
-        //Build a Content Values class that contains the values of this budget
+        //Build a Content Values class that contains the values of this Budget
         ContentValues values = new ContentValues();
         values.put(theHelper.COLUMN_BUDGET_NAME,theBudget.getName());
         values.put(theHelper.COLUMN_BUDGET_LIMIT,theBudget.getMaxValue());
@@ -38,8 +37,8 @@ public class DatabaseAccess {
         return ID;
     }
 
-    //Updates a budget entry in the database
-    public void updateBudget(budget updatedBudget)
+    //Updates a Budget entry in the database
+    public void updateBudget(Budget updatedBudget)
     {
         String command = "UPDATE " +  theHelper.BUDGET_TABLE_NAME +
                 " SET " + theHelper.COLUMN_BUDGET_NAME + " = '" + updatedBudget.getName() + "'," +
@@ -48,30 +47,30 @@ public class DatabaseAccess {
         theDatabase.execSQL(command);
     }
 
-    //Removes a listed budget, if it exists
+    //Removes a listed Budget, if it exists
     public void removeBudget(long ID)
     {
         //First we delete the subtable
-        budget targetBudget = findBudget(ID);
+        Budget targetBudget = findBudget(ID);
         removeExpenseTable(targetBudget.getName());
         //This builds a delete command to be executed
         String command = "DELETE FROM " + theHelper.BUDGET_TABLE_NAME + " WHERE " + theHelper.COLUMN_ID + " = " + ID;
         theDatabase.execSQL(command);
     }
 
-    //Finds a specific budget in the database
-    public budget findBudget(long ID)
+    //Finds a specific Budget in the database
+    public Budget findBudget(long ID)
     {
         //Builds a cursor from the query where we find it by the ID number
         Cursor theCursor = theDatabase.query(theHelper.BUDGET_TABLE_NAME,null,theHelper.COLUMN_ID + " = " + ID ,null,null,null,null);
         theCursor.moveToFirst();
-        //Failure budget, just in case
-        budget newBudget = new budget("FAILURE10101",0);
+        //Failure Budget, just in case
+        Budget newBudget = new Budget("FAILURE10101",0);
         if (theCursor != null) {
             String budgetName = theCursor.getString(1);
             Double budgetLimit = theCursor.getDouble(2);
 
-            newBudget = new budget(budgetName, budgetLimit);
+            newBudget = new Budget(budgetName, budgetLimit);
             newBudget.setIDNumber(ID);
             theCursor.close();
             return newBudget;
@@ -84,10 +83,10 @@ public class DatabaseAccess {
     }
 
     //Returns a list of budgets in the database
-    public ArrayList<budget> findAllBudgets()
+    public ArrayList<Budget> findAllBudgets()
     {
-        //Builds a cursor that is at the top of the budget database
-        ArrayList<budget> budgetList = new ArrayList<budget>();
+        //Builds a cursor that is at the top of the Budget database
+        ArrayList<Budget> budgetList = new ArrayList<Budget>();
         Cursor theCursor = theDatabase.query(theHelper.BUDGET_TABLE_NAME,null,null,null,theHelper.COLUMN_BUDGET_NAME,null,null);
         theCursor.moveToFirst();
         //Traverse through each row
@@ -98,8 +97,8 @@ public class DatabaseAccess {
             long budgetID = theCursor.getInt(0);
             String budgetName = theCursor.getString(1);
             Double budgetLimit = theCursor.getDouble(2);
-            //Create budget
-            budget newBudget = new budget(budgetName,budgetLimit);
+            //Create Budget
+            Budget newBudget = new Budget(budgetName,budgetLimit);
             newBudget.setIDNumber(budgetID);
             //Add to list
             budgetList.add(newBudget);
@@ -113,12 +112,12 @@ public class DatabaseAccess {
         return budgetList;
     }
 
-    //Adds an expense to the corresponding expense
-    public long insertExpense(expense theExpense, String tableName)
+    //Adds an Expense to the corresponding Expense
+    public long insertExpense(Expense theExpense, String tableName)
     {
         //Convert to appropriate table name
         String theTable = convertToSQLTableName(tableName);
-        //Build a Content Values class that contains the values of this budget
+        //Build a Content Values class that contains the values of this Budget
         ContentValues values = new ContentValues();
         //Add values in
         values.put(theHelper.COLUMN_EXPENSE_NAME, theExpense.getName());
@@ -131,9 +130,9 @@ public class DatabaseAccess {
         return ID;
     }
 
-    public void updateExpense(expense theExpense, String budgetName)
+    public void updateExpense(Expense theExpense, String budgetName)
     {
-        //Builds a string to update an entry in an expense table to a corresponding budget
+        //Builds a string to update an entry in an Expense table to a corresponding Budget
         //It is also important to note that this methods updates ALL of the fields corresponding to Expense except of course the ID
         //First convert to actual table name
         String theTable = convertToSQLTableName(budgetName);
@@ -147,8 +146,8 @@ public class DatabaseAccess {
         theDatabase.execSQL(command);
     }
 
-    //Adds a subtable of expenses that corresponds to a budget
-    //This should be called on the creation of a new budget
+    //Adds a subtable of expenses that corresponds to a Budget
+    //This should be called on the creation of a new Budget
     public void addExpenseTable(String newTableName) {
         //This is the string for execution via SQL.execSQL
         //Will have to add '_' to the string so that the SQL command doesn't have an error
@@ -163,14 +162,14 @@ public class DatabaseAccess {
         theDatabase.execSQL(command);
     }
 
-    //Removes an existing subtable of the expenses that corresponds to a budget
+    //Removes an existing subtable of the expenses that corresponds to a Budget
     public void removeExpenseTable(String tableName) {
         String properTableName = convertToSQLTableName(tableName);
         String command = "DROP TABLE " + properTableName;
         theDatabase.execSQL(command);
     }
 
-    //Removes a listed expense, if it exists
+    //Removes a listed Expense, if it exists
     public void removeExpense(long ID, String tableName)
     {
         String properTableName = convertToSQLTableName(tableName);
@@ -179,8 +178,8 @@ public class DatabaseAccess {
         theDatabase.execSQL(command);
     }
 
-    //Finds and returns an expense that corresponds to that budget and ID
-    public expense findExpense(long ID, String budgetName)
+    //Finds and returns an Expense that corresponds to that Budget and ID
+    public Expense findExpense(long ID, String budgetName)
     {
         //Builds a cursor from the query where we find it by the ID number and the appropriate table
         Cursor theCursor = theDatabase.query(budgetName,null,theHelper.COLUMN_ID + " = " + ID,null,null,null,null);
@@ -191,18 +190,18 @@ public class DatabaseAccess {
         float expenseMax = theCursor.getFloat(4);
         int expenseAisle = theCursor.getInt(5);
 
-        //Create an expense and return it with this information
-        expense newExpense = new expense(expenseName,expenseTotal,expenseMax);
+        //Create an Expense and return it with this information
+        Expense newExpense = new Expense(expenseName,expenseTotal,expenseMax);
         newExpense.setPriority(expensePriority);
         newExpense.setIDNumber(ID);
         newExpense.setAisle(expenseAisle);
         return newExpense;
     }
 
-    //Returns a list of expenses for a corresponding budget in the database
-    public ArrayList<expense> findAllExpenses(String theExpenseTable)
+    //Returns a list of expenses for a corresponding Budget in the database
+    public ArrayList<Expense> findAllExpenses(String theExpenseTable)
     {
-        ArrayList<expense> expenseList = new ArrayList<expense>();
+        ArrayList<Expense> expenseList = new ArrayList<Expense>();
         //Get the actual table name
         String tableName = convertToSQLTableName(theExpenseTable);
         //Build a cursor
@@ -219,8 +218,8 @@ public class DatabaseAccess {
             float expenseMaxCost = theCursor.getFloat(4);
             int expenseAisle = theCursor.getInt(5);
 
-            //Create expense
-            expense newExpense = new expense(expenseName,expenseCost,expenseMaxCost);
+            //Create Expense
+            Expense newExpense = new Expense(expenseName,expenseCost,expenseMaxCost);
             newExpense.setPriority(expensePriority);
             newExpense.setIDNumber(expenseID);
             newExpense.setAisle(expenseAisle);
@@ -248,13 +247,8 @@ public class DatabaseAccess {
         //Traverse through each row
         while (!theCursor.isAfterLast())
         {
-            //Grab material
-            long expenseID = theCursor.getInt(0);
-            String expenseName = theCursor.getString(1);
-            int expensePriority = theCursor.getInt(2);
+            //Grab material and add to total
             float expenseCost = theCursor.getFloat(3);
-            float expenseMaxCost = theCursor.getFloat(4);
-
             totalCost += expenseCost;
 
             theCursor.moveToNext();

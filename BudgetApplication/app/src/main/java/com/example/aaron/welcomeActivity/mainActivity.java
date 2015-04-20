@@ -26,8 +26,8 @@ public class mainActivity extends Activity {
     public static String BACKGROUND_COLOR = "#ffddffd4";
 
     //List components
-    private ArrayList<budget> listItems=new ArrayList<budget>();
-    private ArrayAdapter<budget> theAdapter;
+    private ArrayList<Budget> listItems=new ArrayList<Budget>();
+    private ArrayAdapter<Budget> theAdapter;
     private int selectedItemInListPosition = -1;
     private int previousListPosition = -1;
 
@@ -50,7 +50,7 @@ public class mainActivity extends Activity {
         theDatabase.closeDatabase();
 
         //Updates list with budgets
-        theAdapter = new ArrayAdapter<budget>(this,
+        theAdapter = new ArrayAdapter<Budget>(this,
                 android.R.layout.simple_list_item_1, listItems);
 
         budgetListView.setAdapter(theAdapter);
@@ -66,7 +66,7 @@ public class mainActivity extends Activity {
         //close database when you're done
         theDatabase.closeDatabase();
         //Updates list with budgets
-        theAdapter = new ArrayAdapter<budget>(this,
+        theAdapter = new ArrayAdapter<Budget>(this,
                 android.R.layout.simple_list_item_1, listItems);
         budgetListView.setAdapter(theAdapter);
         //Reset some position flags
@@ -113,24 +113,24 @@ public class mainActivity extends Activity {
     //Called when the edit button is pressed a long with an item on the list
     public void onEditClick(View view) {
         Intent newIntent = new Intent(this,budgetOverviewActivity.class);
-        //Get the appropriate budget ot pass into the next activity, if available
+        //Get the appropriate Budget ot pass into the next activity, if available
         if (selectedItemInListPosition != -1)
         {
-            budget transferBudget = listItems.get(selectedItemInListPosition);
+            Budget transferBudget = listItems.get(selectedItemInListPosition);
             newIntent.putExtra("Budget",transferBudget);
             startActivity(newIntent);
         }
     }
 
-    //called when delete is pressed; deletes selected budget
+    //called when delete is pressed; deletes selected Budget
     public void onDeleteClick(View view){
         if (selectedItemInListPosition != -1){
-            //get budget to be deleted
-            budget deleteBudget = listItems.get(selectedItemInListPosition);
+            //get Budget to be deleted
+            Budget deleteBudget = listItems.get(selectedItemInListPosition);
             theDatabase.open();
-            //removes budget from database
+            //removes Budget from database
             theDatabase.removeBudget(deleteBudget.getIDNumber());
-            //removes budget from listView and updates listView
+            //removes Budget from listView and updates listView
             theAdapter.remove(deleteBudget);
             theAdapter.notifyDataSetChanged();
             theDatabase.closeDatabase();

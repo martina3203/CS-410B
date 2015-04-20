@@ -20,8 +20,8 @@ public class itemOverviewActivity extends ActionBarActivity {
     private DatabaseAccess theDatabase;
     private AlertDialog.Builder builder;
 
-    expense currentExpense;
-    budget currentBudget;
+    Expense currentExpense;
+    Budget currentBudget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +37,10 @@ public class itemOverviewActivity extends ActionBarActivity {
         theDatabase = new DatabaseAccess(getApplicationContext());
         builder = new AlertDialog.Builder(this);
 
-        //Get budget and expense from intent
+        //Get Budget and Expense from intent
         Intent receivedIntent = this.getIntent();
-        currentExpense = (expense) receivedIntent.getSerializableExtra("Expense");
-        currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
+        currentExpense = (Expense) receivedIntent.getSerializableExtra("Expense");
+        currentBudget = (Budget) receivedIntent.getSerializableExtra("Budget");
 
         //Set values of text views
         nameBox.setText(currentExpense.getName());
@@ -78,9 +78,9 @@ public class itemOverviewActivity extends ActionBarActivity {
         //make new intent to send user to editItemActivity
         Intent intent = new Intent(this, editItemActivity.class);
         //set up info to be transferred
-        expense transferExpense = currentExpense;
-        budget transferBudget = currentBudget;
-        //add budget and expense to intent
+        Expense transferExpense = currentExpense;
+        Budget transferBudget = currentBudget;
+        //add Budget and Expense to intent
         intent.putExtra("Expense",transferExpense);
         intent.putExtra("Budget", transferBudget);
         //send intent to start new activity
@@ -97,7 +97,7 @@ public class itemOverviewActivity extends ActionBarActivity {
                 //Do nothing
             }
         });
-        //if they click yes, call deleteExpense to delete the expense (gasp)
+        //if they click yes, call deleteExpense to delete the Expense (gasp)
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int id){
                 deleteExpense();
@@ -109,7 +109,7 @@ public class itemOverviewActivity extends ActionBarActivity {
         return;
     }
 
-    //used to delete an expense.  called in onDeleteClick
+    //used to delete an Expense.  called in onDeleteClick
     public void deleteExpense(){
         theDatabase.open();
         theDatabase.removeExpense(currentExpense.getIDNumber(), currentBudget.getName());

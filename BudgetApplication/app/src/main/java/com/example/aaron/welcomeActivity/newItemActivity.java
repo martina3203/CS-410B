@@ -33,7 +33,7 @@ public class newItemActivity extends ActionBarActivity {
     private EditText newItemCurrentCostTextEdit;
     private EditText newItemMaxCostTextEdit;
     private Button addItemButton;
-    budget currentBudget;
+    Budget currentBudget;
     private DatabaseAccess theDatabase;
     private Spinner dropdown;
     private String selectedSpinner;
@@ -69,7 +69,7 @@ public class newItemActivity extends ActionBarActivity {
         theDatabase = new DatabaseAccess(getApplicationContext());
 
         Intent receivedIntent = this.getIntent();
-        currentBudget = (budget) receivedIntent.getSerializableExtra("Budget");
+        currentBudget = (Budget) receivedIntent.getSerializableExtra("Budget");
         Log.v("Budget Loaded: ", currentBudget.getName());
         newItemCategoryName.setText(currentBudget.getName());
 
@@ -126,14 +126,14 @@ public class newItemActivity extends ActionBarActivity {
         //Gets Priority from dropdown
         priority = Integer.parseInt(selectedSpinner);
 
-        //Find current total cost of budget and add the new item's price to it
+        //Find current total cost of Budget and add the new item's price to it
         theDatabase.open();
         float budgetCost = theDatabase.findTotalCost(currentBudget.getName());
         budgetCost = budgetCost + currentCost;
         theDatabase.closeDatabase();
 
         /*if adding the new item may cause the user to go overbudget, display a warning box.
-         *Otherwise, just add the expense*/
+         *Otherwise, just add the Expense*/
         if(budgetCost > currentBudget.getMaxValue()){
             overbudgetAlert();
         }
@@ -178,10 +178,10 @@ public class newItemActivity extends ActionBarActivity {
         });
     }
 
-    //adds new expense to database based on inputted values
+    //adds new Expense to database based on inputted values
     public void addExpense(){
-        //Create new expense object
-        expense newExpense = new expense(newItemName, currentCost, itemLimit);
+        //Create new Expense object
+        Expense newExpense = new Expense(newItemName, currentCost, itemLimit);
         newExpense.setPriority(priority);
         newExpense.setAisle(aisle);
         theDatabase.open();

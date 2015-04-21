@@ -7,8 +7,6 @@ import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -177,7 +175,7 @@ public class newItemActivity extends ActionBarActivity {
 
     //adds new Expense to database based on inputted values
     public void addExpense(){
-        //Create new Expense object
+        //Create new Expense object and adds it to database
         Expense newExpense = new Expense(newItemName, currentCost, itemLimit);
         newExpense.setPriority(priority);
         newExpense.setAisle(aisle);
@@ -185,10 +183,7 @@ public class newItemActivity extends ActionBarActivity {
         theDatabase.insertExpense(newExpense, currentBudget.getName());
         theDatabase.closeDatabase();
 
-        //Finish Activity and return results
-        /*Intent returnedIntent = this.getIntent();
-        //Says it's ok and returns the information upon finish
-        setResult(RESULT_OK, returnedIntent);*/
+        //Finish Activity
         this.finish();
     }
 
@@ -212,26 +207,4 @@ public class newItemActivity extends ActionBarActivity {
         return;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_budget, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
-

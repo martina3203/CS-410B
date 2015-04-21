@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,7 +19,6 @@ public class mainActivity extends Activity {
 
     private Button budgetAddButton; //Button that saves input when pressed
     private ListView budgetListView;
-    private ArrayList budgetList;
     private DatabaseAccess theDatabase;
     public static String BACKGROUND_COLOR = "#ffddffd4";
 
@@ -38,7 +35,6 @@ public class mainActivity extends Activity {
         //Sets up database material
         theDatabase = new DatabaseAccess(getApplicationContext());
         //Load Budgets
-        //test();
         budgetAddButton = (Button) findViewById(R.id.budgetAddButton);
         budgetListView = (ListView) findViewById(R.id.budgetListView);
 
@@ -80,27 +76,6 @@ public class mainActivity extends Activity {
     {
         super.onPause();
         theDatabase.closeDatabase();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_budget, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     //Executes when the budgetAddButton is pressed

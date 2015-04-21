@@ -153,7 +153,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
         //Omitted for now
     }
 
-     //sets up the progress bar ans the textViews below it
+     //sets up the progress bar and the textViews below it
     private void setUpProgressBar(){
 
         int maxProgress = 0; //the max value of the progress bar

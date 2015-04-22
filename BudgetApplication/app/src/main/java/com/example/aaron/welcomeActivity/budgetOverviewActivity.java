@@ -3,8 +3,6 @@ package com.example.aaron.welcomeActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -137,7 +135,8 @@ public class budgetOverviewActivity extends ActionBarActivity {
                 parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
                 //Revert the previous color
                 if (previousListPosition != -1 && previousListPosition != position){
-                    parent.getChildAt(previousListPosition).setBackgroundColor(Color.parseColor(mainActivity.BACKGROUND_COLOR));
+                    parent.getChildAt(previousListPosition).
+                            setBackgroundColor(Color.parseColor(mainActivity.BACKGROUND_COLOR));
                 }
                 //Update previous saved position so that we can revert it later
                 previousListPosition = position;

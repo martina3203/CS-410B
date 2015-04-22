@@ -205,7 +205,7 @@ public class DatabaseAccess {
         //Get the actual table name
         String tableName = convertToSQLTableName(theExpenseTable);
         //Build a cursor
-        Cursor theCursor = theDatabase.query(tableName,null,null,null,theHelper.COLUMN_EXPENSE_NAME,null,null);
+        Cursor theCursor = theDatabase.query(tableName,null,null,null,null,null,null);
         theCursor.moveToFirst();
         //Traverse through each row
         while (!theCursor.isAfterLast())

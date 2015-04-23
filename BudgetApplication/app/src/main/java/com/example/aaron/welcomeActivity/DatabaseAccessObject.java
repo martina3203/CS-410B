@@ -113,10 +113,10 @@ public class DatabaseAccessObject {
     }
 
     //Adds an Expense to the corresponding Expense
-    public long insertExpense(Expense theExpense, String tableName)
+    public long insertExpense(Expense theExpense, String budgetName)
     {
         //Convert to appropriate table name
-        String theTable = convertToSQLTableName(tableName);
+        String theTable = convertToSQLTableName(budgetName);
         //Build a Content Values class that contains the values of this Budget
         ContentValues values = new ContentValues();
         //Add values in
@@ -163,8 +163,8 @@ public class DatabaseAccessObject {
     }
 
     //Removes an existing subtable of the expenses that corresponds to a Budget
-    public void removeExpenseTable(String tableName) {
-        String properTableName = convertToSQLTableName(tableName);
+    public void removeExpenseTable(String budgetName) {
+        String properTableName = convertToSQLTableName(budgetName);
         String command = "DROP TABLE " + properTableName;
         theDatabase.execSQL(command);
     }

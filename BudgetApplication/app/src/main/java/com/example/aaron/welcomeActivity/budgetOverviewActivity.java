@@ -52,7 +52,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
         Intent receivedIntent = this.getIntent();
         currentBudget = (Budget) receivedIntent.getSerializableExtra("Budget");
         //Set title on screen to be the same as the Budget name
-        titleTextView.setText(currentBudget.getName());
+        titleTextView.setText(currentBudget.getName(), TextView.BufferType.NORMAL);
 
         //Open database and find all expenses for Budget
         theDatabase.open();

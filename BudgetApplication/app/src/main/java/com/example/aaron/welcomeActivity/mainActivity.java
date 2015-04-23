@@ -19,7 +19,7 @@ public class mainActivity extends Activity {
 
     private Button budgetAddButton; //Button that saves input when pressed
     private ListView budgetListView;
-    private DatabaseAccess theDatabase;
+    private DatabaseAccessObject theDatabase;
     public static String BACKGROUND_COLOR = "#ffddffd4";
 
     //List components
@@ -33,7 +33,7 @@ public class mainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_budget);
         //Sets up database material
-        theDatabase = new DatabaseAccess(getApplicationContext());
+        theDatabase = new DatabaseAccessObject(getApplicationContext());
         //Load Budgets
         budgetAddButton = (Button) findViewById(R.id.budgetAddButton);
         budgetListView = (ListView) findViewById(R.id.budgetListView);

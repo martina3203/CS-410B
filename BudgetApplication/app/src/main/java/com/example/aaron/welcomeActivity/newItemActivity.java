@@ -32,7 +32,7 @@ public class newItemActivity extends ActionBarActivity {
     private EditText newItemMaxCostTextEdit;
     private Button addItemButton;
     Budget currentBudget;
-    private DatabaseAccess theDatabase;
+    private DatabaseAccessObject theDatabase;
     private Spinner dropdown;
     private String selectedSpinner;
     String[] values = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
@@ -64,7 +64,7 @@ public class newItemActivity extends ActionBarActivity {
 
         builder = new AlertDialog.Builder(this);
 
-        theDatabase = new DatabaseAccess(getApplicationContext());
+        theDatabase = new DatabaseAccessObject(getApplicationContext());
 
         Intent receivedIntent = this.getIntent();
         currentBudget = (Budget) receivedIntent.getSerializableExtra("Budget");

@@ -17,7 +17,7 @@ public class itemOverviewActivity extends ActionBarActivity {
     private TextView aisleBox;
     private TextView currentCostBox;
     private TextView maxCostBox;
-    private DatabaseAccess theDatabase;
+    private DatabaseAccessObject theDatabase;
     private AlertDialog.Builder builder;
 
     Expense currentExpense;
@@ -34,7 +34,7 @@ public class itemOverviewActivity extends ActionBarActivity {
         currentCostBox = (TextView) findViewById(R.id.currentCostBox);
         maxCostBox = (TextView) findViewById(R.id.maxCostBox);
 
-        theDatabase = new DatabaseAccess(getApplicationContext());
+        theDatabase = new DatabaseAccessObject(getApplicationContext());
         builder = new AlertDialog.Builder(this);
 
         //Get Budget and Expense from intent

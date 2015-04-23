@@ -11,11 +11,11 @@ import java.util.ArrayList;
 /**
  * Created by Aaron on 3/3/2015.
  */
-public class DatabaseAccess {
+public class DatabaseAccessObject {
     private budgetDatabaseHelper theHelper;
     private SQLiteDatabase theDatabase;
 
-    DatabaseAccess(Context context)
+    DatabaseAccessObject(Context context)
     {
         theHelper = new budgetDatabaseHelper(context);
     }

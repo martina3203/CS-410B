@@ -19,7 +19,7 @@ public class newBudgetActivity extends ActionBarActivity {
     private Button addButton;
     private EditText newBudgetNameTextEdit;
     private EditText newBudgetTotalTextEdit;
-    private DatabaseAccess theDatabase;
+    private DatabaseAccessObject theDatabase;
     private static final NumberFormat currencyFormat;
     private AlertDialog.Builder builder;
 
@@ -37,7 +37,7 @@ public class newBudgetActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_budget_layout);
-        theDatabase = new DatabaseAccess(getApplicationContext());
+        theDatabase = new DatabaseAccessObject(getApplicationContext());
         //Creates buttons
         addButton = (Button) findViewById(R.id.addButton);
         newBudgetNameTextEdit = (EditText) findViewById(R.id.newBudgetNameTextEdit);

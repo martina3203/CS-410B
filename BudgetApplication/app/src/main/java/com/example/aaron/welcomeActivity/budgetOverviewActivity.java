@@ -22,7 +22,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
     private TextView titleTextView;
     private TextView currentCostAmountTextView;
     private TextView moneyAvailableAmountTextView;
-    private DatabaseAccess theDatabase;
+    private DatabaseAccessObject theDatabase;
     private ListView expenseListView;
     private ProgressBar progressBar;
     int selectedItemInListPosition = -1;
@@ -38,7 +38,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.budget_overview);
         //Set up database
-        theDatabase = new DatabaseAccess(getApplicationContext());
+        theDatabase = new DatabaseAccessObject(getApplicationContext());
 
         //Creates buttons, textViews, listView, and progressBar
         addNewExpenseButton = (Button) findViewById(R.id.addNewExpenseButton);

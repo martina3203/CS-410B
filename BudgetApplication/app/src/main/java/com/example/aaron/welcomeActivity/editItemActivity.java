@@ -29,7 +29,7 @@ public class editItemActivity extends ActionBarActivity{
     private Button editItemButton;
     Budget currentBudget;
     Expense currentExpense;
-    private DatabaseAccess theDatabase;
+    private DatabaseAccessObject theDatabase;
     private Spinner dropdown;
     private String selectedSpinner;
     private AlertDialog.Builder builder;
@@ -58,7 +58,7 @@ public class editItemActivity extends ActionBarActivity{
         ArrayAdapter<String> priorityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, values);
         dropdown.setAdapter(priorityAdapter);
 
-        theDatabase = new DatabaseAccess(getApplicationContext());
+        theDatabase = new DatabaseAccessObject(getApplicationContext());
         builder = new AlertDialog.Builder(this);
 
         //Get intent from item overview

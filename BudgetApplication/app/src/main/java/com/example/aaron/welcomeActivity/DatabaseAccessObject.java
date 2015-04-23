@@ -170,9 +170,9 @@ public class DatabaseAccessObject {
     }
 
     //Removes a listed Expense, if it exists
-    public void removeExpense(long ID, String tableName)
+    public void removeExpense(long ID, String budgetName)
     {
-        String properTableName = convertToSQLTableName(tableName);
+        String properTableName = convertToSQLTableName(budgetName);
         //This builds a delete command to be executed
         String command = "DELETE FROM " + properTableName + " WHERE " + theHelper.COLUMN_ID + " = " + ID;
         theDatabase.execSQL(command);

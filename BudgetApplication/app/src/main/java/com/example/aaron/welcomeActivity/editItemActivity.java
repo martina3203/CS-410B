@@ -148,7 +148,8 @@ public class editItemActivity extends ActionBarActivity{
         theDatabase.closeDatabase();
 
         //Finish Activity and go to select Budget screen
-        Intent newIntent = new Intent(this, mainActivity.class);
+        Intent newIntent = new Intent(this, budgetOverviewActivity.class);
+        newIntent.putExtra("Budget",currentBudget);
         startActivity(newIntent);
     }
 

@@ -24,6 +24,7 @@ public class newItemActivity extends ActionBarActivity {
     private float currentCost;
     private float itemLimit;
     private int priority;
+    private String frequency;
     private int aisle;
     private EditText newItemNameTextEdit;
     private TextView newItemCategoryName;
@@ -34,9 +35,8 @@ public class newItemActivity extends ActionBarActivity {
     Budget currentBudget;
     private DatabaseAccessObject theDatabase;
     private Spinner dropdown;
-    private Spinner frequency;
+    private Spinner frequencyDropdown;
     private String selectedSpinner;
-    private String selectedFrequencySpinner;
     String[] values = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
     String[] frequencyValues = new String[]{"None", "One Week", "One Month"};
     private AlertDialog.Builder builder;
@@ -48,6 +48,7 @@ public class newItemActivity extends ActionBarActivity {
         itemLimit = 0;
         priority = 0;
         aisle = 0;
+        frequency = "None";
     }
 
     @Override
@@ -62,11 +63,11 @@ public class newItemActivity extends ActionBarActivity {
         newItemMaxCostTextEdit = (EditText) findViewById(R.id.newMaxCostEditText);
         addItemButton = (Button) findViewById(R.id.addItemButton);
         dropdown = (Spinner)findViewById(R.id.priorityDropDown);
-        frequency  =(Spinner) findViewById(R.id.frequencyDropDown);
+        frequencyDropdown  =(Spinner) findViewById(R.id.frequencyDropDown);
         ArrayAdapter<String> priorityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, values);
         ArrayAdapter<String> frequencyAdapter =new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, frequencyValues);
         dropdown.setAdapter(priorityAdapter);
-        frequency.setAdapter(frequencyAdapter);
+        frequencyDropdown.setAdapter(frequencyAdapter);
 
         builder = new AlertDialog.Builder(this);
 
@@ -78,6 +79,7 @@ public class newItemActivity extends ActionBarActivity {
         newItemCategoryName.setText(currentBudget.getName());
 
         findPriorityChoice();
+        findFrequencyChoice();
     }
 
     //called when add item button is clicked
@@ -181,17 +183,17 @@ public class newItemActivity extends ActionBarActivity {
 
     //Gets priority choice from dropdown menu
     private void findFrequencyChoice(){
-        dropdown.setOnItemSelectedListener(new OnItemSelectedListener() {
+        frequencyDropdown.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             //sets variable when selected value is changed in dropdown
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                selectedFrequencySpinner = frequencyValues[position];
+                frequency = frequencyValues[position];
             }
 
             @Override
             //sets variable if user doesn't select one
             public void onNothingSelected(AdapterView<?> parentView) {
-                selectedFrequencySpinner = "None";
+                frequency = "None";
             }
         });
     }
@@ -202,6 +204,7 @@ public class newItemActivity extends ActionBarActivity {
         Expense newExpense = new Expense(newItemName, currentCost, itemLimit);
         newExpense.setPriority(priority);
         newExpense.setAisle(aisle);
+        newExpense.setPaymentInterval(frequency);
         theDatabase.open();
         theDatabase.insertExpense(newExpense, currentBudget.getName());
         theDatabase.closeDatabase();

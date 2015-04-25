@@ -18,6 +18,7 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ID = "ID";
     public static final String COLUMN_BUDGET_NAME = "BUDGET_NAME";
     public static final String COLUMN_BUDGET_LIMIT = "BUDGET_LIMIT";
+    public static final String COLUMN_PAYMENT_INTERVAL = "PAYMENT_INTERVAL";
 
     //Name of the main database
     private static final String DATABASE_NAME = "Budget.db";
@@ -37,7 +38,8 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
             + BUDGET_TABLE_NAME + " (" +
             COLUMN_ID + " integer primary key autoincrement, " +
             COLUMN_BUDGET_NAME + " text, " +
-            COLUMN_BUDGET_LIMIT + " real)";
+            COLUMN_BUDGET_LIMIT + " real, " +
+            COLUMN_PAYMENT_INTERVAL + " text)";
 
     public budgetDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

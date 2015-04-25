@@ -9,6 +9,7 @@ public class Budget implements Serializable {
     private String name = ""; //name of Budget
     private double maxValue = 100; //maximum amount of money that can be used
     private long IDNumber = 0;
+    private String paymentInterval = null;
 
     Budget(String newName, double newMax)
     {
@@ -31,6 +32,16 @@ public class Budget implements Serializable {
     }
 
     long getIDNumber() {return IDNumber; }
+
+    String getPaymentInterval()
+    {
+        return paymentInterval;
+    }
+
+    void setPaymentInterval(String input)
+    {
+        paymentInterval = input;
+    }
 
     //This is needed to display the Budget as a String on a listView
     public String toString() {

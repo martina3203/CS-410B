@@ -18,6 +18,7 @@ public class itemOverviewActivity extends ActionBarActivity {
     private TextView aisleBox;
     private TextView currentCostBox;
     private TextView maxCostBox;
+    private TextView frequencyBox;
     private DatabaseAccessObject theDatabase;
     private AlertDialog.Builder builder;
     private Expense currentExpense;
@@ -33,6 +34,7 @@ public class itemOverviewActivity extends ActionBarActivity {
         aisleBox = (TextView) findViewById(R.id.aisleBox);
         currentCostBox = (TextView) findViewById(R.id.currentCostBox);
         maxCostBox = (TextView) findViewById(R.id.maxCostBox);
+        frequencyBox = (TextView) findViewById(R.id.frequencyBox);
 
         theDatabase = new DatabaseAccessObject(getApplicationContext());
         builder = new AlertDialog.Builder(this);
@@ -48,22 +50,22 @@ public class itemOverviewActivity extends ActionBarActivity {
         priorityBox.setText(temp);
         String temp2 =Integer.toString(currentExpense.getAisle());
         if (currentExpense.getAisle() == 0){
-            aisleBox.setText("None");
+            aisleBox.setText("None", TextView.BufferType.NORMAL);
         }
         else{
-            aisleBox.setText(temp2);
+            aisleBox.setText(temp2, TextView.BufferType.NORMAL);
         }
         String temp3 = Float.toString(currentExpense.getCurrentExpense());
         float f = Float.parseFloat(temp3);
         temp3 = String.format("%.2f", f);
         temp3 = "$" + temp3;
-        currentCostBox.setText(temp3);
+        currentCostBox.setText(temp3, TextView.BufferType.NORMAL);
         String temp4 = Float.toString(currentExpense.getMaxExpense());
         f = Float.parseFloat(temp4);
         temp4 = String.format("%.2f", f);
         temp4 = "$" + temp4;
-        maxCostBox.setText(temp4);
-
+        maxCostBox.setText(temp4, TextView.BufferType.NORMAL);
+        frequencyBox.setText(currentExpense.getPaymentInterval(), TextView.BufferType.NORMAL);
     }
 
     @Override

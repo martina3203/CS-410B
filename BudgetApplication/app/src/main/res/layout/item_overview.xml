@@ -20,7 +20,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:columnCount="2"
-        android:rowCount="5">
+        android:rowCount="6">
 
         <TextView
             android:layout_width="wrap_content"
@@ -67,15 +67,26 @@
             android:layout_row="3" />
 
         <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Max Cost:"
+           android:id="@+id/maxCostPrompt"
+           android:textSize="25sp"
+           android:layout_marginTop="25dp"
+           android:layout_column="0"
+           android:layout_marginLeft="2dp"
+           android:layout_row="4" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Max Cost:"
-            android:id="@+id/maxCostPrompt"
+            android:text="Frequency:"
+            android:id="@+id/frequencyPrompt"
             android:textSize="25sp"
             android:layout_marginTop="25dp"
             android:layout_column="0"
             android:layout_marginLeft="2dp"
-            android:layout_row="4" />
+            android:layout_row="5" />
 
         <TextView
             android:layout_width="match_parent"
@@ -137,6 +148,18 @@
             android:layout_marginRight="160dp"
             android:layout_marginLeft="5dp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/frequencyBox"
+            android:layout_column="1"
+            android:layout_row="5"
+            android:layout_marginTop="25dp"
+            android:textSize="25sp"
+            android:layout_marginRight="160dp"
+            android:layout_marginLeft="5dp" />
+
     </GridLayout>
 
     <LinearLayout
@@ -152,10 +175,11 @@
             android:text="Edit"
             android:id="@+id/editButton"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:onClick="onEditItemClick"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -163,21 +187,11 @@
             android:text="Delete"
             android:id="@+id/deleteButton"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:gravity="center"
-            android:onClick="onDeleteClick" />
+            android:onClick="onDeleteClick"
+            android:layout_marginBottom="5dp" />
 
     </LinearLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Done"
-        android:id="@+id/doneButton"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:onClick="onDoneClick" />
-
 
 </LinearLayout>

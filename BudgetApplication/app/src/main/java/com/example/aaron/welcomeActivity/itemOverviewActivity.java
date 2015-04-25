@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,9 +20,8 @@ public class itemOverviewActivity extends ActionBarActivity {
     private TextView maxCostBox;
     private DatabaseAccessObject theDatabase;
     private AlertDialog.Builder builder;
-
-    Expense currentExpense;
-    Budget currentBudget;
+    private Expense currentExpense;
+    private Budget currentBudget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,5 +121,25 @@ public class itemOverviewActivity extends ActionBarActivity {
         theDatabase.closeDatabase();
         this.finish();
     };
+
+    //The following functions override the two backbuttons that exist on Android
+    @Override
+    public void onBackPressed()
+    {
+        //Finish Activity and go to select Budget screen again
+        Intent newIntent = new Intent(this, budgetOverviewActivity.class);
+        newIntent.putExtra("Budget",currentBudget);
+        newIntent.putExtra("Expense",currentExpense);
+        startActivity(newIntent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
+    }
 
 }

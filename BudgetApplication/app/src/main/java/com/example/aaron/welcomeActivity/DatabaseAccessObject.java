@@ -32,6 +32,7 @@ public class DatabaseAccessObject {
         ContentValues values = new ContentValues();
         values.put(theHelper.COLUMN_BUDGET_NAME,theBudget.getName());
         values.put(theHelper.COLUMN_BUDGET_LIMIT,theBudget.getMaxValue());
+        values.put(theHelper.COLUMN_PAYMENT_INTERVAL,theBudget.getPaymentInterval());
 
         long ID = theDatabase.insert(theHelper.BUDGET_TABLE_NAME,null,values);
         return ID;
@@ -42,7 +43,8 @@ public class DatabaseAccessObject {
     {
         String command = "UPDATE " +  theHelper.BUDGET_TABLE_NAME +
                 " SET " + theHelper.COLUMN_BUDGET_NAME + " = '" + updatedBudget.getName() + "'," +
-                theHelper.COLUMN_BUDGET_LIMIT + " = " + updatedBudget.getMaxValue() +
+                theHelper.COLUMN_BUDGET_LIMIT + " = " + updatedBudget.getMaxValue() + ", " +
+                theHelper.COLUMN_PAYMENT_INTERVAL + " = '" + updatedBudget.getPaymentInterval() + "' " +
                 " WHERE " + theHelper.COLUMN_ID + " = " + updatedBudget.getIDNumber();
         theDatabase.execSQL(command);
     }
@@ -69,9 +71,11 @@ public class DatabaseAccessObject {
         if (theCursor != null) {
             String budgetName = theCursor.getString(1);
             Double budgetLimit = theCursor.getDouble(2);
+            String budgetInterval = theCursor.getString(3);
 
             newBudget = new Budget(budgetName, budgetLimit);
             newBudget.setIDNumber(ID);
+            newBudget.setPaymentInterval(budgetInterval);
             theCursor.close();
             return newBudget;
         }
@@ -97,9 +101,11 @@ public class DatabaseAccessObject {
             long budgetID = theCursor.getInt(0);
             String budgetName = theCursor.getString(1);
             Double budgetLimit = theCursor.getDouble(2);
+            String budgetInterval = theCursor.getString(3);
             //Create Budget
             Budget newBudget = new Budget(budgetName,budgetLimit);
             newBudget.setIDNumber(budgetID);
+            newBudget.setPaymentInterval(budgetInterval);
             //Add to list
             budgetList.add(newBudget);
             theCursor.moveToNext();
@@ -125,6 +131,7 @@ public class DatabaseAccessObject {
         values.put(theHelper.COLUMN_EXPENSE_MAX_COST, theExpense.getMaxExpense());
         values.put(theHelper.COLUMN_EXPENSE_PRIORITY, theExpense.getPriority());
         values.put(theHelper.COLUMN_EXPENSE_AISLE_NUMBER, theExpense.getAisle());
+        values.put(theHelper.COLUMN_PAYMENT_INTERVAL, theExpense.getPaymentInterval());
         //Commit insertion
         long ID = theDatabase.insert(theTable,null,values);
         return ID;
@@ -141,8 +148,9 @@ public class DatabaseAccessObject {
                 theHelper.COLUMN_EXPENSE_COST + " = " + theExpense.getCurrentExpense() + ","
                 + theHelper.COLUMN_EXPENSE_MAX_COST + " = " + theExpense.getMaxExpense() + ","
                 + theHelper.COLUMN_EXPENSE_PRIORITY + " = " + theExpense.getPriority() + ","
-                + theHelper.COLUMN_EXPENSE_AISLE_NUMBER + " = " + theExpense.getAisle() +
-                " WHERE " + theHelper.COLUMN_ID + " = " + theExpense.getIDNumber();
+                + theHelper.COLUMN_EXPENSE_AISLE_NUMBER + " = " + theExpense.getAisle() + ","
+                + theHelper.COLUMN_PAYMENT_INTERVAL + " = '" + theExpense.getPaymentInterval() +
+                "' WHERE " + theHelper.COLUMN_ID + " = " + theExpense.getIDNumber();
         theDatabase.execSQL(command);
     }
 
@@ -157,7 +165,8 @@ public class DatabaseAccessObject {
                 " (" + theHelper.COLUMN_ID + " integer primary key autoincrement, " +
                 theHelper.COLUMN_EXPENSE_NAME + " text, " + theHelper.COLUMN_EXPENSE_PRIORITY + " integer," +
                 theHelper.COLUMN_EXPENSE_COST + " real, " + theHelper.COLUMN_EXPENSE_MAX_COST + " real," +
-                theHelper.COLUMN_EXPENSE_AISLE_NUMBER + " integer)";
+                theHelper.COLUMN_EXPENSE_AISLE_NUMBER + " integer, " + theHelper.COLUMN_PAYMENT_INTERVAL +
+                " text)";
         Log.d("Expense Table Created: ", newTable);
         theDatabase.execSQL(command);
     }
@@ -189,12 +198,14 @@ public class DatabaseAccessObject {
         float expenseTotal = theCursor.getFloat(3);
         float expenseMax = theCursor.getFloat(4);
         int expenseAisle = theCursor.getInt(5);
+        String expenseInterval = theCursor.getString(6);
 
         //Create an Expense and return it with this information
         Expense newExpense = new Expense(expenseName,expenseTotal,expenseMax);
         newExpense.setPriority(expensePriority);
         newExpense.setIDNumber(ID);
         newExpense.setAisle(expenseAisle);
+        newExpense.setPaymentInterval(expenseInterval);
         return newExpense;
     }
 
@@ -217,12 +228,14 @@ public class DatabaseAccessObject {
             float expenseCost = theCursor.getFloat(3);
             float expenseMaxCost = theCursor.getFloat(4);
             int expenseAisle = theCursor.getInt(5);
+            String expenseInterval = theCursor.getString(6);
 
             //Create Expense
             Expense newExpense = new Expense(expenseName,expenseCost,expenseMaxCost);
             newExpense.setPriority(expensePriority);
             newExpense.setIDNumber(expenseID);
             newExpense.setAisle(expenseAisle);
+            newExpense.setPaymentInterval(expenseInterval);
             //Add to list
             expenseList.add(newExpense);
             theCursor.moveToNext();

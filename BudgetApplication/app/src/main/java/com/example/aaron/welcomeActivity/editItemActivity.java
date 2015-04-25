@@ -150,6 +150,7 @@ public class editItemActivity extends ActionBarActivity{
         //Finish Activity and go to select Budget screen
         Intent newIntent = new Intent(this, budgetOverviewActivity.class);
         newIntent.putExtra("Budget",currentBudget);
+        newIntent.putExtra("Expense",currentExpense);
         startActivity(newIntent);
     }
 

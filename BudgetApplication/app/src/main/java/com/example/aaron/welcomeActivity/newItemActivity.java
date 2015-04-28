@@ -41,6 +41,7 @@ public class newItemActivity extends ActionBarActivity {
     String[] frequencyValues = new String[]{"None", "Daily", "Five Days", "One Week", "Two Weeks",
             "One Month", "Quarterly", "Six Months", "Annually"};
     private AlertDialog.Builder builder;
+    private boolean warningShown;
 
     //Constructor
     public newItemActivity() {
@@ -50,6 +51,7 @@ public class newItemActivity extends ActionBarActivity {
         priority = 0;
         aisle = 0;
         frequency = "None";
+        warningShown = false;
     }
 
     @Override
@@ -122,6 +124,14 @@ public class newItemActivity extends ActionBarActivity {
         }
         else {
             itemLimit = Float.parseFloat(itemMaxCost);
+        }
+
+        if(itemLimit < currentCost && !warningShown){
+            builder.setTitle("Warning");
+            builder.setMessage("The current cost is greater than the max cost.  Please consider changing this.");
+            builder.show();
+            warningShown = true;
+            return;
         }
 
         //Gets Priority from dropdown

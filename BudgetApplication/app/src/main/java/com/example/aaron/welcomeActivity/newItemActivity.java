@@ -38,7 +38,8 @@ public class newItemActivity extends ActionBarActivity {
     private Spinner frequencyDropdown;
     private String selectedSpinner;
     String[] values = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
-    String[] frequencyValues = new String[]{"None", "One Week", "One Month"};
+    String[] frequencyValues = new String[]{"None", "Daily", "Five Days", "One Week", "Two Weeks",
+            "One Month", "Quarterly", "Six Months", "Annually"};
     private AlertDialog.Builder builder;
 
     //Constructor
@@ -117,10 +118,7 @@ public class newItemActivity extends ActionBarActivity {
 
         String itemMaxCost = newItemMaxCostTextEdit.getText().toString();
         if (itemMaxCost.matches("")){
-            builder.setTitle("Error");
-            builder.setMessage("You have not entered a max cost!");
-            builder.show();
-            return;
+            itemLimit = currentCost;
         }
         else {
             itemLimit = Float.parseFloat(itemMaxCost);

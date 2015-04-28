@@ -38,7 +38,8 @@ public class editItemActivity extends ActionBarActivity{
 
     private AlertDialog.Builder builder;
     String[] values = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
-    String[] frequencyValues = new String[]{"None", "One Week", "One Month"};
+    String[] frequencyValues = new String[]{"None", "Daily", "Five Days", "One Week", "Two Weeks",
+            "One Month", "Quarterly", "Six Months", "Annually"};
 
     //Constructor
     public editItemActivity(){

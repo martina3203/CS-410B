@@ -58,7 +58,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="   Edit Selected   "
+            android:text="   View Selected   "
             android:id="@+id/budgetEditButton"
             android:onClick="onEditClick"
             android:layout_marginRight="10dp" />

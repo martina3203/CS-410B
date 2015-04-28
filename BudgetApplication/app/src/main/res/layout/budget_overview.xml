@@ -143,5 +143,38 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:text="Edit Budget"
+            android:id="@+id/editBudgetButton"
+            android:textSize="@dimen/abc_text_size_caption_material"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:onClick=""/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:text="Summary"
+            android:id="@+id/summaryButton"
+            android:textSize="@dimen/abc_text_size_caption_material"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:onClick=""/>
+    </LinearLayout>
+
 
 </LinearLayout>

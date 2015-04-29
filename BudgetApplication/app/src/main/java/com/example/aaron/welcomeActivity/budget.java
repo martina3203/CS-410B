@@ -23,6 +23,10 @@ public class Budget implements Serializable {
 
     void setIDNumber(long newID) { IDNumber = newID; }
 
+    void setMaxValue(double newMax){
+        maxValue = newMax;
+    }
+
     double getMaxValue(){
         return maxValue;
     }

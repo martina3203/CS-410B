@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:background="#ffddffd4">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Edit Budget"
+        android:id="@+id/titleTextView"
+        android:layout_weight="0.02"
+        android:textSize="30sp"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Budget Name:"
+        android:id="@+id/budgetNameTextView"
+        android:layout_weight="0.02" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/newBudgetNameTextEdit"
+        android:layout_weight="0.02" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Total Budget Amount:"
+        android:id="@+id/totalBudgetTextView"
+        android:layout_weight="0.02" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.02">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="57dp"
+            android:text="@string/CurrencySymbol"
+            android:id="@+id/CurrencySymbol"
+            android:layout_weight="0.20"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="@dimen/abc_text_size_display_1_material" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/totalBudgetTextEdit"
+            android:layout_weight="1"
+            android:numeric="decimal" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finish"
+        android:id="@+id/finishButton"
+        android:onClick="onAddBudgetClick"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

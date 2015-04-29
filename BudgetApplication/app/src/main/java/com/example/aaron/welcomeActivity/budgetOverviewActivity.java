@@ -19,6 +19,8 @@ import java.util.ArrayList;
 public class budgetOverviewActivity extends ActionBarActivity {
 
     private Button addNewExpenseButton;
+    private Button editBudgetButton;
+    private Button summaryButton;
     private TextView titleTextView;
     private TextView currentCostAmountTextView;
     private TextView moneyAvailableAmountTextView;
@@ -42,6 +44,8 @@ public class budgetOverviewActivity extends ActionBarActivity {
 
         //Creates buttons, textViews, listView, and progressBar
         addNewExpenseButton = (Button) findViewById(R.id.addNewExpenseButton);
+        editBudgetButton = (Button) findViewById(R.id.editBudgetButton);
+        summaryButton = (Button) findViewById(R.id.summaryButton);
         titleTextView = (TextView) findViewById(R.id.titleTextView);
         currentCostAmountTextView = (TextView) findViewById(R.id.currentCostAmountTextView);
         moneyAvailableAmountTextView = (TextView) findViewById(R.id.moneyAvailableAmountTextView);
@@ -218,6 +222,17 @@ public class budgetOverviewActivity extends ActionBarActivity {
 
             theDatabase.closeDatabase();
         }
+    }
+
+    private void onEditClick(View view){
+        Intent newIntent = new Intent(this,editBudgetActivity.class);
+        Budget transferBudget = currentBudget;
+        newIntent.putExtra("Budget",transferBudget);
+        startActivity(newIntent);
+    }
+
+    private void onSummaryClick(View view){
+
     }
 
 }

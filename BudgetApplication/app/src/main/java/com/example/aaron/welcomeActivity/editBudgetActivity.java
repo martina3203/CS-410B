@@ -2,57 +2,49 @@ package com.example.aaron.welcomeActivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import java.text.NumberFormat;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
 
-//This activity is used with new_budget_layout
-
-public class newBudgetActivity extends ActionBarActivity {
-    private String newBudgetName;
+public class editBudgetActivity extends ActionBarActivity {
+    private String budgetName;
     private double budgetLimit;
-    private Button addButton;
-    private EditText newBudgetNameTextEdit;
-    private EditText newBudgetTotalTextEdit;
+    private Button editButton;
+    private EditText budgetNameTextEdit;
+    private EditText budgetTotalTextEdit;
     private DatabaseAccessObject theDatabase;
-    private static final NumberFormat currencyFormat;
     private AlertDialog.Builder builder;
+    private Budget currentBudget;
 
-    static {
-        currencyFormat = NumberFormat.getCurrencyInstance();
-    }
+    editBudgetActivity(){
 
-    //Typical Constructor
-    public newBudgetActivity(){
-        newBudgetName = "";
-        budgetLimit = 0.0;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_budget_layout);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.edit_budget_layout);
         theDatabase = new DatabaseAccessObject(getApplicationContext());
         //Creates buttons
-        addButton = (Button) findViewById(R.id.addButton);
-        newBudgetNameTextEdit = (EditText) findViewById(R.id.newBudgetNameTextEdit);
-        newBudgetTotalTextEdit = (EditText) findViewById(R.id.totalBudgetTextEdit);
+        editButton = (Button) findViewById(R.id.finishButton);
+        budgetNameTextEdit = (EditText) findViewById(R.id.newBudgetNameTextEdit);
+        budgetTotalTextEdit = (EditText) findViewById(R.id.totalBudgetTextEdit);
 
-        //Handle Alert Dialogs by building the dialog
-        builder = new AlertDialog.Builder(this);
+        //Need to get intents and stuff
+        Intent receivedIntent = this.getIntent();
+        currentBudget = (Budget) receivedIntent.getSerializableExtra("Budget");
     }
 
-    //Executes when addButton is clicked
     public void onAddBudgetClick(View view)
     {
         //Get new Budget name
-        newBudgetName = newBudgetNameTextEdit.getText().toString();
-        if (newBudgetName.matches("")){
+        budgetName = budgetNameTextEdit.getText().toString();
+        if (budgetName.matches("")){
             builder.setTitle("Error");
             builder.setMessage("You have not entered a name into the Budget Name field.");
             builder.show();
@@ -60,7 +52,7 @@ public class newBudgetActivity extends ActionBarActivity {
         }
 
         //Get new Budget amount
-        String budgetTotal = newBudgetTotalTextEdit.getText().toString();
+        String budgetTotal = budgetTotalTextEdit.getText().toString();
         if (budgetTotal.matches("")){
             builder.setTitle("Error");
             builder.setMessage("You have not entered a value into the Total Budget Amount field.");
@@ -74,7 +66,7 @@ public class newBudgetActivity extends ActionBarActivity {
         for (int i = 0; i < budgetList.size(); i++)
         {
             Budget currentBudget = budgetList.get(i);
-            if (newBudgetName.matches(currentBudget.getName()))
+            if (budgetName.matches(currentBudget.getName()))
             {
                 //We have encountered a duplicate and will not proceed
                 builder.setTitle("Error");
@@ -87,11 +79,10 @@ public class newBudgetActivity extends ActionBarActivity {
         //Parse Double out of this statement
         budgetLimit = Double.parseDouble(budgetTotal);
 
-        //Create new Budget object and add to database
-        Budget tempBudget = new Budget(newBudgetName, budgetLimit);
-        tempBudget.setIDNumber(theDatabase.insertBudget(tempBudget));
-        //Create new Expense table
-        theDatabase.addExpenseTable(newBudgetName);
+        //Update Budget object and add to database
+        currentBudget.setName(budgetName);
+        currentBudget.setMaxValue(budgetLimit);
+        theDatabase.updateBudget(currentBudget);
         //Close database when done
         theDatabase.closeDatabase();
         //Finish Activity and return results

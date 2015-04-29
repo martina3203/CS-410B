@@ -173,7 +173,7 @@
             android:textSize="@dimen/abc_text_size_caption_material"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
-            android:onClick="onSummaryClick"/>
+            android:onClick="onSummaryClick" />
     </LinearLayout>
 
 

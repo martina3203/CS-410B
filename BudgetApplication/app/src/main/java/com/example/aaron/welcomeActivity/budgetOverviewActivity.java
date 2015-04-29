@@ -3,6 +3,7 @@ package com.example.aaron.welcomeActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -127,6 +128,17 @@ public class budgetOverviewActivity extends ActionBarActivity {
         }
     }
 
+    public void onEditClick(View view){
+        Intent newIntent = new Intent(this,editBudgetActivity.class);
+        Budget transferBudget = currentBudget;
+        newIntent.putExtra("Budget",transferBudget);
+        startActivity(newIntent);
+    }
+
+    public void onSummaryClick(View view){
+        Log.d("Yes", "Yes");
+    }
+
     //Used to register when user clicks on list item
     private void registerClick() {
         ListView expenseListView = (ListView) findViewById(R.id.expenseListView);
@@ -223,16 +235,4 @@ public class budgetOverviewActivity extends ActionBarActivity {
             theDatabase.closeDatabase();
         }
     }
-
-    private void onEditClick(View view){
-        Intent newIntent = new Intent(this,editBudgetActivity.class);
-        Budget transferBudget = currentBudget;
-        newIntent.putExtra("Budget",transferBudget);
-        startActivity(newIntent);
-    }
-
-    private void onSummaryClick(View view){
-
-    }
-
 }

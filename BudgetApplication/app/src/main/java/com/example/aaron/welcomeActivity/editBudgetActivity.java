@@ -21,10 +21,6 @@ public class editBudgetActivity extends ActionBarActivity {
     private AlertDialog.Builder builder;
     private Budget currentBudget;
 
-    editBudgetActivity(){
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

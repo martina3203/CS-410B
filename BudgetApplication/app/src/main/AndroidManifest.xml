@@ -49,6 +49,12 @@
             android:parentActivityName=".itemOverviewActivity">
 
         </activity>
+        <activity
+            android:name=".editBudgetActivity"
+            android:label="Edit Budget"
+            android:parentActivityName=".budgetOverviewActivity">
+
+            </activity>
 
     </application>
 

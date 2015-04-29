@@ -1,6 +1,7 @@
 package com.example.aaron.welcomeActivity;
 
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -35,6 +36,11 @@ public class budgetOverviewActivity extends ActionBarActivity {
     private ArrayList<Expense> expenseList = new ArrayList<Expense>();
     private ArrayAdapter<Expense> theAdapter;
     Budget currentBudget;
+
+    //Color components
+    private final String redColor = "#FF4444";
+    private final String greenColor = "#99CC00";
+    private final String yellowColor = "#FFEB3B";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,8 +177,8 @@ public class budgetOverviewActivity extends ActionBarActivity {
      //sets up the progress bar and the textViews below it
     private void setUpProgressBar(){
 
-        int maxProgress = 0; //the max value of the progress bar
-        int currentProgress = 0; //the current value of the progress bar
+        double maxProgress = 0; //the max value of the progress bar
+        double currentProgress = 0; //the current value of the progress bar
         String moneyNotInUse = ""; //string used to set textView text
         String moneyInUse = ""; //string sued to set textView text
 
@@ -180,7 +186,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
         if(expenseList.isEmpty()) {
             //update the progress bar and textView with current money usage (which is none)
             currentCostAmountTextView.setText("$0.00");
-            progressBar.setProgress(currentProgress);
+            progressBar.setProgress((int)currentProgress);
 
             //update status bar and textView with money available
             double moneyAvailable = currentBudget.getMaxValue();
@@ -190,7 +196,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
 
             double maxProgressbar = currentBudget.getMaxValue();
             maxProgress = (int) maxProgressbar; //progress bars only accept integers
-            progressBar.setMax(maxProgress);
+            progressBar.setMax((int)maxProgress);
         }
         //if there are some expenses
         else{
@@ -199,7 +205,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
             //set max value of progress bar
             double maxProgressbar = currentBudget.getMaxValue();
             maxProgress = (int) maxProgressbar;
-            progressBar.setMax(maxProgress);
+            progressBar.setMax((int)maxProgress);
 
             //prepare progress bar with current money usage
             float currentTotalCost = theDatabase.findTotalCost(currentBudget.getName());
@@ -208,10 +214,25 @@ public class budgetOverviewActivity extends ActionBarActivity {
             //This is to make sure the progress bar doesn't mess up if the current progress
             //becomes higher than the max progress
             if (currentProgress > maxProgress){
-                progressBar.setProgress(maxProgress);
+                progressBar.setProgress((int)maxProgress);
+                progressBar.getProgressDrawable().setColorFilter(Color.parseColor(redColor),
+                        PorterDuff.Mode.SRC_IN);
             }
             else{
-                progressBar.setProgress(currentProgress);
+                //progressBar.setProgress(currentProgress);
+                //We will set colors based on how far we are.
+                progressBar.setProgress((int)currentProgress);
+                //If less than 60%
+                if ((currentProgress/maxProgress) > .6)
+                {
+                    progressBar.getProgressDrawable().setColorFilter(Color.parseColor(yellowColor),
+                            PorterDuff.Mode.MULTIPLY);
+                }
+                else
+                {
+                    progressBar.getProgressDrawable().setColorFilter(Color.parseColor(greenColor),
+                            PorterDuff.Mode.MULTIPLY);
+                }
             }
 
             moneyInUse = String.format("%.2f", currentTotalCost);

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/summaryLinearLayout"
+    android:background="#ffddffd4">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Summary"
+        android:id="@+id/summaryTitle"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp"
+        android:layout_marginLeft="2dp"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Frequency:"
+            android:id="@+id/namePrompt"
+            android:textSize="25sp"
+            android:layout_marginTop="12dp"
+            android:layout_column="0"
+            android:layout_marginLeft="2dp" />
+
+        <Spinner
+            android:id="@+id/frequencyDropDown"
+            android:layout_width="225dp"
+            android:layout_height="46dp"
+            android:layout_column="1"
+            android:layout_row="6"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@android:color/darker_gray"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/expenseListView"
+        android:layout_weight="0.03"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:background="#ffddffd4" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Cost:"
+            android:textSize="25sp"
+            android:id="@+id/totalCostTextView"
+            android:layout_weight="0.02"
+            android:gravity="left"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$$$$$$"
+            android:textSize="25sp"
+            android:id="@+id/totalCostAmountTextView"
+            android:layout_weight="0.02"
+            android:gravity="right"
+            android:layout_margin="5dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

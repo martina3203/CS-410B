@@ -161,7 +161,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
 
         int maxProgress = 0; //the max value of the progress bar
         int currentProgress = 0; //the current value of the progress bar
-        String moneyNotInUse= ""; //string used to set textView text
+        String moneyNotInUse = ""; //string used to set textView text
         String moneyInUse = ""; //string sued to set textView text
 
         //If there are no expenses

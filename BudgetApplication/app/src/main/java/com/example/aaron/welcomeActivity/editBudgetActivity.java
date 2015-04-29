@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,6 @@ public class editBudgetActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_budget_layout);
         theDatabase = new DatabaseAccessObject(getApplicationContext());
         //Creates buttons
@@ -38,9 +38,12 @@ public class editBudgetActivity extends ActionBarActivity {
         //Need to get intents and stuff
         Intent receivedIntent = this.getIntent();
         currentBudget = (Budget) receivedIntent.getSerializableExtra("Budget");
+        budgetNameTextEdit.setText(currentBudget.getName(), TextView.BufferType.EDITABLE);
+        String maxCost = Double.toString(currentBudget.getMaxValue());
+        budgetTotalTextEdit.setText(maxCost, TextView.BufferType.EDITABLE);
     }
 
-    public void onAddBudgetClick(View view)
+    public void onFinishClick(View view)
     {
         //Get new Budget name
         budgetName = budgetNameTextEdit.getText().toString();
@@ -65,8 +68,8 @@ public class editBudgetActivity extends ActionBarActivity {
         ArrayList<Budget> budgetList = theDatabase.findAllBudgets();
         for (int i = 0; i < budgetList.size(); i++)
         {
-            Budget currentBudget = budgetList.get(i);
-            if (budgetName.matches(currentBudget.getName()))
+            Budget thisBudget = budgetList.get(i);
+            if (budgetName.matches(thisBudget.getName()))
             {
                 //We have encountered a duplicate and will not proceed
                 builder.setTitle("Error");

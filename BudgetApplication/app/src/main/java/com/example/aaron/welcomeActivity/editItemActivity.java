@@ -171,7 +171,7 @@ public class editItemActivity extends ActionBarActivity{
         currentExpense.setPriority(priority);
         currentExpense.setPaymentInterval(frequency);
         theDatabase.open();
-        theDatabase.updateExpense(currentExpense, currentBudget.getName());
+        theDatabase.updateExpense(currentExpense);
         theDatabase.closeDatabase();
 
         //Finish Activity and go to select Budget screen

@@ -119,7 +119,7 @@ public class itemOverviewActivity extends ActionBarActivity {
     //used to delete an Expense.  called in onDeleteClick
     public void deleteExpense(){
         theDatabase.open();
-        theDatabase.removeExpense(currentExpense.getIDNumber(), currentBudget.getName());
+        theDatabase.removeExpense(currentExpense.getIDNumber());
         theDatabase.closeDatabase();
         this.finish();
     };

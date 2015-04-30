@@ -68,7 +68,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
 
         //Open database and find all expenses for Budget
         theDatabase.open();
-        expenseList = theDatabase.findAllExpenses(currentBudget.getName());
+        expenseList = theDatabase.findAllExpenses(currentBudget.getIDNumber());
         theDatabase.closeDatabase();
 
         //Update list with expenses
@@ -86,7 +86,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
         super.onResume();
         theDatabase.open();
         //filling listItems with budgets from database
-        expenseList = theDatabase.findAllExpenses(currentBudget.getName());
+        expenseList = theDatabase.findAllExpenses(currentBudget.getIDNumber());
         //close database when you're done
         theDatabase.closeDatabase();
 
@@ -205,7 +205,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
             progressBar.setMax((int) maxProgress);
 
             //prepare progress bar with current money usage
-            float currentTotalCost = theDatabase.findTotalCost(currentBudget.getName());
+            float currentTotalCost = theDatabase.findTotalCost(currentBudget.getIDNumber());
             currentProgress = (int) currentTotalCost;
 
             //This is to make sure the progress bar doesn't mess up if the current progress

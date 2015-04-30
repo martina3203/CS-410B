@@ -13,6 +13,7 @@ import android.util.Log;
 public class budgetDatabaseHelper extends SQLiteOpenHelper {
     //This is the name of the table
     public static final String BUDGET_TABLE_NAME = "BUDGET_TABLE";
+    public static final String EXPENSE_TABLE_NAME = "EXPENSE_TABLE";
 
     //These are the names of the Columns.
     public static final String COLUMN_ID = "ID";
@@ -30,6 +31,7 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_EXPENSE_COST = "EXPENSE_COST";
     public static final String COLUMN_EXPENSE_MAX_COST = "EXPENSE_MAX_COST";
     public static final String COLUMN_EXPENSE_AISLE_NUMBER = "EXPENSE_AISLE_NUMBER";
+    public static final String COLUMN_EXPENSE_BUDGET_ID_NUMBER = "EXPENSE_BUDGET_ID_NUMBER";
 
     //This is the command that is executed to create a database
     //The formatting is basically like this: create table TABLE_NAME ( COLUMN_NAME DATA_TYPE, ...);
@@ -41,6 +43,13 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_BUDGET_LIMIT + " real, " +
             COLUMN_PAYMENT_INTERVAL + " text)";
 
+    private static final String EXPENSE_TABLE_CREATE = "CREATE TABLE " + EXPENSE_TABLE_NAME +
+            " (" + COLUMN_ID + " integer primary key autoincrement, " +
+            COLUMN_EXPENSE_NAME + " text, " + COLUMN_EXPENSE_PRIORITY + " integer," +
+            COLUMN_EXPENSE_COST + " real, " + COLUMN_EXPENSE_MAX_COST + " real," +
+            COLUMN_EXPENSE_AISLE_NUMBER + " integer, " + COLUMN_PAYMENT_INTERVAL +
+            " text, " + COLUMN_EXPENSE_BUDGET_ID_NUMBER + " integer)";
+
     public budgetDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -50,6 +59,7 @@ public class budgetDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase database) {
         //Carries out the creation of such a table
         database.execSQL(DATABASE_CREATE);
+        database.execSQL(EXPENSE_TABLE_CREATE);
     }
 
     @Override

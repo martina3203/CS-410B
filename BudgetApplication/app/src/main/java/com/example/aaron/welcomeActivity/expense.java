@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 public class Expense implements Serializable {
     private String name; //name of Expense
+    private long budgetID = 0;
     private float currentValue = 0; //how much is currently being spent on the item
     private float maxValue = 100; //max amount of money that can be spent on item
     private long IDNumber = 0; //ID number that corresponds to the SQL database location
@@ -40,6 +41,8 @@ public class Expense implements Serializable {
         aisle = newAisle;
     }
 
+    void setBudgetID(long newID) { budgetID = newID; }
+
     float getCurrentExpense(){
         return currentValue;
     }
@@ -57,6 +60,8 @@ public class Expense implements Serializable {
     long getIDNumber() {return IDNumber; }
 
     int getAisle() {return aisle; }
+
+    long getBudgetID() { return budgetID; }
 
     String getPaymentInterval()
     {

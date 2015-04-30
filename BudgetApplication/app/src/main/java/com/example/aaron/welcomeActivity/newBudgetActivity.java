@@ -90,8 +90,6 @@ public class newBudgetActivity extends ActionBarActivity {
         //Create new Budget object and add to database
         Budget tempBudget = new Budget(newBudgetName, budgetLimit);
         tempBudget.setIDNumber(theDatabase.insertBudget(tempBudget));
-        //Create new Expense table
-        theDatabase.addExpenseTable(newBudgetName);
         //Close database when done
         theDatabase.closeDatabase();
         //Finish Activity and return results

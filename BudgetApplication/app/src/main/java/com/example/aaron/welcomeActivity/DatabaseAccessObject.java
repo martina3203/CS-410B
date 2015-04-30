@@ -52,9 +52,6 @@ public class DatabaseAccessObject {
     //Removes a listed Budget, if it exists
     public void removeBudget(long ID)
     {
-        //First we delete the subtable
-        Budget targetBudget = findBudget(ID);
-        removeExpenseTable(targetBudget.getName());
         //This builds a delete command to be executed
         String command = "DELETE FROM " + theHelper.BUDGET_TABLE_NAME + " WHERE " + theHelper.COLUMN_ID + " = " + ID;
         theDatabase.execSQL(command);
@@ -119,10 +116,9 @@ public class DatabaseAccessObject {
     }
 
     //Adds an Expense to the corresponding Expense
-    public long insertExpense(Expense theExpense, String budgetName)
+    public long insertExpense(Expense theExpense)
     {
         //Convert to appropriate table name
-        String theTable = convertToSQLTableName(budgetName);
         //Build a Content Values class that contains the values of this Budget
         ContentValues values = new ContentValues();
         //Add values in
@@ -132,18 +128,18 @@ public class DatabaseAccessObject {
         values.put(theHelper.COLUMN_EXPENSE_PRIORITY, theExpense.getPriority());
         values.put(theHelper.COLUMN_EXPENSE_AISLE_NUMBER, theExpense.getAisle());
         values.put(theHelper.COLUMN_PAYMENT_INTERVAL, theExpense.getPaymentInterval());
+        values.put(theHelper.COLUMN_EXPENSE_BUDGET_ID_NUMBER, theExpense.getBudgetID());
         //Commit insertion
-        long ID = theDatabase.insert(theTable,null,values);
+        long ID = theDatabase.insert(theHelper.EXPENSE_TABLE_NAME,null,values);
         return ID;
     }
 
-    public void updateExpense(Expense theExpense, String budgetName)
+    public void updateExpense(Expense theExpense)
     {
         //Builds a string to update an entry in an Expense table to a corresponding Budget
         //It is also important to note that this methods updates ALL of the fields corresponding to Expense except of course the ID
         //First convert to actual table name
-        String theTable = convertToSQLTableName(budgetName);
-        String command = "UPDATE " +  theTable +
+        String command = "UPDATE " +  theHelper.EXPENSE_TABLE_NAME +
                 " SET " + theHelper.COLUMN_EXPENSE_NAME + " = '" + theExpense.getName() + "'," +
                 theHelper.COLUMN_EXPENSE_COST + " = " + theExpense.getCurrentExpense() + ","
                 + theHelper.COLUMN_EXPENSE_MAX_COST + " = " + theExpense.getMaxExpense() + ","
@@ -154,44 +150,19 @@ public class DatabaseAccessObject {
         theDatabase.execSQL(command);
     }
 
-    //Adds a subtable of expenses that corresponds to a Budget
-    //This should be called on the creation of a new Budget
-    public void addExpenseTable(String newTableName) {
-        //This is the string for execution via SQL.execSQL
-        //Will have to add '_' to the string so that the SQL command doesn't have an error
-        String newTable = convertToSQLTableName(newTableName);
-        //Build create table command
-        String command = "CREATE TABLE " + newTable +
-                " (" + theHelper.COLUMN_ID + " integer primary key autoincrement, " +
-                theHelper.COLUMN_EXPENSE_NAME + " text, " + theHelper.COLUMN_EXPENSE_PRIORITY + " integer," +
-                theHelper.COLUMN_EXPENSE_COST + " real, " + theHelper.COLUMN_EXPENSE_MAX_COST + " real," +
-                theHelper.COLUMN_EXPENSE_AISLE_NUMBER + " integer, " + theHelper.COLUMN_PAYMENT_INTERVAL +
-                " text)";
-        Log.d("Expense Table Created: ", newTable);
-        theDatabase.execSQL(command);
-    }
-
-    //Removes an existing subtable of the expenses that corresponds to a Budget
-    public void removeExpenseTable(String budgetName) {
-        String properTableName = convertToSQLTableName(budgetName);
-        String command = "DROP TABLE " + properTableName;
-        theDatabase.execSQL(command);
-    }
-
     //Removes a listed Expense, if it exists
-    public void removeExpense(long ID, String budgetName)
+    public void removeExpense(long ID)
     {
-        String properTableName = convertToSQLTableName(budgetName);
         //This builds a delete command to be executed
-        String command = "DELETE FROM " + properTableName + " WHERE " + theHelper.COLUMN_ID + " = " + ID;
+        String command = "DELETE FROM " + theHelper.EXPENSE_TABLE_NAME + " WHERE " + theHelper.COLUMN_ID + " = " + ID;
         theDatabase.execSQL(command);
     }
 
     //Finds and returns an Expense that corresponds to that Budget and ID
-    public Expense findExpense(long ID, String budgetName)
+    public Expense findExpense(long ID)
     {
         //Builds a cursor from the query where we find it by the ID number and the appropriate table
-        Cursor theCursor = theDatabase.query(budgetName,null,theHelper.COLUMN_ID + " = " + ID,null,null,null,null);
+        Cursor theCursor = theDatabase.query(theHelper.EXPENSE_TABLE_NAME,null,theHelper.COLUMN_ID + " = " + ID,null,null,null,null);
         theCursor.moveToFirst();
         String expenseName = theCursor.getString(1);
         int expensePriority = theCursor.getInt(2);
@@ -199,6 +170,7 @@ public class DatabaseAccessObject {
         float expenseMax = theCursor.getFloat(4);
         int expenseAisle = theCursor.getInt(5);
         String expenseInterval = theCursor.getString(6);
+        int expenseBudgetID = theCursor.getInt(7);
 
         //Create an Expense and return it with this information
         Expense newExpense = new Expense(expenseName,expenseTotal,expenseMax);
@@ -206,17 +178,17 @@ public class DatabaseAccessObject {
         newExpense.setIDNumber(ID);
         newExpense.setAisle(expenseAisle);
         newExpense.setPaymentInterval(expenseInterval);
+        newExpense.setBudgetID(expenseBudgetID);
         return newExpense;
     }
 
     //Returns a list of expenses for a corresponding Budget in the database
-    public ArrayList<Expense> findAllExpenses(String theExpenseTable)
+    public ArrayList<Expense> findAllExpenses(long budgetID)
     {
         ArrayList<Expense> expenseList = new ArrayList<Expense>();
-        //Get the actual table name
-        String tableName = convertToSQLTableName(theExpenseTable);
         //Build a cursor
-        Cursor theCursor = theDatabase.query(tableName,null,null,null,null,null,null);
+        Cursor theCursor = theDatabase.query(theHelper.EXPENSE_TABLE_NAME,null,
+                theHelper.COLUMN_EXPENSE_BUDGET_ID_NUMBER + " = " + budgetID,null,null,null,null);
         theCursor.moveToFirst();
         //Traverse through each row
         while (!theCursor.isAfterLast())
@@ -229,6 +201,7 @@ public class DatabaseAccessObject {
             float expenseMaxCost = theCursor.getFloat(4);
             int expenseAisle = theCursor.getInt(5);
             String expenseInterval = theCursor.getString(6);
+            int expenseBudgetID = theCursor.getInt(7);
 
             //Create Expense
             Expense newExpense = new Expense(expenseName,expenseCost,expenseMaxCost);
@@ -236,6 +209,7 @@ public class DatabaseAccessObject {
             newExpense.setIDNumber(expenseID);
             newExpense.setAisle(expenseAisle);
             newExpense.setPaymentInterval(expenseInterval);
+            newExpense.setBudgetID(expenseBudgetID);
             //Add to list
             expenseList.add(newExpense);
             theCursor.moveToNext();
@@ -249,12 +223,11 @@ public class DatabaseAccessObject {
     }
 
     //Returns total current cost of all expenses in a table
-    public float findTotalCost(String theExpenseTable)
+    public float findTotalCost(long budgetID)
     {
-        //Get the actual table name
-        String tableName = convertToSQLTableName(theExpenseTable);
         //Build a cursor
-        Cursor theCursor = theDatabase.query(tableName,null,null,null,null,null,null);
+        Cursor theCursor = theDatabase.query(theHelper.EXPENSE_TABLE_NAME,null,
+                theHelper.COLUMN_EXPENSE_BUDGET_ID_NUMBER + " = " + budgetID,null,null,null,null);
         theCursor.moveToFirst();
         float totalCost = 0;
         //Traverse through each row
@@ -272,24 +245,6 @@ public class DatabaseAccessObject {
             theCursor.close();
         }
         return totalCost;
-    }
-
-    //Replaces ' ' with '_' to have a valid table name
-    public String convertToSQLTableName(String input)
-    {
-        String returnString = "";
-        for (int i = 0; i < input.length(); i++)
-        {
-            if ((input.charAt(i) == ' ') || (input.charAt(i) == '\''))
-            {
-                returnString = returnString + "_";
-            }
-            else
-            {
-                returnString = returnString + input.charAt(i);
-            }
-        }
-        return returnString;
     }
 
     //Call this when done with working with the database

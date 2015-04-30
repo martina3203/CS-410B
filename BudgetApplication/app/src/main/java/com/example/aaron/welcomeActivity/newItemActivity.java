@@ -139,7 +139,7 @@ public class newItemActivity extends ActionBarActivity {
 
         //Find current total cost of Budget and add the new item's price to it
         theDatabase.open();
-        float budgetCost = theDatabase.findTotalCost(currentBudget.getName());
+        float budgetCost = theDatabase.findTotalCost(currentBudget.getIDNumber());
         budgetCost = budgetCost + currentCost;
         theDatabase.closeDatabase();
 
@@ -213,8 +213,9 @@ public class newItemActivity extends ActionBarActivity {
         newExpense.setPriority(priority);
         newExpense.setAisle(aisle);
         newExpense.setPaymentInterval(frequency);
+        newExpense.setBudgetID(currentBudget.getIDNumber());
         theDatabase.open();
-        theDatabase.insertExpense(newExpense, currentBudget.getName());
+        theDatabase.insertExpense(newExpense);
         theDatabase.closeDatabase();
 
         //Finish Activity

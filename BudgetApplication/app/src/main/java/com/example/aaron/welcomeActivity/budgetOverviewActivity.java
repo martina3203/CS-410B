@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -102,8 +103,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
         //Reset some position items
         selectedItemInListPosition = -1;
@@ -112,36 +112,34 @@ public class budgetOverviewActivity extends ActionBarActivity {
     }
 
     //Executes when add Expense button is clicked
-    public void onNewExpenseClick(View view){
-        Intent newIntent = new Intent(this,newItemActivity.class);
+    public void onNewExpenseClick(View view) {
+        Intent newIntent = new Intent(this, newItemActivity.class);
         Budget transferBudget = currentBudget;
-        newIntent.putExtra("Budget",transferBudget);
+        newIntent.putExtra("Budget", transferBudget);
         startActivity(newIntent);
     }
 
     //Called when the view button is pressed a long with an item on the list
-    public void onViewExpenseClick(View view)
-    {
-        Intent intent = new Intent(this,itemOverviewActivity.class);
+    public void onViewExpenseClick(View view) {
+        Intent intent = new Intent(this, itemOverviewActivity.class);
         //Get the appropriate Budget ot pass into the next activity, if available
-        if (selectedItemInListPosition != -1)
-        {
+        if (selectedItemInListPosition != -1) {
             Expense transferExpense = expenseList.get(selectedItemInListPosition);
             Budget transferBudget = currentBudget;
-            intent.putExtra("Expense",transferExpense);
+            intent.putExtra("Expense", transferExpense);
             intent.putExtra("Budget", transferBudget);
             startActivity(intent);
         }
     }
 
-    public void onEditClick(View view){
-        Intent newIntent = new Intent(this,editBudgetActivity.class);
+    public void onEditClick(View view) {
+        Intent newIntent = new Intent(this, editBudgetActivity.class);
         Budget transferBudget = currentBudget;
-        newIntent.putExtra("Budget",transferBudget);
+        newIntent.putExtra("Budget", transferBudget);
         startActivity(newIntent);
     }
 
-    public void onSummaryClick(View view){
+    public void onSummaryClick(View view) {
         Log.d("Yes", "Yes");
     }
 
@@ -156,7 +154,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
                 //Set the new selected to the color
                 parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
                 //Revert the previous color
-                if (previousListPosition != -1 && previousListPosition != position){
+                if (previousListPosition != -1 && previousListPosition != position) {
                     parent.getChildAt(previousListPosition).
                             setBackgroundColor(Color.parseColor(mainActivity.BACKGROUND_COLOR));
                 }
@@ -169,13 +167,12 @@ public class budgetOverviewActivity extends ActionBarActivity {
     }
 
     //Reviews what is returned when an intent is updated
-    protected void onActivityResult(int requestCode,int resultCode, Intent returnedIntent)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent returnedIntent) {
         //Omitted for now
     }
 
-     //sets up the progress bar and the textViews below it
-    private void setUpProgressBar(){
+    //sets up the progress bar and the textViews below it
+    private void setUpProgressBar() {
 
         double maxProgress = 0; //the max value of the progress bar
         double currentProgress = 0; //the current value of the progress bar
@@ -183,10 +180,10 @@ public class budgetOverviewActivity extends ActionBarActivity {
         String moneyInUse = ""; //string sued to set textView text
 
         //If there are no expenses
-        if(expenseList.isEmpty()) {
+        if (expenseList.isEmpty()) {
             //update the progress bar and textView with current money usage (which is none)
             currentCostAmountTextView.setText("$0.00");
-            progressBar.setProgress((int)currentProgress);
+            progressBar.setProgress((int) currentProgress);
 
             //update status bar and textView with money available
             double moneyAvailable = currentBudget.getMaxValue();
@@ -196,16 +193,16 @@ public class budgetOverviewActivity extends ActionBarActivity {
 
             double maxProgressbar = currentBudget.getMaxValue();
             maxProgress = (int) maxProgressbar; //progress bars only accept integers
-            progressBar.setMax((int)maxProgress);
+            progressBar.setMax((int) maxProgress);
         }
         //if there are some expenses
-        else{
+        else {
             theDatabase.open();
 
             //set max value of progress bar
             double maxProgressbar = currentBudget.getMaxValue();
             maxProgress = (int) maxProgressbar;
-            progressBar.setMax((int)maxProgress);
+            progressBar.setMax((int) maxProgress);
 
             //prepare progress bar with current money usage
             float currentTotalCost = theDatabase.findTotalCost(currentBudget.getName());
@@ -213,23 +210,19 @@ public class budgetOverviewActivity extends ActionBarActivity {
 
             //This is to make sure the progress bar doesn't mess up if the current progress
             //becomes higher than the max progress
-            if (currentProgress > maxProgress){
-                progressBar.setProgress((int)maxProgress);
+            if (currentProgress > maxProgress) {
+                progressBar.setProgress((int) maxProgress);
                 progressBar.getProgressDrawable().setColorFilter(Color.parseColor(redColor),
                         PorterDuff.Mode.SRC_IN);
-            }
-            else{
+            } else {
                 //progressBar.setProgress(currentProgress);
                 //We will set colors based on how far we are.
-                progressBar.setProgress((int)currentProgress);
+                progressBar.setProgress((int) currentProgress);
                 //If less than 60%
-                if ((currentProgress/maxProgress) > .6)
-                {
+                if ((currentProgress / maxProgress) > .6) {
                     progressBar.getProgressDrawable().setColorFilter(Color.parseColor(yellowColor),
                             PorterDuff.Mode.MULTIPLY);
-                }
-                else
-                {
+                } else {
                     progressBar.getProgressDrawable().setColorFilter(Color.parseColor(greenColor),
                             PorterDuff.Mode.MULTIPLY);
                 }
@@ -243,11 +236,11 @@ public class budgetOverviewActivity extends ActionBarActivity {
             double moneyAvailable = currentBudget.getMaxValue();
             moneyAvailable = moneyAvailable - currentTotalCost;
             //if there is no money left in the Budget, the text view will say "None"
-            if (moneyAvailable <= 0){
+            if (moneyAvailable <= 0) {
                 moneyAvailableAmountTextView.setText("None");
             }
             //if there is money leftover, set the text view's value
-            else{
+            else {
                 moneyNotInUse = String.format("%.2f", moneyAvailable);
                 moneyNotInUse = "$" + moneyNotInUse;
                 moneyAvailableAmountTextView.setText(moneyNotInUse);
@@ -256,4 +249,20 @@ public class budgetOverviewActivity extends ActionBarActivity {
             theDatabase.closeDatabase();
         }
     }
+
+    public void onBackPressed() {
+        //Finish Activity and go to select Budget screen again
+        Intent newIntent = new Intent(this, mainActivity.class);
+        startActivity(newIntent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
+    }
+
 }

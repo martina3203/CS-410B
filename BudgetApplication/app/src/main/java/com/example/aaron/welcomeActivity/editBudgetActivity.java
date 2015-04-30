@@ -59,28 +59,15 @@ public class editBudgetActivity extends ActionBarActivity {
             return;
         }
 
-        //Now I have to check for duplicates in the database
         theDatabase.open();
-        ArrayList<Budget> budgetList = theDatabase.findAllBudgets();
-        for (int i = 0; i < budgetList.size(); i++)
-        {
-            Budget thisBudget = budgetList.get(i);
-            if (budgetName.matches(thisBudget.getName()))
-            {
-                //We have encountered a duplicate and will not proceed
-                builder.setTitle("Error");
-                builder.setMessage("A Budget of that name already exists.");
-                builder.show();
-                return;
-            }
-        }
 
         //Parse Double out of this statement
         budgetLimit = Double.parseDouble(budgetTotal);
 
         //Update Budget object and add to database
-        currentBudget.setName(budgetName);
+        //currentBudget.setName(budgetName);
         currentBudget.setMaxValue(budgetLimit);
+        theDatabase.open();
         theDatabase.updateBudget(currentBudget);
         //Close database when done
         theDatabase.closeDatabase();
@@ -88,6 +75,10 @@ public class editBudgetActivity extends ActionBarActivity {
         Intent returnedIntent = this.getIntent();
         //Says it's ok and returns the information upon finish
         setResult(RESULT_OK,returnedIntent);
-        this.finish();
+
+        Intent newIntent = new Intent(this, budgetOverviewActivity.class);
+        newIntent.putExtra("Budget", currentBudget);
+        startActivity(newIntent);
+
     }
 }

@@ -37,8 +37,8 @@ public class newItemActivity extends ActionBarActivity {
     private Spinner dropdown;
     private Spinner frequencyDropdown;
     private String selectedSpinner;
-    String[] values = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
-    String[] frequencyValues = new String[]{"None", "Daily", "Five Days", "One Week", "Two Weeks",
+    private String[] values = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+    private String[] frequencyValues = new String[]{"None", "Daily", "Five Days", "One Week", "Two Weeks",
             "One Month", "Quarterly", "Six Months", "Annually"};
     private AlertDialog.Builder builder;
     private boolean warningShown;
@@ -68,7 +68,7 @@ public class newItemActivity extends ActionBarActivity {
         dropdown = (Spinner)findViewById(R.id.priorityDropDown);
         frequencyDropdown  =(Spinner) findViewById(R.id.frequencyDropDown);
         ArrayAdapter<String> priorityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, values);
-        ArrayAdapter<String> frequencyAdapter =new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, frequencyValues);
+        ArrayAdapter<String> frequencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, frequencyValues);
         dropdown.setAdapter(priorityAdapter);
         frequencyDropdown.setAdapter(frequencyAdapter);
 

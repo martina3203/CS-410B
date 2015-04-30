@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+//This activity is used with edit_budget_layout
+
 public class editBudgetActivity extends ActionBarActivity {
     private String budgetName;
     private double budgetLimit;

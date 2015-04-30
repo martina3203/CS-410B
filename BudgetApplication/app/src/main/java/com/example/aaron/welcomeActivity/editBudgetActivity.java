@@ -65,7 +65,7 @@ public class editBudgetActivity extends ActionBarActivity {
         budgetLimit = Double.parseDouble(budgetTotal);
 
         //Update Budget object and add to database
-        //currentBudget.setName(budgetName);
+        currentBudget.setName(budgetName);
         currentBudget.setMaxValue(budgetLimit);
         theDatabase.open();
         theDatabase.updateBudget(currentBudget);

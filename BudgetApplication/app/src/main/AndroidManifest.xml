@@ -55,6 +55,12 @@
             android:parentActivityName=".budgetOverviewActivity">
 
             </activity>
+        <activity
+            android:name=".summaryActivity"
+            android:label="Summary"
+            android:parentActivityName=".budgetOverviewActivity">
+
+        </activity>
 
     </application>
 

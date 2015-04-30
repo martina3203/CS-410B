@@ -1,5 +1,6 @@
 package com.example.aaron.welcomeActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 public class summaryActivity extends ActionBarActivity {
 
     private DatabaseAccessObject theDatabase;
+    private  Budget currentBudget;
     private ListView expenseListView;
     private TextView priceTextView;
     private String frequency;
@@ -32,6 +34,12 @@ public class summaryActivity extends ActionBarActivity {
         frequencyDropdown.setAdapter(frequencyAdapter);
 
         theDatabase = new DatabaseAccessObject(getApplicationContext());
+
+        //Acquire intent
+        Intent receivedIntent = this.getIntent();
+        currentBudget = (Budget) receivedIntent.getSerializableExtra("Budget");
+
+        findFrequencyChoice();
     }
 
     private void findFrequencyChoice(){

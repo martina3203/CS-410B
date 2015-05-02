@@ -9,17 +9,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import java.util.ArrayList;
 
 //This activity is used with summary_layout
 
 public class summaryActivity extends ActionBarActivity {
 
     private DatabaseAccessObject theDatabase;
-    private  Budget currentBudget;
+    private Budget currentBudget;
     private ListView expenseListView;
     private TextView priceTextView;
     private String frequency;
     private Spinner frequencyDropdown;
+    private ArrayList<Expense> expenseList = new ArrayList<Expense>();
     private String[] frequencyValues = new String[]{"None", "Daily", "Five Days", "One Week", "Two Weeks",
             "One Month", "Quarterly", "Six Months", "Annually"};
 
@@ -39,6 +41,15 @@ public class summaryActivity extends ActionBarActivity {
         Intent receivedIntent = this.getIntent();
         currentBudget = (Budget) receivedIntent.getSerializableExtra("Budget");
 
+        //Get all expenses in the budget
+        theDatabase.open();
+        expenseList = theDatabase.findAllExpenses(currentBudget.getIDNumber());
+        theDatabase.closeDatabase();
+
+        //Update listView with expenses
+        customExpenseAdapter adapter = new customExpenseAdapter(this, expenseList);
+        expenseListView.setAdapter(adapter);
+
         findFrequencyChoice();
     }
 
@@ -56,5 +67,14 @@ public class summaryActivity extends ActionBarActivity {
                 frequency = "None";
             }
         });
+    }
+
+    private void populateList(){
+        theDatabase.open();
+        expenseList = theDatabase.findAllExpenses(currentBudget.getIDNumber());
+        theDatabase.closeDatabase();
+
+        customExpenseAdapter adapter = new customExpenseAdapter(this, expenseList);
+        expenseListView.setAdapter(adapter);
     }
 }

@@ -13,15 +13,17 @@
         android:id="@+id/titleTextView"
         android:layout_weight="0.02"
         android:textSize="30sp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="New Budget Name:"
         android:id="@+id/newBudgetNameTextView"
-        android:layout_weight="0.02" />
+        android:layout_weight="0.02"
+        android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
     <EditText
         android:layout_width="match_parent"
@@ -30,12 +32,13 @@
         android:layout_weight="0.02" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Total Budget Amount:"
         android:id="@+id/totalBudgetTextView"
-        android:layout_weight="0.02" />
+        android:layout_weight="0.02"
+        android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -52,7 +55,8 @@
             android:layout_weight="0.20"
             android:textAlignment="center"
             android:gravity="center"
-            android:textSize="@dimen/abc_text_size_display_1_material" />
+            android:textSize="@dimen/abc_text_size_display_1_material"
+            android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
         <EditText
             android:layout_width="wrap_content"

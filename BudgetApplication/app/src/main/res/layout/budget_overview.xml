@@ -13,14 +13,16 @@
         android:id="@+id/titleTextView"
         android:layout_weight="0.02"
         android:textSize="30sp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Expense List"
         android:textSize="22sp"
-        android:id="@+id/expenseListLabel"/>
+        android:id="@+id/expenseListLabel"
+        android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
     <ListView
         android:layout_width="match_parent"
@@ -94,7 +96,8 @@
             android:id="@+id/currentCostTextView"
             android:layout_weight="0.02"
             android:gravity="left"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -104,7 +107,8 @@
             android:id="@+id/currentCostAmountTextView"
             android:layout_weight="0.02"
             android:gravity="right"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
     </LinearLayout>
 
@@ -127,7 +131,8 @@
             android:layout_weight="0.02"
             android:gravity="left"
             android:layout_marginLeft="5dp"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -139,7 +144,7 @@
             android:gravity="right"
             android:layout_margin="5dp"
 
-            />
+            android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
     </LinearLayout>
 

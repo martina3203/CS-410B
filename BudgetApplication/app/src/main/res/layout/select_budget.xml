@@ -21,14 +21,16 @@
         android:backgroundTint="@color/background_material_light"
         android:gravity="center"
         android:textStyle="bold"
-        android:textSize="@dimen/abc_dropdownitem_icon_width" />
+        android:textSize="@dimen/abc_dropdownitem_icon_width"
+        android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Saved Budgets:"
-        android:id="@+id/savedBudgetTextView" />
+        android:id="@+id/savedBudgetTextView"
+        android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
     <LinearLayout
         android:orientation="vertical"

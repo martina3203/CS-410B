@@ -13,7 +13,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="30sp"
         android:layout_marginLeft="2dp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -78,7 +79,8 @@
             android:id="@+id/totalCostTextView"
             android:layout_weight="0.02"
             android:gravity="left"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -88,7 +90,8 @@
             android:id="@+id/totalCostAmountTextView"
             android:layout_weight="0.02"
             android:gravity="right"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
     </LinearLayout>
 

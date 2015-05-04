@@ -222,6 +222,49 @@ public class DatabaseAccessObject {
         return expenseList;
     }
 
+    //Returns a list of expenses for a corresponding Budget in the database
+    public ArrayList<Expense> findAllExpensesFrequency(long budgetID, String frequency)
+    {
+        ArrayList<Expense> expenseList = new ArrayList<Expense>();
+        //Build a cursor
+        Cursor theCursor = theDatabase.query(theHelper.EXPENSE_TABLE_NAME,null,
+                theHelper.COLUMN_EXPENSE_BUDGET_ID_NUMBER + " = " + budgetID,null,null,null,null);
+        theCursor.moveToFirst();
+        //Traverse through each row
+        while (!theCursor.isAfterLast())
+        {
+            //Grab material
+            long expenseID = theCursor.getInt(0);
+            String expenseName = theCursor.getString(1);
+            int expensePriority = theCursor.getInt(2);
+            float expenseCost = theCursor.getFloat(3);
+            float expenseMaxCost = theCursor.getFloat(4);
+            int expenseAisle = theCursor.getInt(5);
+            String expenseInterval = theCursor.getString(6);
+            int expenseBudgetID = theCursor.getInt(7);
+
+            if (expenseInterval.matches(frequency)){
+                //Create Expense
+                Expense newExpense = new Expense(expenseName,expenseCost,expenseMaxCost);
+                newExpense.setPriority(expensePriority);
+                newExpense.setIDNumber(expenseID);
+                newExpense.setAisle(expenseAisle);
+                newExpense.setPaymentInterval(expenseInterval);
+                newExpense.setBudgetID(expenseBudgetID);
+                //Add to list
+                expenseList.add(newExpense);
+            }
+
+            theCursor.moveToNext();
+        }
+        //Close the cursor
+        if ((theCursor != null) && (theCursor.isClosed() == true))
+        {
+            theCursor.close();
+        }
+        return expenseList;
+    }
+
     //Returns total current cost of all expenses in a table
     public float findTotalCost(long budgetID)
     {

@@ -21,6 +21,7 @@ public class summaryActivity extends ActionBarActivity {
     private TextView priceTextView;
     private String frequency;
     private Spinner frequencyDropdown;
+    private customExpenseAdapter adapter;
     private ArrayList<Expense> expenseList = new ArrayList<Expense>();
     private String[] frequencyValues = new String[]{"None", "Daily", "Five Days", "One Week", "Two Weeks",
             "One Month", "Quarterly", "Six Months", "Annually"};
@@ -43,11 +44,12 @@ public class summaryActivity extends ActionBarActivity {
 
         //Get all expenses in the budget
         theDatabase.open();
-        expenseList = theDatabase.findAllExpenses(currentBudget.getIDNumber());
+        //expenseList = theDatabase.findAllExpenses(currentBudget.getIDNumber());
+        expenseList = theDatabase.findAllExpensesFrequency(currentBudget.getIDNumber(), "None");
         theDatabase.closeDatabase();
 
         //Update listView with expenses
-        customExpenseAdapter adapter = new customExpenseAdapter(this, expenseList);
+        adapter = new customExpenseAdapter(this, expenseList);
         expenseListView.setAdapter(adapter);
 
         findFrequencyChoice();
@@ -58,8 +60,7 @@ public class summaryActivity extends ActionBarActivity {
             @Override
             //sets variable when selected value is changed in dropdown
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                frequency = frequencyValues[position];
-            }
+                frequency = frequencyValues[position];            }
 
             @Override
             //sets variable if user doesn't select one
@@ -69,12 +70,12 @@ public class summaryActivity extends ActionBarActivity {
         });
     }
 
-    private void populateList(){
+    //Updates list with expenses of specified frequency
+    public void onOkayClick(View view){
         theDatabase.open();
-        expenseList = theDatabase.findAllExpenses(currentBudget.getIDNumber());
+        expenseList = theDatabase.findAllExpensesFrequency(currentBudget.getIDNumber(), frequency);
+        customExpenseAdapter newAdapter = new customExpenseAdapter(this, expenseList);
+        expenseListView.setAdapter(newAdapter);
         theDatabase.closeDatabase();
-
-        customExpenseAdapter adapter = new customExpenseAdapter(this, expenseList);
-        expenseListView.setAdapter(adapter);
     }
 }

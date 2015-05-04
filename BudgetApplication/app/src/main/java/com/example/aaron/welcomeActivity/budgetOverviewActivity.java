@@ -140,7 +140,6 @@ public class budgetOverviewActivity extends ActionBarActivity {
     }
 
     public void onSummaryClick(View view) {
-        Log.d("Yes", "Yes");
         Intent newIntent = new Intent(this, summaryActivity.class);
         Budget transferBudget = currentBudget;
         newIntent.putExtra("Budget", transferBudget);

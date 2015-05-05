@@ -135,4 +135,233 @@ public class summaryActivity extends ActionBarActivity {
         return false;
     }
 
+    public Double computeTotalEstimate()
+    {
+        Double total = 0.0;
+        //Grab all the expenses
+        //For each expense, find the use the frequency to determine the value that is currently has
+        for (int i = 0; i < expenseList.size(); i++)
+        {
+            Expense currentExpense = expenseList.get(i);
+            Double currentCost = Double.valueOf(currentExpense.getCurrentExpense());
+            String paymentInterval = currentExpense.getPaymentInterval();
+            switch (paymentInterval)
+            {
+                case "None":
+                    //It is simply this value
+                    break;
+                case "Daily":
+                    currentCost = computeDaily(currentCost);
+                    break;
+                case "Five Days":
+                    currentCost = computeFiveDays(currentCost);
+                    break;
+                case "One Week":
+                    currentCost = computeOneWeek(currentCost);
+                    break;
+                case "Two Weeks":
+                    currentCost = computeTwoWeeks(currentCost);
+                    break;
+                case "One Month":
+                    currentCost = computeOneMonth(currentCost);
+                    break;
+                case "Quarterly":
+                    currentCost = computeQuarterly(currentCost);
+                    break;
+                case "Six Months":
+                    currentCost = computeSixMonths(currentCost);
+                    break;
+                case "Annually":
+                    currentCost = computeYearly(currentCost);
+                    break;
+            }
+            total = total + currentCost;
+        }
+
+        return total;
+    }
+
+    private Double computeTwoWeeks(Double currentCost) {
+        Double cost = 0.0;
+        //Based on the frequency set by the user, compute these values
+        //Daily
+        if (frequency == frequencyValues[1])
+        {
+            cost = currentCost / 14.0;
+        }
+        //Five Days
+        else if (frequency == frequencyValues[2])
+        {
+            cost = currentCost / 2.8;
+        }
+        //One Week
+        else if (frequency == frequencyValues[3])
+        {
+            cost = currentCost / 2;
+        }
+        //Two Weeks
+        else if (frequency == frequencyValues[4])
+        {
+            cost = currentCost;
+        }
+        //One Month
+        else if (frequency == frequencyValues[5])
+        {
+            cost = currentCost * 2.14;
+        }
+        //Quarterly
+        else if (frequency == frequencyValues[6])
+        {
+            cost = currentCost * 6.4;
+        }
+        //6 Months
+        else if (frequency == frequencyValues[7])
+        {
+            cost = currentCost * 12.9;
+        }
+        //Annually
+        else if (frequency == frequencyValues[8])
+        {
+            cost = currentCost * 26.1;
+        }
+        return cost;
+    }
+
+    private Double computeOneWeek(Double currentCost) {
+        Double cost = 0.0;
+        //Based on the frequency set by the user, compute these values
+        //Daily
+        if (frequency == frequencyValues[1])
+        {
+            cost = currentCost / 7;
+        }
+        //Five Days
+        else if (frequency == frequencyValues[2])
+        {
+            cost = currentCost / 1.4;
+        }
+        //One Week
+        else if (frequency == frequencyValues[3])
+        {
+            cost = currentCost;
+        }
+        //Two Weeks
+        else if (frequency == frequencyValues[4])
+        {
+            cost = currentCost * 2;
+        }
+        //One Month
+        else if (frequency == frequencyValues[5])
+        {
+            cost = currentCost * 4;
+        }
+        //Quarterly
+        else if (frequency == frequencyValues[6])
+        {
+            cost = currentCost * 12.8;
+        }
+        //6 Months
+        else if (frequency == frequencyValues[7])
+        {
+            cost = currentCost * 25.7;
+        }
+        //Annually
+        else if (frequency == frequencyValues[8])
+        {
+            cost = currentCost * 52.1;
+        }
+        return cost;
+    }
+
+    private Double computeFiveDays(Double currentCost) {
+        Double cost = 0.0;
+        //Based on the frequency set by the user, compute these values
+        //Daily
+        if (frequency == frequencyValues[1])
+        {
+            cost = currentCost * 5.0;
+        }
+        //Five Days
+        else if (frequency == frequencyValues[2])
+        {
+            cost = currentCost;
+        }
+        //One Week
+        else if (frequency == frequencyValues[3])
+        {
+            cost = currentCost * 1.4;
+        }
+        //Two Weeks
+        else if (frequency == frequencyValues[4])
+        {
+            cost = currentCost * 2.8;
+        }
+        //One Month
+        else if (frequency == frequencyValues[5])
+        {
+            cost = currentCost * 6;
+        }
+        //Quarterly
+        else if (frequency == frequencyValues[6])
+        {
+            cost = currentCost * 18;
+        }
+        //6 Months
+        else if (frequency == frequencyValues[7])
+        {
+            cost = currentCost * 36;
+        }
+        //Annually
+        else if (frequency == frequencyValues[8])
+        {
+            cost = currentCost * 73;
+        }
+        return cost;
+    }
+
+    private Double computeDaily(Double currentCost) {
+        Double cost = 0.0;
+        //Based on the frequency set by the user, compute these values
+        //Daily
+        if (frequency == frequencyValues[1])
+        {
+            cost = currentCost;
+        }
+        //Five Days
+        else if (frequency == frequencyValues[2])
+        {
+            cost = currentCost * 5.0;
+        }
+        //One Week
+        else if (frequency == frequencyValues[3])
+        {
+            cost = currentCost * 7.0;
+        }
+        //Two Weeks
+        else if (frequency == frequencyValues[4])
+        {
+            cost = currentCost * 14.0;
+        }
+        //One Month
+        else if (frequency == frequencyValues[5])
+        {
+            cost = currentCost * 30.0;
+        }
+        //Quarterly
+        else if (frequency == frequencyValues[6])
+        {
+            cost = currentCost * 90;
+        }
+        //6 Months
+        else if (frequency == frequencyValues[7])
+        {
+            cost = currentCost * 180;
+        }
+        //Annually
+        else if (frequency == frequencyValues[8])
+        {
+            cost = currentCost * 365;
+        }
+        return cost;
+    }
 }

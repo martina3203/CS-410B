@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:baselineAligned="false">
 
     <TextView
         android:layout_width="wrap_content"
@@ -10,7 +11,6 @@
         android:text="Name Field"
         android:id="@+id/nameField"
         android:password="false"
-        android:layout_gravity="center_vertical"
         android:paddingLeft="10dp"
         android:textAlignment="viewEnd" />
 
@@ -20,8 +20,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="  -  "
         android:id="@+id/divider"
-        android:password="false"
-        android:layout_gravity="center_vertical" />
+        android:password="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,7 +29,6 @@
         android:id="@+id/totalBudgetField"
         android:text="Price Field"
         android:password="false"
-        android:layout_gravity="center_vertical"
         android:textAlignment="textStart"
         android:singleLine="false"
         android:elegantTextHeight="false" />

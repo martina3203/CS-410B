@@ -25,7 +25,7 @@
         android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Saved Budgets:"
@@ -39,48 +39,47 @@
         android:id="@+id/listLayout">
 
         <ListView
-            android:layout_width="match_parent"
-            android:layout_height="386dp"
+            android:layout_width="fill_parent"
+            android:layout_height="375dp"
             android:id="@+id/budgetListView"
             android:choiceMode="singleChoice"
             android:background="#ffddffd4" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:id="@+id/budgetButtonLayout"
-        android:paddingBottom="6dp"
-        android:gravity="center_horizontal">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:id="@+id/budgetButtonLayout"
+            android:paddingBottom="6dp"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="   View Selected   "
+                android:id="@+id/budgetEditButton"
+                android:onClick="onEditClick" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Delete Selected"
+                android:id="@+id/budgetDeleteButton"
+                android:onClick="onDeleteClick" />
+
+        </LinearLayout>
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="   View Selected   "
-            android:id="@+id/budgetEditButton"
-            android:onClick="onEditClick"
-            android:layout_marginRight="10dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Delete Selected"
-            android:id="@+id/budgetDeleteButton"
-            android:onClick="onDeleteClick" />
-
+            android:layout_height="wrap_content"
+            android:text="Add New Budget..."
+            android:id="@+id/budgetAddButton"
+            android:nestedScrollingEnabled="false"
+            android:onClick="onAddBudgetClick"
+            android:layout_gravity="center" />
     </LinearLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:text="Add New Budget..."
-        android:id="@+id/budgetAddButton"
-        android:nestedScrollingEnabled="false"
-        android:onClick="onAddBudgetClick"
-        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

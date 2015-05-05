@@ -27,12 +27,22 @@ public class customExpenseAdapter extends ArrayAdapter<Expense> {
         }
         // Set the data into the textViews
         TextView nameBox = (TextView) convertView.findViewById(R.id.name);
-        TextView aisleBox = (TextView) convertView.findViewById(R.id.aisleBox);
+        TextView aisleBox = (TextView) convertView.findViewById(R.id.aisle);
         TextView priceBox = (TextView) convertView.findViewById(R.id.price);
         //We are going to set the colors of these
         nameBox.setTextColor(Color.BLACK);
         priceBox.setTextColor(Color.BLACK);
+        aisleBox.setTextColor(Color.BLACK);
+        //Fill the boxes
         nameBox.setText(item.getName());
+        if (item.getAisle() != 0)
+        {
+            aisleBox.setText("Aisle " + item.getAisle());
+        }
+        else
+        {
+            aisleBox.setText("No Aisle Given");
+        }
         String price = String.format("%.2f", item.getCurrentExpense());
         price = "$" + price;
         priceBox.setText(price);

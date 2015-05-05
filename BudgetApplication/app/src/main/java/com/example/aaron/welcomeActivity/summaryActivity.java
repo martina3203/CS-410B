@@ -38,20 +38,40 @@ public class summaryActivity extends ActionBarActivity {
         frequencyDropdown.setAdapter(frequencyAdapter);
 
         theDatabase = new DatabaseAccessObject(getApplicationContext());
-
         //Acquire intent
         Intent receivedIntent = this.getIntent();
         currentBudget = (Budget) receivedIntent.getSerializableExtra("Budget");
+        //Set beginning frequency value
+        frequency = "None";
 
         //Get all expenses in the budget
         theDatabase.open();
-        //expenseList = theDatabase.findAllExpenses(currentBudget.getIDNumber());
-        expenseList = theDatabase.findAllExpensesFrequency(currentBudget.getIDNumber(), "None");
+        expenseList = theDatabase.findAllExpensesFrequency(currentBudget.getIDNumber(), frequency);
         theDatabase.closeDatabase();
-
+        //Set the value of the textView
+        setPriceTextView();
         //Update listView with expenses
         adapter = new customExpenseAdapter(this, expenseList);
         expenseListView.setAdapter(adapter);
+
+        findFrequencyChoice();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        theDatabase.closeDatabase();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        theDatabase.open();
+        expenseList = theDatabase.findAllExpensesFrequency(currentBudget.getIDNumber(), frequency);
+        theDatabase.closeDatabase();
+        customExpenseAdapter newAdapter = new customExpenseAdapter(this, expenseList);
+        expenseListView.setAdapter(newAdapter);
+        setPriceTextView();
 
         findFrequencyChoice();
     }
@@ -78,9 +98,25 @@ public class summaryActivity extends ActionBarActivity {
         customExpenseAdapter newAdapter = new customExpenseAdapter(this, expenseList);
         expenseListView.setAdapter(newAdapter);
         theDatabase.closeDatabase();
+        setPriceTextView();
     }
 
-    //The following functions override the two backbuttons that exist on Android
+    //Sets value of total price text view;
+    public void setPriceTextView(){
+        theDatabase.open();
+        float totalCost = theDatabase.findTotalCostByFrequency(currentBudget.getIDNumber(), frequency);
+        theDatabase.closeDatabase();
+        if (totalCost != 0){
+            String currentAmount = String.format("%.2f", totalCost);
+            currentAmount = "$" + currentAmount;
+            priceTextView.setText(currentAmount, TextView.BufferType.NORMAL);
+        }
+        else{
+            priceTextView.setText("$0.00", TextView.BufferType.NORMAL);
+        }
+    }
+
+    //The following functions override the two back buttons that exist on Android
     @Override
     public void onBackPressed()
     {

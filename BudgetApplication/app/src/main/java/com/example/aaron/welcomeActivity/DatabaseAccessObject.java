@@ -290,6 +290,33 @@ public class DatabaseAccessObject {
         return totalCost;
     }
 
+    //Returns total current cost of all expenses in a table
+    public float findTotalCostByFrequency(long budgetID, String interval)
+    {
+        //Build a cursor
+        Cursor theCursor = theDatabase.query(theHelper.EXPENSE_TABLE_NAME,null,
+                theHelper.COLUMN_EXPENSE_BUDGET_ID_NUMBER + " = " + budgetID,null,null,null,null);
+        theCursor.moveToFirst();
+        float totalCost = 0;
+        //Traverse through each row
+        while (!theCursor.isAfterLast())
+        {
+
+            if (theCursor.getString(6).matches(interval)) {
+                float expenseCost = theCursor.getFloat(3);
+                totalCost += expenseCost;
+            }
+
+            theCursor.moveToNext();
+        }
+        //Close the cursor
+        if ((theCursor != null) && (theCursor.isClosed() == true))
+        {
+            theCursor.close();
+        }
+        return totalCost;
+    }
+
     //Call this when done with working with the database
     public void closeDatabase()
     {

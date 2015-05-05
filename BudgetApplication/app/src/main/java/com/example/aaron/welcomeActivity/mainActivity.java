@@ -46,8 +46,7 @@ public class mainActivity extends Activity {
         theDatabase.closeDatabase();
 
         //Updates list with budgets
-        theAdapter = new ArrayAdapter<Budget>(this,
-                android.R.layout.simple_list_item_1, listItems);
+        theAdapter = new customBudgetAdapter(this,listItems);
 
         budgetListView.setAdapter(theAdapter);
         registerClick();
@@ -62,8 +61,7 @@ public class mainActivity extends Activity {
         //close database when you're done
         theDatabase.closeDatabase();
         //Updates list with budgets
-        theAdapter = new ArrayAdapter<Budget>(this,
-                android.R.layout.simple_list_item_1, listItems);
+        theAdapter = new customBudgetAdapter(this,listItems);
         budgetListView.setAdapter(theAdapter);
         //Reset some position flags
         selectedItemInListPosition = -1;
@@ -126,7 +124,6 @@ public class mainActivity extends Activity {
         budgetListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                TextView textView = (TextView) viewClicked;
                 //Sets the position up for list transfer
                 selectedItemInListPosition = position;
                 budgetListView.setItemChecked(position,true);

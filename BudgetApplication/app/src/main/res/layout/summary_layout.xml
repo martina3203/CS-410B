@@ -35,13 +35,6 @@
             android:layout_marginTop="5dp"
             android:layout_weight="0.90" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Okay"
-            android:id="@+id/okayButton"
-            android:onClick="onOkayClick" />
-
     </LinearLayout>
 
     <TextView

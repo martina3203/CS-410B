@@ -1,8 +1,10 @@
 package com.example.aaron.welcomeActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -68,13 +70,11 @@ public class summaryActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         theDatabase.open();
-        expenseList = theDatabase.findAllExpensesFrequency(currentBudget.getIDNumber(), frequency);
+        expenseList = theDatabase.findAllExpenses(currentBudget.getIDNumber());
         theDatabase.closeDatabase();
         customExpenseAdapter newAdapter = new customExpenseAdapter(this, expenseList);
         expenseListView.setAdapter(newAdapter);
         setPriceTextView();
-
-        findFrequencyChoice();
     }
 
     private void findFrequencyChoice(){
@@ -82,12 +82,19 @@ public class summaryActivity extends ActionBarActivity {
             @Override
             //sets variable when selected value is changed in dropdown
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                frequency = frequencyValues[position];            }
+                frequency = frequencyValues[position];
+                customExpenseAdapter newAdapter = new customExpenseAdapter(getBaseContext(), expenseList);
+                expenseListView.setAdapter(newAdapter);
+                setPriceTextView();
+            }
 
             @Override
             //sets variable if user doesn't select one
             public void onNothingSelected(AdapterView<?> parentView) {
                 frequency = "None";
+                customExpenseAdapter newAdapter = new customExpenseAdapter(getBaseContext(), expenseList);
+                expenseListView.setAdapter(newAdapter);
+                setPriceTextView();
             }
         });
     }
@@ -173,6 +180,9 @@ public class summaryActivity extends ActionBarActivity {
                 case "Annually":
                     currentCost = computeYearly(currentCost);
                     break;
+                default:
+                    Log.d("This is not a valid", "String");
+                    break;
             }
             total = total + currentCost;
         }
@@ -222,6 +232,10 @@ public class summaryActivity extends ActionBarActivity {
         {
             cost = currentCost;
         }
+        else
+        {
+            cost = currentCost;
+        }
         return cost;
     }
 
@@ -267,6 +281,10 @@ public class summaryActivity extends ActionBarActivity {
         else if (frequency == frequencyValues[8])
         {
             cost = currentCost * 2.0;
+        }
+        else
+        {
+            cost = currentCost;
         }
         return cost;
     }
@@ -314,6 +332,10 @@ public class summaryActivity extends ActionBarActivity {
         {
             cost = currentCost * 4;
         }
+        else
+        {
+            cost = currentCost;
+        }
         return cost;
     }
 
@@ -359,6 +381,10 @@ public class summaryActivity extends ActionBarActivity {
         else if (frequency == frequencyValues[8])
         {
             cost = currentCost * 12.0;
+        }
+        else
+        {
+            cost = currentCost;
         }
         return cost;
     }
@@ -406,6 +432,10 @@ public class summaryActivity extends ActionBarActivity {
         {
             cost = currentCost * 26.1;
         }
+        else
+        {
+            cost = currentCost;
+        }
         return cost;
     }
 
@@ -451,6 +481,10 @@ public class summaryActivity extends ActionBarActivity {
         else if (frequency == frequencyValues[8])
         {
             cost = currentCost * 52.1;
+        }
+        else
+        {
+            cost = currentCost;
         }
         return cost;
     }
@@ -498,6 +532,10 @@ public class summaryActivity extends ActionBarActivity {
         {
             cost = currentCost * 73;
         }
+        else
+        {
+            cost = currentCost;
+        }
         return cost;
     }
 
@@ -544,6 +582,11 @@ public class summaryActivity extends ActionBarActivity {
         {
             cost = currentCost * 365;
         }
+        else
+        {
+            cost = currentCost;
+        }
         return cost;
     }
+
 }

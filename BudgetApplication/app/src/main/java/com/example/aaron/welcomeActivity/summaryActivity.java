@@ -20,11 +20,11 @@ public class summaryActivity extends ActionBarActivity {
     private Budget currentBudget;
     private ListView expenseListView;
     private TextView priceTextView;
-    private String frequency;
+    public static String frequency = "None";
     private Spinner frequencyDropdown;
     private customExpenseAdapter adapter;
     private ArrayList<Expense> expenseList = new ArrayList<Expense>();
-    private String[] frequencyValues = new String[]{"None", "Daily", "Five Days", "One Week", "Two Weeks",
+    public static String[] frequencyValues = new String[]{"None", "Daily", "Five Days", "One Week", "Two Weeks",
             "One Month", "Quarterly", "Six Months", "Annually"};
 
     @Override
@@ -59,6 +59,7 @@ public class summaryActivity extends ActionBarActivity {
 
     @Override
     protected void onPause() {
+        frequency = "None";
         super.onPause();
         theDatabase.closeDatabase();
     }
@@ -94,7 +95,7 @@ public class summaryActivity extends ActionBarActivity {
     //Updates list with expenses of specified frequency
     public void onOkayClick(View view){
         theDatabase.open();
-        expenseList = theDatabase.findAllExpensesFrequency(currentBudget.getIDNumber(), frequency);
+        expenseList = theDatabase.findAllExpenses(currentBudget.getIDNumber());
         customExpenseAdapter newAdapter = new customExpenseAdapter(this, expenseList);
         expenseListView.setAdapter(newAdapter);
         theDatabase.closeDatabase();
@@ -103,9 +104,7 @@ public class summaryActivity extends ActionBarActivity {
 
     //Sets value of total price text view;
     public void setPriceTextView(){
-        theDatabase.open();
-        float totalCost = theDatabase.findTotalCostByFrequency(currentBudget.getIDNumber(), frequency);
-        theDatabase.closeDatabase();
+        Double totalCost = computeTotalEstimate();
         if (totalCost != 0){
             String currentAmount = String.format("%.2f", totalCost);
             currentAmount = "$" + currentAmount;
@@ -180,7 +179,7 @@ public class summaryActivity extends ActionBarActivity {
         return total;
     }
 
-    private Double computeYearly(Double currentCost) {
+    public static Double computeYearly(Double currentCost) {
         Double cost = 0.0;
         //Based on the frequency set by the user, compute these values
         //Daily
@@ -226,7 +225,7 @@ public class summaryActivity extends ActionBarActivity {
         return cost;
     }
 
-    private Double computeSixMonths(Double currentCost) {
+    public static Double computeSixMonths(Double currentCost) {
         Double cost = 0.0;
         //Based on the frequency set by the user, compute these values
         //Daily
@@ -272,7 +271,7 @@ public class summaryActivity extends ActionBarActivity {
         return cost;
     }
 
-    private Double computeQuarterly(Double currentCost) {
+    public static Double computeQuarterly(Double currentCost) {
         Double cost = 0.0;
         //Based on the frequency set by the user, compute these values
         //Daily
@@ -318,7 +317,7 @@ public class summaryActivity extends ActionBarActivity {
         return cost;
     }
 
-    private Double computeOneMonth(Double currentCost) {
+    public static Double computeOneMonth(Double currentCost) {
         Double cost = 0.0;
         //Based on the frequency set by the user, compute these values
         //Daily
@@ -364,7 +363,7 @@ public class summaryActivity extends ActionBarActivity {
         return cost;
     }
 
-    private Double computeTwoWeeks(Double currentCost) {
+    public static Double computeTwoWeeks(Double currentCost) {
         Double cost = 0.0;
         //Based on the frequency set by the user, compute these values
         //Daily
@@ -410,7 +409,7 @@ public class summaryActivity extends ActionBarActivity {
         return cost;
     }
 
-    private Double computeOneWeek(Double currentCost) {
+    public static Double computeOneWeek(Double currentCost) {
         Double cost = 0.0;
         //Based on the frequency set by the user, compute these values
         //Daily
@@ -456,13 +455,13 @@ public class summaryActivity extends ActionBarActivity {
         return cost;
     }
 
-    private Double computeFiveDays(Double currentCost) {
+    public static Double computeFiveDays(Double currentCost) {
         Double cost = 0.0;
         //Based on the frequency set by the user, compute these values
         //Daily
         if (frequency == frequencyValues[1])
         {
-            cost = currentCost * 5.0;
+            cost = currentCost / 5.0;
         }
         //Five Days
         else if (frequency == frequencyValues[2])
@@ -502,7 +501,7 @@ public class summaryActivity extends ActionBarActivity {
         return cost;
     }
 
-    private Double computeDaily(Double currentCost) {
+    public static Double computeDaily(Double currentCost) {
         Double cost = 0.0;
         //Based on the frequency set by the user, compute these values
         //Daily

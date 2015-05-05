@@ -42,7 +42,40 @@ public class customExpenseAdapter extends ArrayAdapter<Expense> {
         {
             aisleBox.setText("No Aisle Given");
         }
-        String price = String.format("%.2f", item.getCurrentExpense());
+
+        //We have to get the price based on the frequency.
+        Double currentCost = Double.valueOf(item.getCurrentExpense());
+        String paymentInterval = item.getPaymentInterval();
+        switch (paymentInterval) {
+            case "None":
+                //It is simply this value
+                break;
+            case "Daily":
+                currentCost = summaryActivity.computeDaily(currentCost);
+                break;
+            case "Five Days":
+                currentCost = summaryActivity.computeFiveDays(currentCost);
+                break;
+            case "One Week":
+                currentCost = summaryActivity.computeOneWeek(currentCost);
+                break;
+            case "Two Weeks":
+                currentCost = summaryActivity.computeTwoWeeks(currentCost);
+                break;
+            case "One Month":
+                currentCost = summaryActivity.computeOneMonth(currentCost);
+                break;
+            case "Quarterly":
+                currentCost = summaryActivity.computeQuarterly(currentCost);
+                break;
+            case "Six Months":
+                currentCost = summaryActivity.computeSixMonths(currentCost);
+                break;
+            case "Annually":
+                currentCost = summaryActivity.computeYearly(currentCost);
+                break;
+        }
+        String price = String.format("%.2f", currentCost);
         price = "$" + price;
         priceBox.setText(price);
         return convertView;

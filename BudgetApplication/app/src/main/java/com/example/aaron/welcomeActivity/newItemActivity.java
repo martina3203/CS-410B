@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -240,6 +241,24 @@ public class newItemActivity extends ActionBarActivity {
         builder.show();
 
         return;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        //Finish Activity and go to select Budget screen again
+        Intent newIntent = new Intent(this, budgetOverviewActivity.class);
+        newIntent.putExtra("Budget", currentBudget);
+        startActivity(newIntent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 
 }

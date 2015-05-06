@@ -59,14 +59,14 @@ public class itemOverviewActivity extends ActionBarActivity {
             aisleBox.setText(temp2, TextView.BufferType.NORMAL);
         }
         //This handles the current cost of the item.
-        String temp3 = Float.toString(currentExpense.getCurrentExpense());
-        float f = Float.parseFloat(temp3);
+        String temp3 = Double.toString(currentExpense.getCurrentExpense());
+        Double f = Double.parseDouble(temp3);
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         temp3 = formatter.format(f);
         currentCostBox.setText(temp3, TextView.BufferType.NORMAL);
         //Now we handle maximum amount allowed by the expense
-        String temp4 = Float.toString(currentExpense.getMaxExpense());
-        f = Float.parseFloat(temp4);
+        String temp4 = Double.toString(currentExpense.getMaxExpense());
+        f = Double.parseDouble(temp4);
         temp4 = formatter.format(f);
         maxCostBox.setText(temp4, TextView.BufferType.NORMAL);
         //And finally the payment interval

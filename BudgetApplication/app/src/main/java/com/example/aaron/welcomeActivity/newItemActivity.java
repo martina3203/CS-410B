@@ -21,8 +21,8 @@ import android.widget.TextView;
 public class newItemActivity extends ActionBarActivity {
 
     private String newItemName;
-    private float currentCost;
-    private float itemLimit;
+    private Double currentCost;
+    private Double itemLimit;
     private int priority;
     private String frequency;
     private int aisle;
@@ -46,8 +46,8 @@ public class newItemActivity extends ActionBarActivity {
     //Constructor
     public newItemActivity() {
         newItemName = "";
-        currentCost = 0;
-        itemLimit = 0;
+        currentCost = 0.0;
+        itemLimit = 0.0;
         priority = 0;
         aisle = 0;
         frequency = "None";
@@ -115,7 +115,7 @@ public class newItemActivity extends ActionBarActivity {
             return;
         }
         else {
-            currentCost = Float.parseFloat(itemCurrentCost);
+            currentCost = Double.parseDouble(itemCurrentCost);
         }
 
         String itemMaxCost = newItemMaxCostTextEdit.getText().toString();
@@ -123,7 +123,7 @@ public class newItemActivity extends ActionBarActivity {
             itemLimit = currentCost;
         }
         else {
-            itemLimit = Float.parseFloat(itemMaxCost);
+            itemLimit = Double.parseDouble(itemMaxCost);
         }
 
         if(itemLimit < currentCost && !warningShown){
@@ -139,7 +139,7 @@ public class newItemActivity extends ActionBarActivity {
 
         //Find current total cost of Budget and add the new item's price to it
         theDatabase.open();
-        float budgetCost = theDatabase.findTotalCost(currentBudget.getIDNumber());
+        Double budgetCost = theDatabase.findTotalCost(currentBudget.getIDNumber());
         budgetCost = budgetCost + currentCost;
         theDatabase.closeDatabase();
 

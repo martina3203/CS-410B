@@ -18,8 +18,8 @@ import android.widget.TextView;
 public class editItemActivity extends ActionBarActivity{
 
     private String itemName;
-    private float currentCost;
-    private float itemLimit;
+    private Double currentCost;
+    private Double itemLimit;
     private int priority;
     private String frequency;
     private int aisle;
@@ -44,8 +44,8 @@ public class editItemActivity extends ActionBarActivity{
     //Constructor
     public editItemActivity(){
         itemName = "";
-        currentCost = 0;
-        itemLimit = 0;
+        currentCost = 0.0;
+        itemLimit = 0.0;
         priority = 0;
         aisle = 0;
     };
@@ -80,7 +80,7 @@ public class editItemActivity extends ActionBarActivity{
         itemCategoryName.setText(currentBudget.getName());
         String aisleNum = Integer.toString(currentExpense.getAisle());
         aisleTextEdit.setText(aisleNum, TextView.BufferType.EDITABLE);
-        String curCost = Float.toString(currentExpense.getCurrentExpense());
+        String curCost = Double.toString(currentExpense.getCurrentExpense());
         itemCurrentCostTextEdit.setText(curCost, TextView.BufferType.EDITABLE);
         String maxCost = Double.toString(currentExpense.getMaxExpense());
         itemMaxCostTextEdit.setText(maxCost, TextView.BufferType.EDITABLE);
@@ -147,7 +147,7 @@ public class editItemActivity extends ActionBarActivity{
             return;
         }
         else {
-            currentCost = Float.parseFloat(itemCurrentCost);
+            currentCost = Double.parseDouble(itemCurrentCost);
         }
 
         String itemMaxCost = itemMaxCostTextEdit.getText().toString();
@@ -158,7 +158,7 @@ public class editItemActivity extends ActionBarActivity{
             return;
         }
         else {
-            itemLimit = Float.parseFloat(itemMaxCost);
+            itemLimit = Double.parseDouble(itemMaxCost);
         }
 
         //Gets Priority from dropdown

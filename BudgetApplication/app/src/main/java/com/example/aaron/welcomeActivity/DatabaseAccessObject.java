@@ -41,12 +41,13 @@ public class DatabaseAccessObject {
     //Updates a Budget entry in the database
     public void updateBudget(Budget updatedBudget)
     {
-        String command = "UPDATE " +  theHelper.BUDGET_TABLE_NAME +
-                " SET " + theHelper.COLUMN_BUDGET_NAME + " = '" + updatedBudget.getName() + "'," +
-                theHelper.COLUMN_BUDGET_LIMIT + " = " + updatedBudget.getMaxValue() + ", " +
-                theHelper.COLUMN_PAYMENT_INTERVAL + " = '" + updatedBudget.getPaymentInterval() + "' " +
-                " WHERE " + theHelper.COLUMN_ID + " = " + updatedBudget.getIDNumber();
-        theDatabase.execSQL(command);
+        ContentValues newValues = new ContentValues();
+        newValues.put(theHelper.COLUMN_BUDGET_NAME, updatedBudget.getName());
+        newValues.put(theHelper.COLUMN_BUDGET_LIMIT, updatedBudget.getMaxValue());
+        newValues.put(theHelper.COLUMN_PAYMENT_INTERVAL,updatedBudget.getPaymentInterval());
+
+        theDatabase.update(theHelper.BUDGET_TABLE_NAME, newValues, theHelper.COLUMN_ID + " = " +
+                updatedBudget.getIDNumber(), null);
     }
 
     //Removes a listed Budget, if it exists
@@ -136,18 +137,16 @@ public class DatabaseAccessObject {
 
     public void updateExpense(Expense theExpense)
     {
-        //Builds a string to update an entry in an Expense table to a corresponding Budget
-        //It is also important to note that this methods updates ALL of the fields corresponding to Expense except of course the ID
-        //First convert to actual table name
-        String command = "UPDATE " +  theHelper.EXPENSE_TABLE_NAME +
-                " SET " + theHelper.COLUMN_EXPENSE_NAME + " = '" + theExpense.getName() + "'," +
-                theHelper.COLUMN_EXPENSE_COST + " = " + theExpense.getCurrentExpense() + ","
-                + theHelper.COLUMN_EXPENSE_MAX_COST + " = " + theExpense.getMaxExpense() + ","
-                + theHelper.COLUMN_EXPENSE_PRIORITY + " = " + theExpense.getPriority() + ","
-                + theHelper.COLUMN_EXPENSE_AISLE_NUMBER + " = " + theExpense.getAisle() + ","
-                + theHelper.COLUMN_PAYMENT_INTERVAL + " = '" + theExpense.getPaymentInterval() +
-                "' WHERE " + theHelper.COLUMN_ID + " = " + theExpense.getIDNumber();
-        theDatabase.execSQL(command);
+        ContentValues newValues = new ContentValues();
+        newValues.put(theHelper.COLUMN_EXPENSE_NAME, theExpense.getName());
+        newValues.put(theHelper.COLUMN_EXPENSE_AISLE_NUMBER,theExpense.getAisle());
+        newValues.put(theHelper.COLUMN_PAYMENT_INTERVAL, theExpense.getPaymentInterval());
+        newValues.put(theHelper.COLUMN_EXPENSE_COST, theExpense.getCurrentExpense());
+        newValues.put(theHelper.COLUMN_EXPENSE_PRIORITY, theExpense.getPriority());
+        newValues.put(theHelper.COLUMN_EXPENSE_MAX_COST, theExpense.getMaxExpense());
+
+        theDatabase.update(theHelper.EXPENSE_TABLE_NAME, newValues, theHelper.COLUMN_ID + " = " +
+                theExpense.getIDNumber(), null);
     }
 
     //Removes a listed Expense, if it exists
@@ -166,8 +165,8 @@ public class DatabaseAccessObject {
         theCursor.moveToFirst();
         String expenseName = theCursor.getString(1);
         int expensePriority = theCursor.getInt(2);
-        float expenseTotal = theCursor.getFloat(3);
-        float expenseMax = theCursor.getFloat(4);
+        Double expenseTotal = theCursor.getDouble(3);
+        Double expenseMax = theCursor.getDouble(4);
         int expenseAisle = theCursor.getInt(5);
         String expenseInterval = theCursor.getString(6);
         int expenseBudgetID = theCursor.getInt(7);
@@ -197,8 +196,8 @@ public class DatabaseAccessObject {
             long expenseID = theCursor.getInt(0);
             String expenseName = theCursor.getString(1);
             int expensePriority = theCursor.getInt(2);
-            float expenseCost = theCursor.getFloat(3);
-            float expenseMaxCost = theCursor.getFloat(4);
+            Double expenseCost = theCursor.getDouble(3);
+            Double expenseMaxCost = theCursor.getDouble(4);
             int expenseAisle = theCursor.getInt(5);
             String expenseInterval = theCursor.getString(6);
             int expenseBudgetID = theCursor.getInt(7);
@@ -237,8 +236,8 @@ public class DatabaseAccessObject {
             long expenseID = theCursor.getInt(0);
             String expenseName = theCursor.getString(1);
             int expensePriority = theCursor.getInt(2);
-            float expenseCost = theCursor.getFloat(3);
-            float expenseMaxCost = theCursor.getFloat(4);
+            Double expenseCost = theCursor.getDouble(3);
+            Double expenseMaxCost = theCursor.getDouble(4);
             int expenseAisle = theCursor.getInt(5);
             String expenseInterval = theCursor.getString(6);
             int expenseBudgetID = theCursor.getInt(7);
@@ -266,18 +265,18 @@ public class DatabaseAccessObject {
     }
 
     //Returns total current cost of all expenses in a table
-    public float findTotalCost(long budgetID)
+    public Double findTotalCost(long budgetID)
     {
         //Build a cursor
         Cursor theCursor = theDatabase.query(theHelper.EXPENSE_TABLE_NAME,null,
                 theHelper.COLUMN_EXPENSE_BUDGET_ID_NUMBER + " = " + budgetID,null,null,null,null);
         theCursor.moveToFirst();
-        float totalCost = 0;
+        Double totalCost = 0.0;
         //Traverse through each row
         while (!theCursor.isAfterLast())
         {
             //Grab material and add to total
-            float expenseCost = theCursor.getFloat(3);
+            Double expenseCost = theCursor.getDouble(3);
             totalCost += expenseCost;
 
             theCursor.moveToNext();
@@ -291,19 +290,19 @@ public class DatabaseAccessObject {
     }
 
     //Returns total current cost of all expenses in a table
-    public float findTotalCostByFrequency(long budgetID, String interval)
+    public Double findTotalCostByFrequency(long budgetID, String interval)
     {
         //Build a cursor
         Cursor theCursor = theDatabase.query(theHelper.EXPENSE_TABLE_NAME,null,
                 theHelper.COLUMN_EXPENSE_BUDGET_ID_NUMBER + " = " + budgetID,null,null,null,null);
         theCursor.moveToFirst();
-        float totalCost = 0;
+        Double totalCost = 0.0;
         //Traverse through each row
         while (!theCursor.isAfterLast())
         {
 
             if (theCursor.getString(6).matches(interval)) {
-                float expenseCost = theCursor.getFloat(3);
+                Double expenseCost = theCursor.getDouble(3);
                 totalCost += expenseCost;
             }
 

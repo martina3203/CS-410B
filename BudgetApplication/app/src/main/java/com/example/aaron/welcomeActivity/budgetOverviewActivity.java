@@ -205,8 +205,8 @@ public class budgetOverviewActivity extends ActionBarActivity {
             progressBar.setMax((int) maxProgress);
 
             //prepare progress bar with current money usage
-            float currentTotalCost = theDatabase.findTotalCost(currentBudget.getIDNumber());
-            currentProgress = (int) currentTotalCost;
+            Double currentTotalCost = theDatabase.findTotalCost(currentBudget.getIDNumber());
+            currentProgress = currentTotalCost;
 
             //This is to make sure the progress bar doesn't mess up if the current progress
             //becomes higher than the max progress

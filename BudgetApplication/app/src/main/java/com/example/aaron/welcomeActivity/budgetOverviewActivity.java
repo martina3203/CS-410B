@@ -149,7 +149,6 @@ public class budgetOverviewActivity extends ActionBarActivity {
         expenseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                TextView textView = (TextView) viewClicked;
                 //This section pertains to highlighting
                 //Set the new selected to the color
                 parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);

@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.content.Intent;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 //This activity is used with budget_overview
@@ -186,8 +187,8 @@ public class budgetOverviewActivity extends ActionBarActivity {
 
             //update status bar and textView with money available
             double moneyAvailable = currentBudget.getMaxValue();
-            moneyNotInUse = String.format("%.2f", moneyAvailable);
-            moneyNotInUse = "$" + moneyNotInUse;
+            NumberFormat formatter = NumberFormat.getCurrencyInstance();
+            moneyNotInUse = formatter.format(moneyAvailable);
             moneyAvailableAmountTextView.setText(moneyNotInUse);
 
             double maxProgressbar = currentBudget.getMaxValue();
@@ -226,9 +227,8 @@ public class budgetOverviewActivity extends ActionBarActivity {
                             PorterDuff.Mode.MULTIPLY);
                 }
             }
-
-            moneyInUse = String.format("%.2f", currentTotalCost);
-            moneyInUse = "$" + moneyInUse;
+            NumberFormat formatter = NumberFormat.getCurrencyInstance();
+            moneyInUse = formatter.format(currentTotalCost);
             currentCostAmountTextView.setText(moneyInUse);
 
             //update textView with money available to use
@@ -240,8 +240,8 @@ public class budgetOverviewActivity extends ActionBarActivity {
             }
             //if there is money leftover, set the text view's value
             else {
-                moneyNotInUse = String.format("%.2f", moneyAvailable);
-                moneyNotInUse = "$" + moneyNotInUse;
+                formatter = NumberFormat.getCurrencyInstance();
+                moneyNotInUse = formatter.format(moneyAvailable);
                 moneyAvailableAmountTextView.setText(moneyNotInUse);
             }
 

@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
+
 //corresponds with item_overview
 
 public class itemOverviewActivity extends ActionBarActivity {
@@ -48,6 +50,7 @@ public class itemOverviewActivity extends ActionBarActivity {
         nameBox.setText(currentExpense.getName());
         String temp =Integer.toString(currentExpense.getPriority());
         priorityBox.setText(temp);
+        //Handle the aisle
         String temp2 =Integer.toString(currentExpense.getAisle());
         if (currentExpense.getAisle() == 0){
             aisleBox.setText("None", TextView.BufferType.NORMAL);
@@ -55,16 +58,18 @@ public class itemOverviewActivity extends ActionBarActivity {
         else{
             aisleBox.setText(temp2, TextView.BufferType.NORMAL);
         }
+        //This handles the current cost of the item.
         String temp3 = Float.toString(currentExpense.getCurrentExpense());
         float f = Float.parseFloat(temp3);
-        temp3 = String.format("%.2f", f);
-        temp3 = "$" + temp3;
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        temp3 = formatter.format(f);
         currentCostBox.setText(temp3, TextView.BufferType.NORMAL);
+        //Now we handle maximum amount allowed by the expense
         String temp4 = Float.toString(currentExpense.getMaxExpense());
         f = Float.parseFloat(temp4);
-        temp4 = String.format("%.2f", f);
-        temp4 = "$" + temp4;
+        temp4 = formatter.format(f);
         maxCostBox.setText(temp4, TextView.BufferType.NORMAL);
+        //And finally the payment interval
         frequencyBox.setText(currentExpense.getPaymentInterval(), TextView.BufferType.NORMAL);
     }
 

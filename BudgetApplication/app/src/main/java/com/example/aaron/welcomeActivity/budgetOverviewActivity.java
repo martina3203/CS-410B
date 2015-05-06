@@ -72,8 +72,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
         theDatabase.closeDatabase();
 
         //Update list with expenses
-        theAdapter = new ArrayAdapter<Expense>(this,
-                android.R.layout.simple_list_item_1, expenseList);
+        theAdapter = new customExpenseAdapter(this, expenseList);
         expenseListView.setAdapter(theAdapter);
         //set up the progress bar
         setUpProgressBar();
@@ -91,9 +90,7 @@ public class budgetOverviewActivity extends ActionBarActivity {
         theDatabase.closeDatabase();
 
         //Updates list with budgets
-        theAdapter = new ArrayAdapter<Expense>(this,
-                android.R.layout.simple_list_item_1, expenseList);
-
+        theAdapter = new customExpenseAdapter(this, expenseList);
         expenseListView.setAdapter(theAdapter);
 
         //set up the progress bar

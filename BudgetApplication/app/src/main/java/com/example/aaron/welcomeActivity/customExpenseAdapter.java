@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class customExpenseAdapter extends ArrayAdapter<Expense> {
@@ -75,8 +76,8 @@ public class customExpenseAdapter extends ArrayAdapter<Expense> {
                 currentCost = summaryActivity.computeYearly(currentCost);
                 break;
         }
-        String price = String.format("%.2f", currentCost);
-        price = "$" + price;
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        String price = formatter.format(currentCost);
         priceBox.setText(price);
         return convertView;
     }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 /**
@@ -36,8 +37,8 @@ public class customBudgetAdapter extends ArrayAdapter<Budget> {
             totalBudgetBox.setTextColor(Color.BLACK);
             //Fill the boxes
             nameBox.setText(theBudget.getName());
-            String price = String.format("%.2f", theBudget.getMaxValue());
-            price = "$" + price;
+            NumberFormat formatter = NumberFormat.getCurrencyInstance();
+            String price = formatter.format(theBudget.getMaxValue());
             totalBudgetBox.setText(price);
             return convertView;
         }

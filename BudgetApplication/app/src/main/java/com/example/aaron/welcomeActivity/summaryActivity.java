@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 //This activity is used with summary_layout
@@ -113,8 +115,8 @@ public class summaryActivity extends ActionBarActivity {
     public void setPriceTextView(){
         Double totalCost = computeTotalEstimate();
         if (totalCost != 0){
-            String currentAmount = String.format("%.2f", totalCost);
-            currentAmount = "$" + currentAmount;
+            NumberFormat formatter = NumberFormat.getCurrencyInstance();
+            String currentAmount = formatter.format(totalCost);
             priceTextView.setText(currentAmount, TextView.BufferType.NORMAL);
         }
         else{
